@@ -1,7 +1,31 @@
-﻿@page "/Login"
+﻿@page "/"
 
 <PageTitle>Login</PageTitle>
 
 <div class="log">
     <h1>DeltaStock</h1>
+    <style>
+        /* Container que ocupa a tela inteira */
+        .center-container {
+            display: flex;
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center;     /* Centraliza verticalmente */
+            height: 100vh;           /* Altura total da viewport */
+        }
+
+        /* Estilo do quadrado */
+        .square {
+            width: 150px;
+            height: 150px;
+            background-color: #3498db; /* Cor azul para visualizar */
+        }
+    </style>
+
+<body>
+    <form id="form1" runat="server">
+        <div class="center-container">
+            <div class="square"></div>
+        </div>
+    </form>
+</body>
 </div>
