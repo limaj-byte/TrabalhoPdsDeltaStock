@@ -1,0 +1,9 @@
+body {
+    display: block;
+    margin: 8px;
+    padding: 0; 
+    font-size: 16px; 
+    font-family: serif; 
+    color: black; 
+    background-color: white; 
+}
