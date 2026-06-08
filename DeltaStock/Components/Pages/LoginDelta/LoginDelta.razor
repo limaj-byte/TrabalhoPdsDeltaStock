@@ -1,23 +1,17 @@
 ﻿@page "/"
 
-<PageTitle>Login</PageTitle>
+<PageTitle>Login - DeltaStock</PageTitle>
 
 <div class="divlog">
-    <form id="form1" runat="server">
-        <div class="center-container">
-            <div class="squareLogin">
-                <h2>Insira Seu Gmail ou Nome de Usuário</h2>
-                <input type="text" placeholder="Login here" id="user">
-                <input type="text" placeholder="Password here" id="senha">
-                <button class="logSend">Enviar</button>
+    <div class="center-container">
+        <div class="squareLogin">
+            <h2>🔐 Acesso</h2>
+            <input type="text" placeholder="E-mail ou Usuário" id="user" autocomplete="username">
+            <input type="password" placeholder="Senha" id="senha" autocomplete="current-password">
+            <button type="button" class="logSend">Entrar</button>
+            <div class="login-footer">
+                <a href="/HomePage">Continuar como Visitante</a>
             </div>
         </div>
-    </form>
-
-
-    <h2>Insira Seu Gmail ou Nome de Usuario</h2>
-    <input type="text" placeholder="Login here"id="user">
-    <input type="text" placeholder="Password here" id="senha">
-    <button class="logSend">Enviar</button> 
-    <a href="/HomePage">Ver HomePage</a>
+    </div>
 </div>

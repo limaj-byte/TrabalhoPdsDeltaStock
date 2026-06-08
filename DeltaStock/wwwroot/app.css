@@ -98,23 +98,3 @@ body {
     background: #E5E7EB;
     position: relative;
 }
-
-/* LOGIN PAGE */
-
-.center-container {
-    display: flex;
-    height: 100vh;
-}
-
-.squareLogin {
-    position: absolute;
-    top: 200px;
-    left: 160px;
-    width: 400px;
-    height: 700px;
-    background-color: #1D3A81;
-}
-
-.tituloLog {
-    margin: 0;
-}
