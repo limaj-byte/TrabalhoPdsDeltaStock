@@ -1,2 +1,86 @@
-﻿body {
+﻿.divlog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.center-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.squareLogin {
+    width: 400px;
+    padding: 40px;
+    background-color: #1D3A81;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.squareLogin h2 {
+    color: white;
+    text-align: center;
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.squareLogin input {
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: white;
+    color: #333;
+}
+
+.squareLogin input::placeholder {
+    color: #999;
+}
+
+.squareLogin input:focus {
+    outline: none;
+    background-color: #f0f0f0;
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+.logSend {
+    padding: 12px;
+    background-color: #3B82F6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logSend:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+}
+
+.logSend:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    .squareLogin {
+        width: 90%;
+        padding: 30px;
+    }
+
+    .squareLogin h2 {
+        font-size: 18px;
+    }
 }
