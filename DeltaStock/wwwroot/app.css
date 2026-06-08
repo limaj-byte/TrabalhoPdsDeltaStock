@@ -5,6 +5,10 @@ body {
     min-height: 100vh;
 }
 
+
+
+/*---------começo css homepage---------*/
+
 * {
     margin: 0;
     padding: 0;
@@ -20,7 +24,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 24px 18px;
-    height: 100vh; /* ocupa toda a altura da tela */
+    height: 95vh; /* ocupa toda a altura da tela */
 }
 
 /* Card Usuário */
@@ -118,3 +122,5 @@ body {
 .tituloLog {
     margin: 0;
 }
+/*---------fim css homepage*---------*/
+
