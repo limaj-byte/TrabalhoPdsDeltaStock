@@ -9,7 +9,7 @@
             <h2>🔐 Acesso</h2>
             <input type="text" placeholder="CNPJ ou Access Key" id="user" autocomplete="username">
             <input type="password" placeholder="Senha" id="senha" autocomplete="current-password">
-            <button type="button" class="logSend" @onclick="HandleLogin">Entrar</button>
+            <button type="button" class="logSend">Entrar</button>
             <div class="login-footer">
                 <a href="/HomePage">Continuar como Visitante</a>
             </div>
@@ -21,9 +21,21 @@
     </div>
 </div>
 
-@code {
-    private void HandleLogin()
-    {
-        
-    }
-}
+<script>
+    let userInput = document.getElementById('user');
+    let passwordInput = document.getElementById('senha');
+    let loginButton = document.querySelector('.logSend');
+
+    let userValue = '123';
+    let passwordValue = '123';
+    loginButton.addEventListener('click', function() {
+        if (userInput.value === userValue && passwordInput.value === passwordValue) {
+             window.location.href = '/HomePage';
+             alert("Bem vindo a DeltaStock");
+
+        } else {
+            alert('Credenciais inválidas. Tente novamente.');
+            return
+        }
+    });
+</script>
