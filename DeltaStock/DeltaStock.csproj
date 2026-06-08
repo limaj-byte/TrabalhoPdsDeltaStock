@@ -10,4 +10,8 @@
     <Folder Include="Components\Layout\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\bootstrap\logo deltaestoque.png" />
+  </ItemGroup>
+
 </Project>
