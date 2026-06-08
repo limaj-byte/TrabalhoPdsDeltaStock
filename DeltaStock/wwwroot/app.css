@@ -86,11 +86,6 @@ body {
     color: white;
     cursor: pointer;
     font-size: 30px;
-    transition: 0.3s;
-}
-
-.settings:hover {
-    transform: rotate(30deg);
 }
 
 /* MAIN */
