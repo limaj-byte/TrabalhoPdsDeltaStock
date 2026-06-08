@@ -4,20 +4,26 @@
 
 <div class="divlog">
     <div class="center-container">
-        <img src="~/" alt="Alternate Text" />
+
         <div class="squareLogin">
             <h2>🔐 Acesso</h2>
             <input type="text" placeholder="CNPJ ou Access Key" id="user" autocomplete="username">
             <input type="password" placeholder="Senha" id="senha" autocomplete="current-password">
-            <button type="button" class="logSend">Entrar</button>
+            <button type="button" class="logSend" @onclick="HandleLogin">Entrar</button>
             <div class="login-footer">
                 <a href="/HomePage">Continuar como Visitante</a>
             </div>
         </div>
+
+        <div class="login-image">
+            <img src="~/favicon.png" alt="Logo DeltaStock" />
+        </div>
     </div>
 </div>
-<script>
-    let botao = document.querySelector("logSend");
 
-
-</script>
+@code {
+    private void HandleLogin()
+    {
+        
+    }
+}
