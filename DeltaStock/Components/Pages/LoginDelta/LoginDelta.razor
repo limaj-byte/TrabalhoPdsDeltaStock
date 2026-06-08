@@ -26,12 +26,11 @@
     let passwordInput = document.getElementById('senha');
     let loginButton = document.querySelector('.logSend');
 
-    let userValue = '123';
-    let passwordValue = '123';
+    let userValue = 'Tester';
+    let passwordValue = 'tecao';
     loginButton.addEventListener('click', function() {
         if (userInput.value === userValue && passwordInput.value === passwordValue) {
              window.location.href = '/HomePage';
-             alert("Bem vindo a DeltaStock");
 
         } else {
             alert('Credenciais inválidas. Tente novamente.');
