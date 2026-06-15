@@ -31,6 +31,13 @@ body {
     margin-top: auto;
 }
 
+/* LOGIN LOGO DELTA */
+.logo-delta {
+    width: 700px;
+    height: 700px;
+}
+
+
 /*---------começo css homepage---------*/
 
 * {
