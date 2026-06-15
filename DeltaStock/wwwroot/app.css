@@ -590,3 +590,133 @@ body {
         justify-content: stretch;
     }
 }
+
+/* -------- USUARIOS -------- */
+
+
+.usuario-page {
+    padding: 40px;
+    font-family: 'Inter', sans-serif;
+}
+
+
+.usuario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+
+    .usuario-header h1 {
+        color: #1E3A8A;
+    }
+
+
+
+.btn-novo {
+    background: #3B82F6;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+
+    .btn-novo:hover {
+        background: #2563eb;
+    }
+
+
+
+.usuarios-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+
+.usuario-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+
+
+
+.usuario-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+}
+
+
+
+.usuario-info {
+    flex: 1;
+}
+
+
+    .usuario-info h2 {
+        color: #1E3A8A;
+        margin-bottom: 8px;
+    }
+
+
+
+    .usuario-info p {
+        color: #555;
+        margin: 4px 0;
+    }
+
+
+
+
+.acoes {
+    display: flex;
+    gap: 10px;
+}
+
+
+
+    .acoes button {
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        color: white;
+    }
+
+
+
+.editar {
+    background: #3B82F6;
+}
+
+
+
+.excluir {
+    background: #dc2626;
+}
+
+
+.editar:hover {
+    background: #2563eb;
+}
+
+
+.excluir:hover {
+    background: #b91c1c;
+}
