@@ -1,7 +1,18 @@
-﻿@page "/>Produtos"
+﻿namespace DeltaStock.Models;
 
-<PageTitle>Produtos</PageTitle>
+public class Produto
+{
+public int Id { get; set; }
 
-<div class="pro">
-    <h1>>Produtos</h1>
-</div>
+public string Nome { get; set; } = string.Empty;
+
+public string Categoria { get; set; } = string.Empty;
+
+public string Descricao { get; set; } = string.Empty;
+
+public decimal Preco { get; set; }
+
+public int Estoque { get; set; }
+
+public string Imagem { get; set; } = string.Empty;
+}
