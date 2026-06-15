@@ -1,32 +1,48 @@
-﻿@page "/ProdutosAdicionar"
+@page "/ProdutosAdicionar"
+@rendermode InteractiveServer
+@inject ProdutoLocalStore ProdutoStore
+@inject NavigationManager NavigationManager
 
 <h1>Adicionar Produto</h1>
 
-<form>
+<EditForm Model="ProdutoForm" OnValidSubmit="SalvarProduto" FormName="produto-local-form" class="produto-form">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
     <label>Nome do Produto</label>
-    <input type="text" />
+    <input @bind="ProdutoForm.Nome" @bind:event="oninput" />
 
-    <label>Código</label>
-    <input type="text" />
+    <label>Codigo</label>
+    <input @bind="ProdutoForm.Codigo" @bind:event="oninput" />
 
     <label>Fornecedor</label>
-    <input type="text" />
+    <input @bind="ProdutoForm.Fornecedor" @bind:event="oninput" />
 
     <label>Categoria</label>
-    <input type="text" />
+    <input @bind="ProdutoForm.Categoria" @bind:event="oninput" />
 
-    <label>Preço de Compra</label>
-    <input type="number" />
+    <label>Preco de Compra</label>
+    <input type="number" min="0.01" step="0.01" @bind="ProdutoForm.PrecoCompra" @bind:event="oninput" />
 
-    <label>Preço de Venda</label>
-    <input type="number" />
+    <label>Preco de Venda</label>
+    <input type="number" min="0.01" step="0.01" @bind="ProdutoForm.PrecoVenda" @bind:event="oninput" />
 
     <label>Quantidade</label>
-    <input type="number" />
+    <input type="number" min="0" @bind="ProdutoForm.Quantidade" @bind:event="oninput" />
 
     <button type="submit">
         Salvar Produto
     </button>
+</EditForm>
 
-</form>
+@code {
+    [SupplyParameterFromForm]
+    public Produto ProdutoForm { get; set; } = new();
+
+    private void SalvarProduto()
+    {
+        ProdutoStore.Adicionar(ProdutoForm);
+        ProdutoForm = new Produto();
+        NavigationManager.NavigateTo("/ProdutosVisualizar");
+    }
+}

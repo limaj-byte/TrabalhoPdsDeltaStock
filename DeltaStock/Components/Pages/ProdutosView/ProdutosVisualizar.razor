@@ -1,23 +1,30 @@
-﻿@page "/ProdutosVisualizar"
+@page "/ProdutosVisualizar"
+@rendermode InteractiveServer
+@inject ProdutoLocalStore ProdutoStore
 
 <h1>Produtos</h1>
 
-<div class="produto-card">
-    <h3>Camiseta Sport Dry-Fit</h3>
-    <p>Categoria: Roupas</p>
-    <p>Estoque atual: 520 unidades</p>
-    <p>Preço sugerido: R$ 89,90</p>
+<div class="cards-container">
+    @foreach (Produto produto in ProdutoStore.ObterTodos())
+    {
+        <div class="produto-card">
+            <h3>@produto.Nome</h3>
+            <p>Codigo: @produto.Codigo</p>
+            <p>Fornecedor: @produto.Fornecedor</p>
+            <p>Categoria: @produto.Categoria</p>
+            <p>Estoque atual: @produto.Quantidade unidades</p>
+            <p>Preco de compra: @produto.PrecoCompra.ToString("C")</p>
+            <p>Preco sugerido: @produto.PrecoVenda.ToString("C")</p>
 
-    <button>Editar</button>
-    <button>🗑</button>
+            <button type="button">Editar</button>
+            <button type="button" @onclick="() => RemoverProduto(produto.Id)">Excluir</button>
+        </div>
+    }
 </div>
 
-<div class="produto-card">
-    <h3>Fone Sony WH-1000XM5</h3>
-    <p>Categoria: Eletrônicos</p>
-    <p>Estoque atual: 350 unidades</p>
-    <p>Preço sugerido: R$ 1869,00</p>
-
-    <button>Editar</button>
-    <button>🗑</button>
-</div>
+@code {
+    private void RemoverProduto(int id)
+    {
+        ProdutoStore.Remover(id);
+    }
+}

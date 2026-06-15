@@ -177,6 +177,47 @@ body {
     line-height: 1.5;
 }
 
+.produto-form {
+    background: #ffffff;
+    border-top: 6px solid #F97316;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    display: grid;
+    gap: 10px;
+    max-width: 560px;
+    padding: 24px;
+}
+
+.produto-form label {
+    color: #1E3A8A;
+    font-weight: 700;
+}
+
+.produto-form input {
+    border: 1px solid #d9e2ec;
+    border-radius: 6px;
+    min-height: 42px;
+    padding: 10px 12px;
+}
+
+.produto-form button,
+.produto-card button {
+    background: #3B82F6;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: 10px;
+    min-height: 40px;
+    padding: 10px 14px;
+}
+
+.produto-form button:hover,
+.produto-card button:hover {
+    background: #2563eb;
+}
+
 /* VENDAS */
 .sales-page {
     color: #0f172a;
