@@ -1,7 +1,82 @@
-﻿@page "/>ProdutosVisualizar"
+﻿@page "/ProdutosVisualizar"
 
-<PageTitle>Produtos Visualizar</PageTitle>
+<PageTitle>Visualizar Produtos</PageTitle>
 
-<div class="proVis">
-    <h1>>Produtos Visualizar</h1>
+<div class="container-produtos">
+
+    @foreach (var produto in produtos)
+    {
+        <div class="card-produto">
+
+            <img src="@produto.Imagem" alt="@produto.Nome" class="img-produto" />
+
+            <div class="info-produto">
+                <h3>@produto.Nome</h3>
+
+                <p>
+                    Categoria: @produto.Categoria
+                </p>
+
+                <p>
+                    Estoque atual: @produto.Estoque unidades
+                </p>
+
+                <p>
+                    Preço sugerido: R$ @produto.Preco
+                </p>
+
+                <button class="btn-editar">
+                    Editar
+                </button>
+            </div>
+
+            <button class="btn-excluir">
+                🗑
+            </button>
+
+        </div>
+    }
+
 </div>
+
+@code {
+
+    public class Produto
+    {
+        public string Nome { get; set; } = "";
+        public string Categoria { get; set; } = "";
+        public int Estoque { get; set; }
+        public decimal Preco { get; set; }
+        public string Imagem { get; set; } = "";
+    }
+
+    private List<Produto> produtos = new()
+    {
+        new Produto
+        {
+            Nome = "Camiseta Sport Dry-Fit",
+            Categoria = "Roupas",
+            Estoque = 520,
+            Preco = 89.90m,
+            Imagem = "images/camiseta.png"
+        },
+
+        new Produto
+        {
+            Nome = "Fone Sony WH-1000XM5",
+            Categoria = "Acessórios",
+            Estoque = 350,
+            Preco = 1869.00m,
+            Imagem = "images/fone.png"
+        },
+
+        new Produto
+        {
+            Nome = "Tênis Adidas Samba OG",
+            Categoria = "Calçados",
+            Estoque = 270,
+            Preco = 887.90m,
+            Imagem = "images/tenis.png"
+        }
+    };
+}
