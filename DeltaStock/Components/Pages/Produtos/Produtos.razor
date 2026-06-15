@@ -1,18 +1,40 @@
-﻿namespace DeltaStock.Models;
+﻿@page "/Produtos"
+@inject NavigationManager Nav
 
-public class Produto
-{
-public int Id { get; set; }
+<PageTitle>Produtos</PageTitle>
 
-public string Nome { get; set; } = string.Empty;
+<div class="produtos-page">
 
-public string Categoria { get; set; } = string.Empty;
+    <h1>📦 Gerenciamento de Produtos</h1>
 
-public string Descricao { get; set; } = string.Empty;
+    <div class="cards-container">
 
-public decimal Preco { get; set; }
+        <div class="produto-card"
+             @onclick='() => Nav.NavigateTo("/ProdutosVisualizar")'>
 
-public int Estoque { get; set; }
+            <div class="icone">👀</div>
 
-public string Imagem { get; set; } = string.Empty;
-}
+            <h2>Visualizar Produtos</h2>
+
+            <p>
+                Consulte todos os produtos cadastrados no sistema.
+            </p>
+
+        </div>
+
+        <div class="produto-card"
+             @onclick='() => Nav.NavigateTo("/ProdutosAdicionar")'>
+
+            <div class="icone">➕</div>
+
+            <h2>Adicionar Produto</h2>
+
+            <p>
+                Cadastre novos produtos no estoque.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
