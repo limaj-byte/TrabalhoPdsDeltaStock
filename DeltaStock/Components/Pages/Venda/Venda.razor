@@ -1,7 +1,192 @@
-﻿@page "/Venda"
+@page "/Venda"
 
 <PageTitle>Venda</PageTitle>
 
-<div class="Ven">
-    <h1>>Vendas do gustavo</h1>
+<div class="sales-page">
+    <header class="sales-header">
+        <div class="sales-title">
+            <div class="sales-title-icon">🛒</div>
+            <div>
+                <h1>Registrar Venda</h1>
+                <p>Registre uma nova venda no sistema</p>
+            </div>
+        </div>
+
+        <div class="sales-info">
+            <div>
+                <span>Data / Hora</span>
+                <strong>23/05/2024 10:45</strong>
+            </div>
+            <div>
+                <span>Venda Nº</span>
+                <strong>1234</strong>
+            </div>
+            <div>
+                <span>Vendedor</span>
+                <strong>Admin Sistema</strong>
+            </div>
+        </div>
+    </header>
+
+    <div class="sales-content">
+        <section class="sales-left">
+            <div class="sales-card">
+                <h2><span>1</span> Cliente</h2>
+
+                <div class="sales-search-row">
+                    <input type="text" placeholder="Buscar cliente por nome ou CPF..." />
+                    <button class="icon-button">🔍</button>
+                    <button class="secondary-button">+ Novo Cliente</button>
+                </div>
+
+                <div class="customer-box">
+                    <div class="customer-avatar">👤</div>
+                    <div class="customer-data">
+                        <strong>João da Silva</strong>
+                        <span>CPF: 123.456.789-00</span>
+                        <span>Telefone: (11) 99999-9999</span>
+                    </div>
+                    <div class="customer-stats">
+                        <span>🛒 Compras</span>
+                        <strong>12</strong>
+                        <small>Total gasto</small>
+                        <strong>R$ 1.250,50</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sales-card">
+                <h2><span>2</span> Produtos</h2>
+
+                <div class="product-form">
+                    <div class="product-search">
+                        <input type="text" placeholder="Buscar produto por nome, código ou código de barras..." />
+                        <button class="icon-button">🔍</button>
+                    </div>
+                    <label>
+                        Qtd.
+                        <input type="number" value="1" />
+                    </label>
+                    <label>
+                        Preço Unit.
+                        <input type="text" value="R$ 0,00" />
+                    </label>
+                    <button class="primary-button">Adicionar +</button>
+                </div>
+
+                <div class="products-table">
+                    <div class="table-head">
+                        <span>Produto</span>
+                        <span>Código</span>
+                        <span>Qtd.</span>
+                        <span>Preço Unit.</span>
+                        <span>Desconto</span>
+                        <span>Total</span>
+                        <span></span>
+                    </div>
+
+                    <div class="table-row">
+                        <span class="product-name">🖱️ Mouse Gamer</span>
+                        <span>MOU001</span>
+                        <span>2</span>
+                        <span>R$ 59,90</span>
+                        <span>R$ 0,00</span>
+                        <span>R$ 119,80</span>
+                        <button>🗑️</button>
+                    </div>
+
+                    <div class="table-row">
+                        <span class="product-name">⌨️ Teclado Mecânico</span>
+                        <span>TEC002</span>
+                        <span>1</span>
+                        <span>R$ 199,90</span>
+                        <span>R$ 0,00</span>
+                        <span>R$ 199,90</span>
+                        <button>🗑️</button>
+                    </div>
+
+                    <div class="table-row">
+                        <span class="product-name">🎧 Headset Gamer</span>
+                        <span>HEAD03</span>
+                        <span>1</span>
+                        <span>R$ 129,90</span>
+                        <span>R$ 0,00</span>
+                        <span>R$ 129,90</span>
+                        <button>🗑️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sales-card">
+                <h2><span>3</span> Observações</h2>
+                <textarea maxlength="200" placeholder="Adicione observações sobre a venda (opcional)..."></textarea>
+                <small class="counter">0/200</small>
+            </div>
+
+            <div class="stock-alert">
+                <strong>📦 Estoque</strong>
+                <span>O estoque será atualizado automaticamente após a finalização da venda.</span>
+            </div>
+        </section>
+
+        <aside class="sales-right">
+            <div class="sales-card">
+                <h2><span>4</span> Resumo da Venda</h2>
+
+                <div class="summary-line">
+                    <span>Subtotal dos produtos</span>
+                    <strong>R$ 449,60</strong>
+                </div>
+
+                <div class="discount-row">
+                    <label>
+                        Desconto
+                        <select>
+                            <option>R$</option>
+                            <option>%</option>
+                        </select>
+                    </label>
+                    <input type="text" value="0,00" />
+                </div>
+
+                <div class="summary-line discount">
+                    <span>Desconto aplicado</span>
+                    <strong>- R$ 0,00</strong>
+                </div>
+
+                <div class="summary-total">
+                    <span>Total da Venda</span>
+                    <strong>R$ 449,60</strong>
+                </div>
+            </div>
+
+            <div class="sales-card">
+               
+                <div class="payment-grid">
+                    <button class="selected">💵<span>Dinheiro</span></button>
+                    <button>💳<span>Cartão Débito</span></button>
+                    <button>💳<span>Cartão Crédito</span></button>
+                    <button>💠<span>Pix</span></button>
+                    <button>•••<span>Outra Forma</span></button>
+                </div>
+
+                <div class="payment-values">
+                    <label>
+                        Valor Recebido
+                        <input type="text" value="R$ 0,00" />
+                    </label>
+                    <label>
+                        Troco
+                        <input type="text" value="R$ 0,00" readonly />
+                    </label>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="sales-actions">
+        <button class="cancel-button">× Cancelar Venda</button>
+        <button class="draft-button">💾 Salvar Rascunho</button>
+        <button class="finish-button">✓ Finalizar Venda</button>
+    </footer>
 </div>

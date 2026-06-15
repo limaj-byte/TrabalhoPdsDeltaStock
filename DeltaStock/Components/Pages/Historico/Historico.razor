@@ -1,7 +1,43 @@
-﻿@page "/Historico"
+﻿@page "/HistoricoVendas"
+@inject NavigationManager Nav
 
-<PageTitle>Historico</PageTitle>
+<PageTitle>Histórico de Vendas</PageTitle>
 
-<div class="his">
-    <h1>Historico</h1>
+<div class="produtos-page">
+
+    <h1>Histórico de Vendas</h1>
+
+    <div class="cards-container">
+
+
+        <div class="produto-card"
+             @onclick='() => Nav.NavigateTo("/HistoricoVisualizar")'>
+
+            <div class="icone"></div>
+
+            <h2>Visualizar Histórico</h2>
+
+            <p>
+                Consulte todas as vendas e movimentações realizadas.
+            </p>
+
+        </div>
+
+
+        <div class="produto-card"
+             @onclick='() => Nav.NavigateTo("/RelatoriosVendas")'>
+
+            <div class="icone"></div>
+
+            <h2>Relatórios de Vendas</h2>
+
+            <p>
+                Analise entradas, saídas e dados das vendas realizadas.
+            </p>
+
+        </div>
+
+
+    </div>
+
 </div>

@@ -427,3 +427,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Local dotnet verification folders
+DeltaStock/.build-check/
+DeltaStock/.dotnet-home/
