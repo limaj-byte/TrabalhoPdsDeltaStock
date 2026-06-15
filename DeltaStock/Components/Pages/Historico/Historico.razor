@@ -1,43 +1,117 @@
-﻿@page "/HistoricoVendas"
-@inject NavigationManager Nav
+﻿@page "/Historico"
 
 <PageTitle>Histórico de Vendas</PageTitle>
 
-<div class="produtos-page">
+<div class="container mt-4">
 
     <h1>Histórico de Vendas</h1>
 
-    <div class="cards-container">
+    <hr />
+
+    <h3>Movimentações</h3>
+
+    <table class="table table-striped">
+
+        <thead>
+
+            <tr>
+                <th>Data</th>
+                <th>Produto</th>
+                <th>Tipo</th>
+                <th>Quantidade</th>
+                <th>Origem</th>
+                <th>Usuário</th>
+            </tr>
+
+        </thead>
 
 
-        <div class="produto-card"
-             @onclick='() => Nav.NavigateTo("/HistoricoVisualizar")'>
+        <tbody>
 
-            <div class="icone"></div>
+            <tr>
+                <td>15/06/2026</td>
+                <td>Arroz 5kg</td>
+                <td>Saída</td>
+                <td>2</td>
+                <td>Venda</td>
+                <td>Sistema</td>
+            </tr>
 
-            <h2>Visualizar Histórico</h2>
 
-            <p>
-                Consulte todas as vendas e movimentações realizadas.
-            </p>
+            <tr>
+                <td>15/06/2026</td>
+                <td>Leite Integral</td>
+                <td>Entrada</td>
+                <td>25</td>
+                <td>Reposição</td>
+                <td>Administrador</td>
+            </tr>
+
+
+            <tr>
+                <td>14/06/2026</td>
+                <td>Feijão 1kg</td>
+                <td>Ajuste-</td>
+                <td>3</td>
+                <td>Correção de estoque</td>
+                <td>Operador</td>
+            </tr>
+
+        </tbody>
+
+
+    </table>
+
+
+    <hr />
+
+
+    <h3>Resumo</h3>
+
+
+    <div class="row">
+
+
+        <div class="col-md-4">
+
+            <div class="card p-3 mb-3">
+
+                <h5>Total de Entradas</h5>
+
+                <p>25 itens</p>
+
+            </div>
 
         </div>
 
 
-        <div class="produto-card"
-             @onclick='() => Nav.NavigateTo("/RelatoriosVendas")'>
+        <div class="col-md-4">
 
-            <div class="icone"></div>
+            <div class="card p-3 mb-3">
 
-            <h2>Relatórios de Vendas</h2>
+                <h5>Total de Saídas</h5>
 
-            <p>
-                Analise entradas, saídas e dados das vendas realizadas.
-            </p>
+                <p>18 itens</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card p-3 mb-3">
+
+                <h5>Perdas</h5>
+
+                <p>3 itens</p>
+
+            </div>
 
         </div>
 
 
     </div>
+
 
 </div>
