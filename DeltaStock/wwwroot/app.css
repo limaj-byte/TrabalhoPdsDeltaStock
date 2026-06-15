@@ -7,6 +7,26 @@ body {
 
 /*---------começo css homepage---------*/
 
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 270px;
+    background: #244a9a;
+    flex-shrink: 0;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+
+
 * {
     margin: 0;
     padding: 0;
