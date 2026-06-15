@@ -2,6 +2,7 @@
 
 <PageTitle>Homepage</PageTitle>
 
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 
@@ -9,18 +10,18 @@
 
     <aside class="sidebar">
 
-        <div class="user-card">
+        <div class="user-card" onclick="window.location.href='/'">
             <div class="avatar">👤</div>
             <div class="user-name">Nome_Usuario</div>
         </div>
 
         <nav class="menu">
-            <button>Produtos</button>
-            <button>Movimentação de Estoque</button>
-            <button>Histórico</button>
-            <button>Relatórios</button>
-            <button>Usuários</button>
-            <button>Vendas</button>
+            <button onclick="window.location.href='/Produtos'">Produtos</button>
+            <button onclick="window.location.href='/MovimentacaoEstoque'">Movimentação de Estoque</button>
+            <button onclick="window.location.href='/Historico'">Histórico</button>
+            <button onclick="window.location.href='/Relatorios'">Relatórios</button>
+            <button onclick="window.location.href='/Usuario'">Usuários</button>
+            <button onclick="window.location.href='/Venda'">Vendas</button>
         </nav>
 
         <div class="settings">
@@ -30,3 +31,10 @@
     </aside>
 
 </body>
+
+
+
+<div class="home-content">
+    <h1>Bem-vindo ao DeltaStock</h1>
+    <p>Conteúdo da homepage.</p>
+</div>

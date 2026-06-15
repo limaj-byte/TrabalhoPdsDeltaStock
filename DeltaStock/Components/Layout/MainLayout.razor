@@ -1,14 +1,38 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="app-shell">
-    <main class="app-content">
+
+    <aside class="sidebar">
+
+        <div class="user-card">
+            <div class="avatar">👤</div>
+            <div class="user-name">Nome_Usuario</div>
+        </div>
+
+        <nav class="menu">
+            <button>Produtos</button>
+            <button>Movimentação de Estoque</button>
+            <button>Histórico</button>
+            <button>Relatórios</button>
+            <button>Usuários</button>
+            <button>Vendas</button>
+        </nav>
+
+        <div class="settings">
+            ⚙️
+        </div>
+
+    </aside>
+
+    <main class="main-content">
         @Body
+
+        <footer class="app-footer">
+            <span>© 2026 DeltaStock. Todos os direitos reservados.</span>
+            <span>Seleção: Emanuel, Gustavo, João G, João P, Otávio, Vinícius.</span>
+        </footer>
     </main>
 
-    <footer class="app-footer">
-        <span>© 2026 DeltaStock. Todos os direitos reservados.</span>
-        <span>Seleção: Emanuel, Gustavo, João G, João P, Otávio, Vinícius.</span>
-    </footer>
 </div>
 
 <div id="blazor-error-ui" data-nosnippet>
