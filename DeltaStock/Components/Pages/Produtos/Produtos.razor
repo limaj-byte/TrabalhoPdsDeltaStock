@@ -1,7 +1,20 @@
 ﻿@page "/Produtos"
 
-<PageTitle>Produtos</PageTitle>
 
-<div class="pro">
-    <h1>>Produtos</h1>
-</div>
+
+public class Produto
+{
+public int Id { get; set; }
+
+public string Nome { get; set; } = string.Empty;
+
+public string Categoria { get; set; } = string.Empty;
+
+public string Descricao { get; set; } = string.Empty;
+
+public decimal Preco { get; set; }
+
+public int Estoque { get; set; }
+
+public string Imagem { get; set; } = string.Empty;
+}
