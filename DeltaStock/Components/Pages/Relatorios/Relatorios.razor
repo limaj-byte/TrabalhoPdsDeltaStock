@@ -1,38 +1,35 @@
 ﻿@page "/Relatorios"
 
-<PageTitle>Relatórios Gerenciais</PageTitle>
+<PageTitle>Relatórios</PageTitle>
 
 <div class="container mt-4">
 
-    <h1>Relatórios Gerenciais</h1>
-    <p class="text-muted">
-        Acompanhe os principais indicadores de estoque, movimentações e desempenho financeiro.
-    </p>
+    <h1>Relatórios</h1>
 
     <hr />
-
-    <h3>Painel de Indicadores</h3>
+   
+    <h3>Dashboard</h3>
 
     <div class="row">
 
         <div class="col-md-4">
-            <div class="card p-3 mb-3 shadow-sm">
-                <h5>Produtos com Estoque Crítico</h5>
-                <p>5 produtos identificados abaixo do nível mínimo.</p>
+            <div class="card p-3 mb-3">
+                <h5>Estoque Baixo</h5>
+                <p>5 produtos</p>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card p-3 mb-3 shadow-sm">
-                <h5>Entradas Registradas Hoje</h5>
-                <p>25 itens adicionados ao estoque.</p>
+            <div class="card p-3 mb-3">
+                <h5>Entradas Hoje</h5>
+                <p>25 itens</p>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card p-3 mb-3 shadow-sm">
-                <h5>Saídas Registradas Hoje</h5>
-                <p>18 itens movimentados para venda.</p>
+            <div class="card p-3 mb-3">
+                <h5>Saídas Hoje</h5>
+                <p>18 itens</p>
             </div>
         </div>
 
@@ -41,47 +38,43 @@
     <div class="row">
 
         <div class="col-md-6">
-            <div class="card p-3 mb-3 shadow-sm">
-                <h5>Faturamento do Período</h5>
-                <p>R$ 2.500,00 em vendas registradas.</p>
+            <div class="card p-3 mb-3">
+                <h5>Vendas do Período</h5>
+                <p>R$ 2.500,00</p>
             </div>
         </div>
 
         <div class="col-md-6">
-            <div class="card p-3 mb-3 shadow-sm">
-                <h5>Lucro Bruto Acumulado</h5>
-                <p>R$ 850,00 obtidos no período analisado.</p>
+            <div class="card p-3 mb-3">
+                <h5>Lucro Bruto</h5>
+                <p>R$ 850,00</p>
             </div>
         </div>
 
     </div>
 
     <hr />
-
-    <h3>Alertas Operacionais</h3>
+   
+    <h3>Alertas</h3>
 
     <div class="alert alert-warning">
-        Atenção: o produto <strong> Mouse Gamer</strong> encontra-se abaixo do estoque mínimo definido.
+        Produto "Arroz 5kg" com estoque abaixo do mínimo.
     </div>
 
     <div class="alert alert-danger">
-        Atenção: o produto <strong>Teclado Mecânico</strong> encontra-se sem disponibilidade em estoque.
+        Produto "Leite Integral" vence em 7 dias.
     </div>
 
     <hr />
-
-    <h3>Exportação de Relatórios</h3>
-
-    <p class="text-muted">
-        Exporte os dados para análise externa e arquivamento.
-    </p>
+    
+    <h3>Exportação</h3>
 
     <button class="btn btn-success me-2">
-        Exportar Relatório de Estoque (CSV)
+        Exportar Estoque CSV
     </button>
 
     <button class="btn btn-primary">
-        Exportar Relatório Financeiro (CSV)
+        Exportar Financeiro CSV
     </button>
 
 </div>
