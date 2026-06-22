@@ -1,8 +1,4 @@
 @page "/Venda"
-@rendermode InteractiveServer
-@inject ProdutoLocalStore ProdutoStore
-
-@using System.Globalization
 
 <PageTitle>Venda</PageTitle>
 
@@ -19,11 +15,11 @@
         <div class="sales-info">
             <div>
                 <span>Data / Hora</span>
-                <strong>@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</strong>
+                <div id="Horaatual"></div>
             </div>
             <div>
                 <span>Venda Nº</span>
-                <strong>VDA-000125</strong>
+                <strong>1234</strong>
             </div>
             <div>
                 <span>Vendedor</span>
@@ -38,43 +34,25 @@
                 <h2><span>1</span> Cliente</h2>
 
                 <div class="sales-search-row">
-                    <input type="text" placeholder="Buscar cliente por nome ou CPF..." @bind="clienteBusca" @bind:event="oninput" />
-                    <button type="button" class="icon-button" @onclick="BuscarCliente">🔍</button>
-                    <button type="button" class="secondary-button" @onclick="AbrirNovoCliente">+ Novo Cliente</button>
+                    <input type="text" placeholder="Buscar cliente por nome ou CPF..." />
+                    <button class="icon-button">🔍</button>
+                    <button class="secondary-button">+ Novo Cliente</button>
                 </div>
 
-                @if (mostrarNovoCliente)
-                {
-                    <div class="new-customer-form">
-                        <input type="text" placeholder="Nome do cliente" @bind="novoClienteNome" @bind:event="oninput" />
-                        <input type="text" placeholder="CPF" @bind="novoClienteCpf" @bind:event="oninput" />
-                        <input type="text" placeholder="Telefone" @bind="novoClienteTelefone" @bind:event="oninput" />
-                        <button type="button" class="primary-button" @onclick="SalvarNovoCliente">Salvar Cliente</button>
+                <div class="customer-box">
+                    <div class="customer-avatar">👤</div>
+                    <div class="customer-data">
+                        <strong>João da Silva</strong>
+                        <span>CPF: 123.456.789-00</span>
+                        <span>Telefone: (11) 99999-9999</span>
                     </div>
-                }
-
-                @if (!string.IsNullOrWhiteSpace(clienteMensagem))
-                {
-                    <p class="feedback-message">@clienteMensagem</p>
-                }
-
-                @if (clienteSelecionado is not null)
-                {
-                    <div class="customer-box">
-                        <div class="customer-avatar">👤</div>
-                        <div class="customer-data">
-                            <strong>@clienteSelecionado.Nome</strong>
-                            <span>CPF: @clienteSelecionado.Cpf</span>
-                            <span>Telefone: @clienteSelecionado.Telefone</span>
-                        </div>
-                        <div class="customer-stats">
-                            <span>🛒 Compras</span>
-                            <strong>@clienteSelecionado.Compras</strong>
-                            <small>Total gasto</small>
-                            <strong>@FormatarMoeda(clienteSelecionado.TotalGasto)</strong>
-                        </div>
+                    <div class="customer-stats">
+                        <span>🛒 Compras</span>
+                        <strong>12</strong>
+                        <small>Total gasto</small>
+                        <strong>R$ 1.250,50</strong>
                     </div>
-                }
+                </div>
             </div>
 
             <div class="sales-card">
@@ -82,24 +60,19 @@
 
                 <div class="product-form">
                     <div class="product-search">
-                        <input type="text" placeholder="Buscar produto por nome, código ou código de barras..." @bind="produtoBusca" @bind:event="oninput" />
-                        <button type="button" class="icon-button" @onclick="BuscarProduto">🔍</button>
+                        <input type="text" placeholder="Buscar produto por nome, código ou código de barras..." />
+                        <button class="icon-button">🔍</button>
                     </div>
                     <label>
                         Qtd.
-                        <input type="number" min="1" @bind="produtoQuantidade" @bind:event="oninput" />
+                        <input type="number" value="1" />
                     </label>
                     <label>
                         Preço Unit.
-                        <input type="number" min="0" step="0.01" @bind="produtoPrecoUnitario" @bind:event="oninput" />
+                        <input type="text" value="R$ 0,00" />
                     </label>
-                    <button type="button" class="primary-button" @onclick="AdicionarProduto">Adicionar +</button>
+                    <button class="primary-button">Adicionar +</button>
                 </div>
-
-                @if (!string.IsNullOrWhiteSpace(produtoMensagem))
-                {
-                    <p class="feedback-message">@produtoMensagem</p>
-                }
 
                 <div class="products-table">
                     <div class="table-head">
@@ -112,34 +85,42 @@
                         <span></span>
                     </div>
 
-                    @if (produtosVenda.Count == 0)
-                    {
-                        <div class="table-row empty-row">
-                            <span>Nenhum produto adicionado.</span>
-                        </div>
-                    }
-                    else
-                    {
-                        @foreach (ProdutoVenda item in produtosVenda)
-                        {
-                            <div class="table-row">
-                                <span class="product-name">@item.Nome</span>
-                                <span>@item.Codigo</span>
-                                <span>@item.Quantidade</span>
-                                <span>@FormatarMoeda(item.PrecoUnitario)</span>
-                                <span>@FormatarMoeda(item.Desconto)</span>
-                                <span>@FormatarMoeda(item.Total)</span>
-                                <button type="button" @onclick="() => RemoverProduto(item.Id)">🗑️</button>
-                            </div>
-                        }
-                    }
+                    <div class="table-row">
+                        <span class="product-name">🖱️ Mouse Gamer</span>
+                        <span>MOU001</span>
+                        <span>2</span>
+                        <span>R$ 59,90</span>
+                        <span>R$ 0,00</span>
+                        <span>R$ 119,80</span>
+                        <button>🗑️</button>
+                    </div>
+
+                    <div class="table-row">
+                        <span class="product-name">⌨️ Teclado Mecânico</span>
+                        <span>TEC002</span>
+                        <span>1</span>
+                        <span>R$ 199,90</span>
+                        <span>R$ 0,00</span>
+                        <span>R$ 199,90</span>
+                        <button>🗑️</button>
+                    </div>
+
+                    <div class="table-row">
+                        <span class="product-name">🎧 Headset Gamer</span>
+                        <span>HEAD03</span>
+                        <span>1</span>
+                        <span>R$ 129,90</span>
+                        <span>R$ 0,00</span>
+                        <span>R$ 129,90</span>
+                        <button>🗑️</button>
+                    </div>
                 </div>
             </div>
 
             <div class="sales-card">
                 <h2><span>3</span> Observações</h2>
-                <textarea maxlength="200" placeholder="Adicione observações sobre a venda (opcional)..." @bind="observacoes" @bind:event="oninput"></textarea>
-                <small class="counter">@observacoes.Length/200</small>
+                <textarea maxlength="200" placeholder="Adicione observações sobre a venda (opcional)..."></textarea>
+                <small class="counter">0/200</small>
             </div>
         </section>
 
@@ -149,52 +130,48 @@
 
                 <div class="summary-line">
                     <span>Subtotal dos produtos</span>
-                    <strong>@FormatarMoeda(Subtotal)</strong>
+                    <strong>R$ 449,60</strong>
                 </div>
 
                 <div class="discount-row">
                     <label>
                         Desconto
-                        <select @bind="tipoDesconto">
+                        <select>
                             <option>R$</option>
                             <option>%</option>
                         </select>
                     </label>
-                    <input type="number" min="0" step="0.01" @bind="valorDesconto" @bind:event="oninput" />
+                    <input type="text" value="0,00" />
                 </div>
 
                 <div class="summary-line discount">
                     <span>Desconto aplicado</span>
-                    <strong>- @FormatarMoeda(DescontoAplicado)</strong>
+                    <strong>- R$ 0,00</strong>
                 </div>
 
                 <div class="summary-total">
                     <span>Total da Venda</span>
-                    <strong>@FormatarMoeda(TotalVenda)</strong>
+                    <strong>R$ 449,60</strong>
                 </div>
             </div>
 
             <div class="sales-card">
-                <h2><span>5</span> Forma de Pagamento</h2>
-
+               
                 <div class="payment-grid">
-                    @foreach (string forma in formasPagamento)
-                    {
-                        <button type="button" class="@ClassePagamento(forma)" @onclick="() => SelecionarPagamento(forma)">
-                            <span>@IconePagamento(forma)</span>
-                            <span>@forma</span>
-                        </button>
-                    }
+                    <button class="selected">💵<span>Dinheiro</span></button>
+                    <button>💳<span>Cartão Débito</span></button>
+                    <button>💳<span>Cartão Crédito</span></button>
+                    <button>💠<span>Pix</span></button>
                 </div>
 
                 <div class="payment-values">
                     <label>
                         Valor Recebido
-                        <input type="number" min="0" step="0.01" @bind="valorRecebido" @bind:event="oninput" />
+                        <input type="text" value="R$ 0,00" />
                     </label>
                     <label>
                         Troco
-                        <input type="text" value="@FormatarMoeda(Troco)" readonly />
+                        <input type="text" value="R$ 0,00" readonly />
                     </label>
                 </div>
             </div>
@@ -202,289 +179,23 @@
     </div>
 
     <footer class="sales-actions">
-        <button type="button" class="cancel-button" @onclick="CancelarVenda">× Cancelar Venda</button>
-        <button type="button" class="draft-button">💾 Salvar Rascunho</button>
-        <button type="button" class="finish-button">✓ Finalizar Venda</button>
+        <button class="cancel-button">× Cancelar Venda</button>
+        <button class="draft-button">💾 Salvar Rascunho</button>
+        <button class="finish-button">✓ Finalizar Venda</button>
     </footer>
 </div>
+<script>
+    function atualizarRelogio() {
+        const dataAtual = new Date();
 
-@code {
-    private static readonly CultureInfo CulturaBrasil = CultureInfo.GetCultureInfo("pt-BR");
+        const horas = String(dataAtual.getHours()).padStart(2, '0');
+        const minutos = String(dataAtual.getMinutes()).padStart(2, '0');
+        const segundos = String(dataAtual.getSeconds()).padStart(2, '0');
 
-    private readonly List<Cliente> clientes =
-    [
-        new("João da Silva", "123.456.789-00", "(11) 99999-9999", 12, 1250.50m),
-        new("Maria Oliveira", "987.654.321-00", "(92) 98888-7777", 4, 640.00m),
-        new("Carlos Souza", "456.789.123-00", "(92) 97777-1111", 8, 980.75m)
-    ];
+        const horaFormatada = `${horas}:${minutos}:${segundos}`;
 
-    private readonly List<ProdutoCatalogo> produtosBase =
-    [
-        new("Mouse Gamer", "MOU001", 59.90m),
-        new("Teclado Mecânico", "TEC002", 199.90m),
-        new("Headset Gamer", "HEAD03", 129.90m)
-    ];
-
-    private readonly List<ProdutoVenda> produtosVenda =
-    [
-        new(1, "Mouse Gamer", "MOU001", 2, 59.90m, 0),
-        new(2, "Teclado Mecânico", "TEC002", 1, 199.90m, 0),
-        new(3, "Headset Gamer", "HEAD03", 1, 129.90m, 0)
-    ];
-
-    private readonly string[] formasPagamento = ["Dinheiro", "Cartão Débito", "Cartão Crédito", "Pix"];
-
-    private Cliente? clienteSelecionado;
-    private string clienteBusca = "";
-    private string clienteMensagem = "";
-    private bool mostrarNovoCliente;
-    private string novoClienteNome = "";
-    private string novoClienteCpf = "";
-    private string novoClienteTelefone = "";
-
-    private string produtoBusca = "";
-    private string produtoMensagem = "";
-    private int produtoQuantidade = 1;
-    private decimal produtoPrecoUnitario;
-    private int proximoProdutoVendaId = 4;
-
-    private string observacoes = "";
-    private string tipoDesconto = "R$";
-    private decimal valorDesconto;
-    private string pagamentoSelecionado = "Dinheiro";
-    private decimal valorRecebido;
-
-    private decimal Subtotal => produtosVenda.Sum(produto => produto.Total);
-
-    private decimal DescontoAplicado
-    {
-        get
-        {
-            decimal desconto = tipoDesconto == "%" ? Subtotal * (valorDesconto / 100) : valorDesconto;
-            return Math.Clamp(desconto, 0, Subtotal);
-        }
+        document.getElementById('Horaatual').textContent = horaFormatada;
     }
-
-    private decimal TotalVenda => Math.Max(0, Subtotal - DescontoAplicado);
-
-    private decimal Troco => pagamentoSelecionado == "Dinheiro" ? Math.Max(0, valorRecebido - TotalVenda) : 0;
-
-    protected override void OnInitialized()
-    {
-        clienteSelecionado = clientes[0];
-    }
-
-    private void BuscarCliente()
-    {
-        clienteMensagem = "";
-        string termo = Normalizar(clienteBusca);
-
-        if (string.IsNullOrWhiteSpace(termo))
-        {
-            clienteMensagem = "Digite um nome ou CPF para buscar.";
-            return;
-        }
-
-        Cliente? cliente = clientes.FirstOrDefault(item =>
-            Normalizar(item.Nome).Contains(termo) ||
-            Normalizar(item.Cpf).Contains(termo));
-
-        if (cliente is null)
-        {
-            clienteMensagem = "Cliente não encontrado.";
-            return;
-        }
-
-        clienteSelecionado = cliente;
-        clienteBusca = cliente.Nome;
-    }
-
-    private void AbrirNovoCliente()
-    {
-        mostrarNovoCliente = !mostrarNovoCliente;
-        clienteMensagem = "";
-    }
-
-    private void SalvarNovoCliente()
-    {
-        if (string.IsNullOrWhiteSpace(novoClienteNome) || string.IsNullOrWhiteSpace(novoClienteCpf))
-        {
-            clienteMensagem = "Informe pelo menos o nome e o CPF do cliente.";
-            return;
-        }
-
-        Cliente cliente = new(novoClienteNome.Trim(), novoClienteCpf.Trim(), novoClienteTelefone.Trim(), 0, 0);
-        clientes.Add(cliente);
-        clienteSelecionado = cliente;
-        clienteBusca = cliente.Nome;
-        novoClienteNome = "";
-        novoClienteCpf = "";
-        novoClienteTelefone = "";
-        mostrarNovoCliente = false;
-        clienteMensagem = "Cliente adicionado e selecionado.";
-    }
-
-    private void BuscarProduto()
-    {
-        ProdutoCatalogo? produto = EncontrarProduto();
-
-        if (produto is null)
-        {
-            produtoMensagem = "Produto não encontrado.";
-            return;
-        }
-
-        produtoBusca = produto.Nome;
-        produtoPrecoUnitario = produto.PrecoUnitario;
-        produtoMensagem = $"Produto selecionado: {produto.Nome}.";
-    }
-
-    private void AdicionarProduto()
-    {
-        ProdutoCatalogo? produto = EncontrarProduto();
-
-        if (produto is null)
-        {
-            produtoMensagem = "Busque um produto válido antes de adicionar.";
-            return;
-        }
-
-        if (produtoQuantidade < 1)
-        {
-            produtoMensagem = "A quantidade precisa ser maior que zero.";
-            return;
-        }
-
-        decimal preco = produtoPrecoUnitario > 0 ? produtoPrecoUnitario : produto.PrecoUnitario;
-        ProdutoVenda? existente = produtosVenda.FirstOrDefault(item => item.Codigo == produto.Codigo && item.PrecoUnitario == preco);
-
-        if (existente is not null)
-        {
-            existente.Quantidade += produtoQuantidade;
-        }
-        else
-        {
-            produtosVenda.Add(new ProdutoVenda(proximoProdutoVendaId++, produto.Nome, produto.Codigo, produtoQuantidade, preco, 0));
-        }
-
-        produtoMensagem = $"{produto.Nome} adicionado à venda.";
-        produtoBusca = "";
-        produtoQuantidade = 1;
-        produtoPrecoUnitario = 0;
-    }
-
-    private void RemoverProduto(int id)
-    {
-        ProdutoVenda? produto = produtosVenda.FirstOrDefault(item => item.Id == id);
-
-        if (produto is not null)
-        {
-            produtosVenda.Remove(produto);
-        }
-    }
-
-    private void SelecionarPagamento(string forma)
-    {
-        pagamentoSelecionado = forma;
-
-        if (forma != "Dinheiro")
-        {
-            valorRecebido = TotalVenda;
-        }
-    }
-
-    private string ClassePagamento(string forma)
-    {
-        return pagamentoSelecionado == forma ? "selected" : "";
-    }
-
-    private string IconePagamento(string forma)
-    {
-        return forma switch
-        {
-            "Dinheiro" => "💵",
-            "Cartão Débito" => "💳",
-            "Cartão Crédito" => "💳",
-            "Pix" => "💠",
-            _ => "•"
-        };
-    }
-
-    private void CancelarVenda()
-    {
-        produtosVenda.Clear();
-        valorDesconto = 0;
-        valorRecebido = 0;
-        observacoes = "";
-        produtoBusca = "";
-        produtoMensagem = "";
-    }
-
-    private ProdutoCatalogo? EncontrarProduto()
-    {
-        string termo = Normalizar(produtoBusca);
-
-        if (string.IsNullOrWhiteSpace(termo))
-        {
-            return null;
-        }
-
-        return ProdutosCatalogo.FirstOrDefault(item =>
-            Normalizar(item.Nome).Contains(termo) ||
-            Normalizar(item.Codigo).Contains(termo));
-    }
-
-    private IEnumerable<ProdutoCatalogo> ProdutosCatalogo
-    {
-        get
-        {
-            IEnumerable<ProdutoCatalogo> produtosCadastrados = ProdutoStore.ObterTodos()
-                .Select(produto => new ProdutoCatalogo(produto.Nome, produto.Codigo, produto.PrecoVenda));
-
-            return produtosBase
-                .Concat(produtosCadastrados)
-                .GroupBy(produto => produto.Codigo)
-                .Select(grupo => grupo.First());
-        }
-    }
-
-    private static string Normalizar(string valor)
-    {
-        return valor.Trim().ToUpperInvariant()
-            .Replace(".", "")
-            .Replace("-", "")
-            .Replace("(", "")
-            .Replace(")", "")
-            .Replace(" ", "");
-    }
-
-    private static string FormatarMoeda(decimal valor)
-    {
-        return valor.ToString("C", CulturaBrasil);
-    }
-
-    private sealed record Cliente(string Nome, string Cpf, string Telefone, int Compras, decimal TotalGasto);
-
-    private sealed record ProdutoCatalogo(string Nome, string Codigo, decimal PrecoUnitario);
-
-    private sealed class ProdutoVenda
-    {
-        public ProdutoVenda(int id, string nome, string codigo, int quantidade, decimal precoUnitario, decimal desconto)
-        {
-            Id = id;
-            Nome = nome;
-            Codigo = codigo;
-            Quantidade = quantidade;
-            PrecoUnitario = precoUnitario;
-            Desconto = desconto;
-        }
-
-        public int Id { get; }
-        public string Nome { get; }
-        public string Codigo { get; }
-        public int Quantidade { get; set; }
-        public decimal PrecoUnitario { get; }
-        public decimal Desconto { get; }
-        public decimal Total => Math.Max(0, Quantidade * PrecoUnitario - Desconto);
-    }
-}
+    setInterval(atualizarRelogio, 1000);
+    atualizarRelogio();
+</script>
