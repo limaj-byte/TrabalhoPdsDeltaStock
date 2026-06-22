@@ -1,9 +1,93 @@
 ﻿@page "/homepage"
 
-<PageTitle>Homepage - DeltaStock</PageTitle>
+<PageTitle>Home - DeltaStock</PageTitle>
 
-<div class="home-content">
-    <h1>Bem-vindo ao DeltaStock</h1>
-    <p>Sistema de Gestão de Estoque</p>
+<div class="dashboard">
+
+    <div class="welcome-banner">
+        <h1>📦 Bem-vindo ao DeltaStock</h1>
+        <p>
+            Sistema inteligente de gerenciamento de estoque,
+            movimentações e relatórios.
+        </p>
+    </div>
+
+    <div class="cards-resumo">
+
+        <div class="resumo-card">
+            <h3>📦 Produtos</h3>
+            <span>1248</span>
+        </div>
+
+        <div class="resumo-card">
+            <h3>📈 Entradas</h3>
+            <span>342</span>
+        </div>
+
+        <div class="resumo-card">
+            <h3>📉 Saídas</h3>
+            <span>198</span>
+        </div>
+
+        <div class="resumo-card lucro">
+            <h3>💰 Lucro</h3>
+            <span>R$ 45.780</span>
+        </div>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+        <div class="painel">
+            <h2>⚠ Produtos com Estoque Baixo</h2>
+
+            <ul>
+                <li>Mouse Gamer RGB - 3 unidades</li>
+                <li>Teclado Mecânico - 2 unidades</li>
+                <li>Headset HyperX - 1 unidade</li>
+                <li>Monitor LG 24" - 4 unidades</li>
+            </ul>
+
+        </div>
+
+        <div class="painel">
+            <h2>🕒 Últimas Movimentações</h2>
+
+            <ul>
+                <li>+50 Camisetas Dry-Fit</li>
+                <li>-12 Fones Sony</li>
+                <li>+15 Teclados Mecânicos</li>
+                <li>-5 Monitores LG</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="acoes-rapidas">
+
+        <h2>⚡ Acesso Rápido</h2>
+
+        <div class="acoes-grid">
+
+            <a href="/ProdutosAdicionar" class="acao-btn">
+                ➕ Adicionar Produto
+            </a>
+
+            <a href="/ProdutosVisualizar" class="acao-btn">
+                📦 Ver Produtos
+            </a>
+
+            <a href="/Historico" class="acao-btn">
+                📋 Histórico
+            </a>
+
+            <a href="/Relatorios" class="acao-btn">
+                📊 Relatórios
+            </a>
+
+        </div>
+
+    </div>
+
 </div>
-
