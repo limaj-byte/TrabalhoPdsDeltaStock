@@ -2,216 +2,66 @@
 
 <PageTitle>Histórico de Vendas</PageTitle>
 
-<style>
-
-    body {
-        background: #f5f7fb;
-    }
-
-    .historico-container {
-        margin-top: 30px;
-    }
-
-
-    h1 {
-        color: #0d47a1;
-        font-weight: 700;
-    }
-
-
-    h3 {
-        color: #123b72;
-        font-weight: 600;
-        margin-top: 25px;
-    }
-
-
-    hr {
-        border-color: #dbe3f0;
-    }
-
-
-    .table-box {
-        background: white;
-        padding: 25px;
-        border-radius: 14px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    }
-
-
-    .table {
-
-        border-radius: 10px;
-        overflow: hidden;
-        background:white;
-
-    }
-
-
-    .table thead {
-
-        background: #0d6efd;
-        color:white;
-
-    }
-
-
-    .table th {
-
-        padding: 15px;
-        font-weight:600;
-
-    }
-
-
-    .table td {
-
-        padding: 14px;
-        color:#334155;
-
-    }
-
-
-    .table tbody tr:hover {
-
-        background:#eef5ff;
-
-    }
-
-
-    .card {
-
-        background:white;
-        border:none;
-        border-radius:15px;
-        box-shadow:0 4px 12px rgba(0,0,0,0.08);
-        transition:0.2s;
-
-    }
-
-
-    .card:hover {
-
-        transform:translateY(-3px);
-
-    }
-
-
-    .card h5 {
-
-        color:#0d47a1;
-        font-weight:700;
-
-    }
-
-
-    .card p {
-
-        font-size:22px;
-        font-weight:700;
-        color:#16a34a;
-
-    }
-
-
-    .entrada {
-
-        color:#16a34a;
-
-    }
-
-
-    .saida {
-
-        color:#dc2626;
-
-    }
-
-
-</style>
-
-
-
-<div class="container historico-container">
-
+<div class="container mt-4">
 
     <h1>Histórico de Vendas</h1>
 
     <hr />
 
-
     <h3>Movimentações</h3>
 
+    <table class="table table-striped">
 
-    <div class="table-box">
+        <thead>
 
+            <tr>
+                <th>Data</th>
+                <th>Produto</th>
+                <th>Tipo</th>
+                <th>Quantidade</th>
+                <th>Origem</th>
+                <th>Usuário</th>
+            </tr>
 
-        <table class="table table-striped">
-
-
-            <thead>
-
-                <tr>
-                    <th>Data</th>
-                    <th>Produto</th>
-                    <th>Tipo</th>
-                    <th>Quantidade</th>
-                    <th>Origem</th>
-                    <th>Usuário</th>
-                </tr>
-
-            </thead>
+        </thead>
 
 
-            <tbody>
+        <tbody>
+
+            <tr>
+                <td>15/06/2026</td>
+                <td>Arroz 5kg</td>
+                <td>Saída</td>
+                <td>2</td>
+                <td>Venda</td>
+                <td>Sistema</td>
+            </tr>
 
 
-                <tr>
-
-                    <td>15/06/2026</td>
-                    <td>Arroz 5kg</td>
-                    <td class="saida">Saída</td>
-                    <td>2</td>
-                    <td>Venda</td>
-                    <td>Sistema</td>
-
-                </tr>
+            <tr>
+                <td>15/06/2026</td>
+                <td>Leite Integral</td>
+                <td>Entrada</td>
+                <td>25</td>
+                <td>Reposição</td>
+                <td>Administrador</td>
+            </tr>
 
 
+            <tr>
+                <td>14/06/2026</td>
+                <td>Feijão 1kg</td>
+                <td>Ajuste-</td>
+                <td>3</td>
+                <td>Correção de estoque</td>
+                <td>Operador</td>
+            </tr>
 
-                <tr>
-
-                    <td>15/06/2026</td>
-                    <td>Leite Integral</td>
-                    <td class="entrada">Entrada</td>
-                    <td>25</td>
-                    <td>Reposição</td>
-                    <td>Administrador</td>
-
-                </tr>
-
+        </tbody>
 
 
+    </table>
 
-                <tr>
-
-                    <td>14/06/2026</td>
-                    <td>Feijão 1kg</td>
-                    <td class="saida">Ajuste-</td>
-                    <td>3</td>
-                    <td>Correção de estoque</td>
-                    <td>Operador</td>
-
-                </tr>
-
-
-            </tbody>
-
-
-        </table>
-
-
-    </div>
 
     <hr />
 
@@ -219,60 +69,46 @@
     <h3>Resumo</h3>
 
 
-
     <div class="row">
 
 
         <div class="col-md-4">
 
-
             <div class="card p-3 mb-3">
-
 
                 <h5>Total de Entradas</h5>
 
                 <p>25 itens</p>
-            </div>
 
+            </div>
 
         </div>
 
 
-
-
         <div class="col-md-4">
 
-
             <div class="card p-3 mb-3">
-
 
                 <h5>Total de Saídas</h5>
 
-                <p style="color:#dc2626">18 itens</p>
-
+                <p>18 itens</p>
 
             </div>
-
 
         </div>
 
 
         <div class="col-md-4">
 
-
             <div class="card p-3 mb-3">
-
 
                 <h5>Perdas</h5>
 
-                <p style="color:#f59e0b">3 itens</p>
-
+                <p>3 itens</p>
 
             </div>
 
-
         </div>
-
 
 
     </div>

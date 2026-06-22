@@ -1,0 +1,111 @@
+.movimentacao-page {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    padding: 40px;
+}
+
+.movimentacao-page h1 {
+    color: #1e3a8a;
+    margin-bottom: 30px;
+}
+
+.painel-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.mov-card {
+    align-items: center;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    display: flex;
+    gap: 20px;
+    min-height: 150px;
+    padding: 25px;
+    width: 300px;
+}
+
+.mov-icon {
+    font-size: 45px;
+}
+
+.mov-card h2 {
+    color: #1e3a8a;
+    margin-bottom: 8px;
+}
+
+.mov-card p {
+    color: #555555;
+}
+
+.mov-card span {
+    display: block;
+    font-size: 22px;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.entrada {
+    border-top: 6px solid #16a34a;
+}
+
+.saida {
+    border-top: 6px solid #dc2626;
+}
+
+.total {
+    border-top: 6px solid #f97316;
+}
+
+.titulo-historico {
+    color: #1e3a8a;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.tabela-container {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    overflow-x: auto;
+    padding: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    min-width: 620px;
+    width: 100%;
+}
+
+th {
+    background: #254796;
+    color: #ffffff;
+    padding: 15px;
+    text-align: left;
+}
+
+td {
+    border-bottom: 1px solid #dddddd;
+    padding: 15px;
+}
+
+.entrada-texto {
+    color: #16a34a;
+    font-weight: 800;
+}
+
+.saida-texto {
+    color: #dc2626;
+    font-weight: 800;
+}
+
+@media (max-width: 760px) {
+    .movimentacao-page {
+        padding: 20px;
+    }
+
+    .mov-card {
+        width: 100%;
+    }
+}
