@@ -81,10 +81,16 @@
                 <h2><span>2</span> Produtos</h2>
 
                 <div class="product-form">
-                    <div class="product-search">
-                        <input type="text" placeholder="Buscar produto por nome, código ou código de barras..." @bind="produtoBusca" @bind:event="oninput" />
-                        <button type="button" class="icon-button" @onclick="BuscarProduto">🔍</button>
-                    </div>
+                    <label class="product-select">
+                        Produto
+                        <select value="@produtoSelecionadoCodigo" @onchange="SelecionarProduto">
+                            <option value="">Selecione um produto</option>
+                            @foreach (ProdutoCatalogo produto in ProdutosCatalogo)
+                            {
+                                <option value="@produto.Codigo">@produto.Nome - @FormatarMoeda(produto.PrecoUnitario)</option>
+                            }
+                        </select>
+                    </label>
                     <label>
                         Qtd.
                         <input type="number" min="1" @bind="produtoQuantidade" @bind:event="oninput" />
@@ -141,11 +147,38 @@
                 <textarea maxlength="200" placeholder="Adicione observações sobre a venda (opcional)..." @bind="observacoes" @bind:event="oninput"></textarea>
                 <small class="counter">@observacoes.Length/200</small>
             </div>
+
+            <div class="sales-card">
+                <h2><span>4</span> Relatório da Venda</h2>
+
+                @if (produtosVenda.Count == 0)
+                {
+                    <p class="feedback-message">Nenhum produto foi adicionado nesta venda.</p>
+                }
+                else
+                {
+                    <div class="sale-report">
+                        @foreach (ProdutoVenda item in produtosVenda)
+                        {
+                            <div class="sale-report-line">
+                                <span>@item.Nome</span>
+                                <strong>@item.Quantidade x @FormatarMoeda(item.PrecoUnitario)</strong>
+                                <strong>@FormatarMoeda(item.Total)</strong>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="sale-report-total">
+                        <span>@QuantidadeTotalItens item(ns) na venda</span>
+                        <strong>@FormatarMoeda(TotalVenda)</strong>
+                    </div>
+                }
+            </div>
         </section>
 
         <aside class="sales-right">
             <div class="sales-card">
-                <h2><span>4</span> Resumo da Venda</h2>
+                <h2><span>5</span> Resumo da Venda</h2>
 
                 <div class="summary-line">
                     <span>Subtotal dos produtos</span>
@@ -175,7 +208,7 @@
             </div>
 
             <div class="sales-card">
-                <h2><span>5</span> Forma de Pagamento</h2>
+                <h2><span>6</span> Forma de Pagamento</h2>
 
                 <div class="payment-grid">
                     @foreach (string forma in formasPagamento)
@@ -225,12 +258,7 @@
         new("Headset Gamer", "HEAD03", 129.90m)
     ];
 
-    private readonly List<ProdutoVenda> produtosVenda =
-    [
-        new(1, "Mouse Gamer", "MOU001", 2, 59.90m, 0),
-        new(2, "Teclado Mecânico", "TEC002", 1, 199.90m, 0),
-        new(3, "Headset Gamer", "HEAD03", 1, 129.90m, 0)
-    ];
+    private readonly List<ProdutoVenda> produtosVenda = [];
 
     private readonly string[] formasPagamento = ["Dinheiro", "Cartão Débito", "Cartão Crédito", "Pix"];
 
@@ -243,10 +271,11 @@
     private string novoClienteTelefone = "";
 
     private string produtoBusca = "";
+    private string produtoSelecionadoCodigo = "";
     private string produtoMensagem = "";
     private int produtoQuantidade = 1;
     private decimal produtoPrecoUnitario;
-    private int proximoProdutoVendaId = 4;
+    private int proximoProdutoVendaId = 1;
 
     private string observacoes = "";
     private string tipoDesconto = "R$";
@@ -255,6 +284,8 @@
     private decimal valorRecebido;
 
     private decimal Subtotal => produtosVenda.Sum(produto => produto.Total);
+
+    private int QuantidadeTotalItens => produtosVenda.Sum(produto => produto.Quantidade);
 
     private decimal DescontoAplicado
     {
@@ -324,6 +355,24 @@
         clienteMensagem = "Cliente adicionado e selecionado.";
     }
 
+    private void SelecionarProduto(ChangeEventArgs evento)
+    {
+        produtoSelecionadoCodigo = evento.Value?.ToString() ?? "";
+        ProdutoCatalogo? produto = EncontrarProdutoSelecionado();
+
+        if (produto is null)
+        {
+            produtoBusca = "";
+            produtoPrecoUnitario = 0;
+            produtoMensagem = "";
+            return;
+        }
+
+        produtoBusca = produto.Nome;
+        produtoPrecoUnitario = produto.PrecoUnitario;
+        produtoMensagem = $"Produto selecionado: {produto.Nome}.";
+    }
+
     private void BuscarProduto()
     {
         ProdutoCatalogo? produto = EncontrarProduto();
@@ -335,17 +384,18 @@
         }
 
         produtoBusca = produto.Nome;
+        produtoSelecionadoCodigo = produto.Codigo;
         produtoPrecoUnitario = produto.PrecoUnitario;
         produtoMensagem = $"Produto selecionado: {produto.Nome}.";
     }
 
     private void AdicionarProduto()
     {
-        ProdutoCatalogo? produto = EncontrarProduto();
+        ProdutoCatalogo? produto = EncontrarProdutoSelecionado() ?? EncontrarProduto();
 
         if (produto is null)
         {
-            produtoMensagem = "Busque um produto válido antes de adicionar.";
+            produtoMensagem = "Selecione um produto antes de adicionar.";
             return;
         }
 
@@ -369,6 +419,7 @@
 
         produtoMensagem = $"{produto.Nome} adicionado à venda.";
         produtoBusca = "";
+        produtoSelecionadoCodigo = "";
         produtoQuantidade = 1;
         produtoPrecoUnitario = 0;
     }
@@ -417,7 +468,18 @@
         valorRecebido = 0;
         observacoes = "";
         produtoBusca = "";
+        produtoSelecionadoCodigo = "";
         produtoMensagem = "";
+    }
+
+    private ProdutoCatalogo? EncontrarProdutoSelecionado()
+    {
+        if (string.IsNullOrWhiteSpace(produtoSelecionadoCodigo))
+        {
+            return null;
+        }
+
+        return ProdutosCatalogo.FirstOrDefault(item => item.Codigo == produtoSelecionadoCodigo);
     }
 
     private ProdutoCatalogo? EncontrarProduto()

@@ -510,6 +510,40 @@ body {
     text-align: right;
 }
 
+.sale-report {
+    display: grid;
+    gap: 8px;
+}
+
+.sale-report-line,
+.sale-report-total {
+    align-items: center;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: minmax(0, 1fr) 150px 130px;
+}
+
+.sale-report-line {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px 0;
+}
+
+.sale-report-line span {
+    font-weight: 700;
+}
+
+.sale-report-line strong,
+.sale-report-total strong {
+    text-align: right;
+}
+
+.sale-report-total {
+    color: #0f2d6b;
+    font-size: 16px;
+    margin-top: 12px;
+    padding-top: 12px;
+}
+
 .stock-alert {
     background: #eaf5ff;
     border: 1px solid #b9dbff;
