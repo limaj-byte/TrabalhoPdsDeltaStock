@@ -345,7 +345,7 @@ body {
 }
 
 .sales-search-row {
-    grid-template-columns: minmax(0, 1fr) 48px 150px;
+    grid-template-columns: minmax(0, 1fr) 90px 150px;
     margin-bottom: 14px;
 }
 
@@ -470,7 +470,7 @@ body {
     align-items: center;
     display: grid;
     gap: 10px;
-    grid-template-columns: 1.5fr 0.8fr 0.45fr 0.8fr 0.8fr 0.8fr 42px;
+    grid-template-columns: 1.5fr 0.8fr 0.45fr 0.8fr 0.8fr 0.8fr 76px;
     min-width: 760px;
     padding: 10px 8px;
 }
@@ -497,6 +497,7 @@ body {
     color: #ffffff;
     cursor: pointer;
     height: 34px;
+    padding: 0 10px;
 }
 
 .sales-card textarea {
