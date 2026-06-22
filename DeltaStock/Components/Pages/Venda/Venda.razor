@@ -15,7 +15,7 @@
         <div class="sales-info">
             <div>
                 <span>Data / Hora</span>
-                <strong>23/05/2024 10:45</strong>
+                <div id="Horaatual"></div>
             </div>
             <div>
                 <span>Venda Nº</span>
@@ -184,3 +184,18 @@
         <button class="finish-button">✓ Finalizar Venda</button>
     </footer>
 </div>
+<script>
+    function atualizarRelogio() {
+        const dataAtual = new Date();
+
+        const horas = String(dataAtual.getHours()).padStart(2, '0');
+        const minutos = String(dataAtual.getMinutes()).padStart(2, '0');
+        const segundos = String(dataAtual.getSeconds()).padStart(2, '0');
+
+        const horaFormatada = `${horas}:${minutos}:${segundos}`;
+
+        document.getElementById('Horaatual').textContent = horaFormatada;
+    }
+    setInterval(atualizarRelogio, 1000);
+    atualizarRelogio();
+</script>
