@@ -349,6 +349,20 @@ body {
     margin-bottom: 14px;
 }
 
+.new-customer-form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) 140px;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.feedback-message {
+    color: #0f2d6b;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
 .product-form {
     grid-template-columns: minmax(260px, 1fr) 76px 120px 130px;
     align-items: end;
@@ -484,6 +498,13 @@ body {
 .table-row {
     border-top: 1px solid #e2e8f0;
     font-size: 13px;
+}
+
+.table-row.empty-row {
+    grid-template-columns: 1fr;
+    min-width: 0;
+    color: #64748b;
+    font-weight: 700;
 }
 
 .product-name {
@@ -632,6 +653,7 @@ body {
 @media (max-width: 760px) {
     .sales-info,
     .sales-search-row,
+    .new-customer-form,
     .product-form,
     .customer-box,
     .sales-right,
