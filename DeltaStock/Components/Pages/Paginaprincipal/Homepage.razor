@@ -2,92 +2,84 @@
 
 <PageTitle>Home - DeltaStock</PageTitle>
 
-<div class="dashboard">
-
-    <div class="welcome-banner">
-        <h1>📦 Bem-vindo ao DeltaStock</h1>
-        <p>
-            Sistema inteligente de gerenciamento de estoque,
-            movimentações e relatórios.
-        </p>
-    </div>
-
-    <div class="cards-resumo">
-
-        <div class="resumo-card">
-            <h3>📦 Produtos</h3>
-            <span>1248</span>
+<section class="dashboard">
+    <header class="dashboard-hero">
+        <div>
+            <span class="dashboard-eyebrow">Painel principal</span>
+            <h1>Bem-vindo ao DeltaStock</h1>
+            <p>Acompanhe estoque, movimentacoes e indicadores importantes em uma visao rapida.</p>
         </div>
 
-        <div class="resumo-card">
-            <h3>📈 Entradas</h3>
-            <span>342</span>
-        </div>
+        <a class="hero-action" href="/ProdutosAdicionar">Adicionar produto</a>
+    </header>
 
-        <div class="resumo-card">
-            <h3>📉 Saídas</h3>
-            <span>198</span>
-        </div>
+    <section class="summary-grid" aria-label="Resumo do estoque">
+        <article class="summary-card summary-blue">
+            <span class="summary-label">Produtos</span>
+            <strong>1.248</strong>
+            <small>itens cadastrados</small>
+        </article>
 
-        <div class="resumo-card lucro">
-            <h3>💰 Lucro</h3>
-            <span>R$ 45.780</span>
-        </div>
+        <article class="summary-card summary-green">
+            <span class="summary-label">Entradas</span>
+            <strong>342</strong>
+            <small>movimentacoes no mes</small>
+        </article>
 
-    </div>
+        <article class="summary-card summary-orange">
+            <span class="summary-label">Saidas</span>
+            <strong>198</strong>
+            <small>vendas registradas</small>
+        </article>
 
-    <div class="dashboard-grid">
+        <article class="summary-card summary-profit">
+            <span class="summary-label">Lucro</span>
+            <strong>R$ 45.780</strong>
+            <small>resultado estimado</small>
+        </article>
+    </section>
 
-        <div class="painel">
-            <h2>⚠ Produtos com Estoque Baixo</h2>
+    <section class="dashboard-columns">
+        <article class="dashboard-panel">
+            <div class="panel-title-row">
+                <h2>Estoque baixo</h2>
+                <span>4 alertas</span>
+            </div>
 
-            <ul>
-                <li>Mouse Gamer RGB - 3 unidades</li>
-                <li>Teclado Mecânico - 2 unidades</li>
-                <li>Headset HyperX - 1 unidade</li>
-                <li>Monitor LG 24" - 4 unidades</li>
+            <ul class="status-list">
+                <li><strong>Mouse Gamer RGB</strong><span>3 unidades</span></li>
+                <li><strong>Teclado Mecanico</strong><span>2 unidades</span></li>
+                <li><strong>Headset HyperX</strong><span>1 unidade</span></li>
+                <li><strong>Monitor LG 24&quot;</strong><span>4 unidades</span></li>
             </ul>
+        </article>
 
-        </div>
+        <article class="dashboard-panel">
+            <div class="panel-title-row">
+                <h2>Ultimas movimentacoes</h2>
+                <span>Hoje</span>
+            </div>
 
-        <div class="painel">
-            <h2>🕒 Últimas Movimentações</h2>
-
-            <ul>
-                <li>+50 Camisetas Dry-Fit</li>
-                <li>-12 Fones Sony</li>
-                <li>+15 Teclados Mecânicos</li>
-                <li>-5 Monitores LG</li>
+            <ul class="movement-list">
+                <li><span class="movement-in">+50</span><strong>Camisetas Dry-Fit</strong></li>
+                <li><span class="movement-out">-12</span><strong>Fones Sony</strong></li>
+                <li><span class="movement-in">+15</span><strong>Teclados Mecanicos</strong></li>
+                <li><span class="movement-out">-5</span><strong>Monitores LG</strong></li>
             </ul>
+        </article>
+    </section>
 
+    <section class="quick-actions" aria-label="Acesso rapido">
+        <div class="panel-title-row">
+            <h2>Acesso rapido</h2>
+            <span>Atalhos</span>
         </div>
 
-    </div>
-
-    <div class="acoes-rapidas">
-
-        <h2>⚡ Acesso Rápido</h2>
-
-        <div class="acoes-grid">
-
-            <a href="/ProdutosAdicionar" class="acao-btn">
-                ➕ Adicionar Produto
-            </a>
-
-            <a href="/ProdutosVisualizar" class="acao-btn">
-                📦 Ver Produtos
-            </a>
-
-            <a href="/Historico" class="acao-btn">
-                📋 Histórico
-            </a>
-
-            <a href="/Relatorios" class="acao-btn">
-                📊 Relatórios
-            </a>
-
+        <div class="quick-actions-grid">
+            <a href="/ProdutosAdicionar">Adicionar produto</a>
+            <a href="/ProdutosVisualizar">Ver produtos</a>
+            <a href="/HistoricoVendas">Historico</a>
+            <a href="/Relatorios">Relatorios</a>
         </div>
-
-    </div>
-
-</div>
+    </section>
+</section>
