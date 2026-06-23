@@ -1,5 +1,311 @@
-﻿<h3>UsuarioConfig</h3>
+@page "/UsuarioConfig"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+
+<PageTitle>Configurações da Conta - DeltaStock</PageTitle>
+
+<section class="account-settings-page">
+    <header class="account-settings-header">
+        <div>
+            <h1>Configurações da Conta</h1>
+            <p>Gerencie suas informações pessoais e preferências do sistema.</p>
+        </div>
+    </header>
+
+    @if (!string.IsNullOrWhiteSpace(SuccessMessage))
+    {
+        <div class="account-success" role="status">
+            <span>✓</span>
+            @SuccessMessage
+        </div>
+    }
+
+    <div class="account-settings-grid">
+        <article class="account-card profile-card">
+            <div class="account-card-title">
+                <span class="section-icon">👤</span>
+                <h2>Perfil do Usuário</h2>
+            </div>
+
+            <div class="profile-layout">
+                <div class="profile-photo-area">
+                    <div class="profile-photo" aria-label="Avatar padrão de João Guilherme">
+                        JG
+                    </div>
+                    <button type="button" class="secondary-action" @onclick="ShowPhotoMessage">
+                        Alterar Foto
+                    </button>
+                </div>
+
+                <div class="form-grid">
+                    <label>
+                        Nome Completo
+                        <input @bind="User.FullName" />
+                    </label>
+
+                    <label>
+                        Nome de Usuário
+                        <input @bind="User.UserName" />
+                    </label>
+
+                    <label>
+                        Cargo
+                        <input @bind="User.Role" />
+                    </label>
+
+                    <label>
+                        E-mail
+                        <input type="email" @bind="User.Email" />
+                    </label>
+
+                    <label>
+                        Telefone
+                        <input @bind="User.Phone" />
+                    </label>
+                </div>
+            </div>
+        </article>
+
+        <article class="account-card">
+            <div class="account-card-title">
+                <span class="section-icon">📍</span>
+                <h2>Endereço</h2>
+            </div>
+
+            <div class="form-grid">
+                <label>
+                    CEP
+                    <input @bind="User.ZipCode" />
+                </label>
+
+                <label>
+                    Rua
+                    <input @bind="User.Street" />
+                </label>
+
+                <label>
+                    Número
+                    <input @bind="User.Number" />
+                </label>
+
+                <label>
+                    Bairro
+                    <input @bind="User.District" />
+                </label>
+
+                <label>
+                    Cidade
+                    <input @bind="User.City" />
+                </label>
+
+                <label>
+                    Estado
+                    <input @bind="User.State" />
+                </label>
+            </div>
+        </article>
+
+        <article class="account-card">
+            <div class="account-card-title">
+                <span class="section-icon">🔒</span>
+                <h2>Segurança</h2>
+            </div>
+
+            <div class="form-grid">
+                <label>
+                    Alterar senha
+                    <input type="password" @bind="NewPassword" />
+                </label>
+
+                <label>
+                    Confirmar nova senha
+                    <input type="password" @bind="ConfirmPassword" />
+                </label>
+            </div>
+
+            <button type="button" class="primary-action compact-action" @onclick="SavePassword">
+                Salvar Nova Senha
+            </button>
+        </article>
+
+        <article class="account-card">
+            <div class="account-card-title">
+                <span class="section-icon">⚙️</span>
+                <h2>Preferências</h2>
+            </div>
+
+            <div class="preferences-list">
+                <div class="preference-row">
+                    <div>
+                        <strong>Tema do sistema</strong>
+                    </div>
+
+                    <div class="theme-options" role="group" aria-label="Tema do sistema">
+                        <label class="radio-pill">
+                            <input type="radio" name="theme" checked="@(User.Theme == "Claro")" @onchange="@(() => User.Theme = "Claro")" />
+                            Claro
+                        </label>
+
+                        <label class="radio-pill">
+                            <input type="radio" name="theme" checked="@(User.Theme == "Escuro")" @onchange="@(() => User.Theme = "Escuro")" />
+                            Escuro
+                        </label>
+                    </div>
+                </div>
+
+                <label class="check-row">
+                    <input type="checkbox" @bind="User.ReceiveEmailNotifications" />
+                    Receber notificações por e-mail.
+                </label>
+
+                <label class="check-row">
+                    <input type="checkbox" @bind="User.ShowLowStockOnHome" />
+                    Mostrar produtos com estoque baixo na página inicial.
+                </label>
+            </div>
+        </article>
+
+        <article class="account-card account-info-card">
+            <div class="account-card-title">
+                <span class="section-icon">ℹ️</span>
+                <h2>Informações da Conta</h2>
+            </div>
+
+            <dl class="account-info-list">
+                <div>
+                    <dt>Data de criação da conta</dt>
+                    <dd>@User.CreatedAt</dd>
+                </div>
+
+                <div>
+                    <dt>Último acesso</dt>
+                    <dd>@User.LastAccess</dd>
+                </div>
+
+                <div>
+                    <dt>Tipo de usuário</dt>
+                    <dd>@User.UserType</dd>
+                </div>
+
+                <div>
+                    <dt>Status da conta</dt>
+                    <dd><span class="status-badge">@User.AccountStatus</span></dd>
+                </div>
+            </dl>
+        </article>
+
+        <article class="account-card actions-card">
+            <div class="account-card-title">
+                <span class="section-icon">✅</span>
+                <h2>Ações</h2>
+            </div>
+
+            <div class="account-actions">
+                <button type="button" class="primary-action" @onclick="SaveChanges">
+                    Salvar Alterações
+                </button>
+
+                <button type="button" class="secondary-action" @onclick="CancelChanges">
+                    Cancelar
+                </button>
+
+                <button type="button" class="danger-action" @onclick="Logout">
+                    Sair da Conta
+                </button>
+            </div>
+        </article>
+    </div>
+</section>
 
 @code {
+    private AccountUser User = CreateDefaultUser();
+    private string? SuccessMessage;
+    private string NewPassword = string.Empty;
+    private string ConfirmPassword = string.Empty;
 
+    private void SaveChanges()
+    {
+        SuccessMessage = "Alterações salvas com sucesso.";
+    }
+
+    private void CancelChanges()
+    {
+        User = CreateDefaultUser();
+        NewPassword = string.Empty;
+        ConfirmPassword = string.Empty;
+        SuccessMessage = "Alterações canceladas.";
+    }
+
+    private void SavePassword()
+    {
+        if (string.IsNullOrWhiteSpace(NewPassword) || string.IsNullOrWhiteSpace(ConfirmPassword))
+        {
+            SuccessMessage = "Informe e confirme a nova senha.";
+            return;
+        }
+
+        if (NewPassword != ConfirmPassword)
+        {
+            SuccessMessage = "As senhas informadas não coincidem.";
+            return;
+        }
+
+        NewPassword = string.Empty;
+        ConfirmPassword = string.Empty;
+        SuccessMessage = "Nova senha salva com sucesso.";
+    }
+
+    private void ShowPhotoMessage()
+    {
+        SuccessMessage = "Seleção de foto pronta para integração.";
+    }
+
+    private void Logout()
+    {
+        Navigation.NavigateTo("/");
+    }
+
+    private static AccountUser CreateDefaultUser() => new()
+    {
+        FullName = "João Guilherme",
+        UserName = "joao.guilherme",
+        Role = "Estoquista",
+        Email = "joao@deltastock.com",
+        Phone = "(69) 99999-9999",
+        ZipCode = "76900-000",
+        Street = "Avenida Brasil",
+        Number = "1024",
+        District = "Centro",
+        City = "Ji-Paraná",
+        State = "RO",
+        Theme = "Claro",
+        ReceiveEmailNotifications = true,
+        ShowLowStockOnHome = true,
+        CreatedAt = "12/02/2026",
+        LastAccess = "Hoje às 08:32",
+        UserType = "Administrador",
+        AccountStatus = "Ativa"
+    };
+
+    private sealed class AccountUser
+    {
+        public string FullName { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public string ZipCode { get; set; } = string.Empty;
+        public string Street { get; set; } = string.Empty;
+        public string Number { get; set; } = string.Empty;
+        public string District { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string State { get; set; } = string.Empty;
+        public string Theme { get; set; } = "Claro";
+        public bool ReceiveEmailNotifications { get; set; }
+        public bool ShowLowStockOnHome { get; set; }
+        public string CreatedAt { get; set; } = string.Empty;
+        public string LastAccess { get; set; } = string.Empty;
+        public string UserType { get; set; } = string.Empty;
+        public string AccountStatus { get; set; } = string.Empty;
+    }
 }
