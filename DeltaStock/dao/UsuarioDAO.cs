@@ -38,10 +38,10 @@ namespace DeltaStock.DAO
                     usuario.Telefone = leitor.GetString("telefone_usu");
                     usuario.Endereco = leitor.GetDateTime("endereco_usu");
                     usuario.Tipo = leitor.GetDateTime("tipo_usu");
-                    usuario.Status = leitor.GetDateTime("data_cadastro_cat");
+                    usuario.Status = leitor.GetDateTime("status_usu");
 
                     //id_usu int primary key auto_increment,
-                    // nome_usu varchar(300),
+                    //nome_usu varchar(300),
                     //email_usu varchar(300),
                     //senha_usu varchar(300),
                     //telefone_usu varchar(100),
