@@ -12,7 +12,7 @@ namespace DeltaStock.DAO
         {
             _conexao = conexao;
         }
-        public List<Venda> Listar() 
+        public List<Venda> Listar()     
         {
             try
             {
