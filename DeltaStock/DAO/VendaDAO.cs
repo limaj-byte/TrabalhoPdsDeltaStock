@@ -1,18 +1,18 @@
-﻿using DeltaStock.Components.Pages.Venda;
+﻿using DeltaStock.Models;
 using DeltaStock.Configs;
 
 namespace DeltaStock.DAO
 {
     public class VendaDAO
     {
-<<<<<<< HEAD
+
         private readonly Conexao _conexao;
 
         public VendaDAO(Conexao conexao)
         {
             _conexao = conexao;
         }
-        public List<VendaDAO> Listar()
+        public List<Venda> Listar()
         {
             try
             {
@@ -53,7 +53,6 @@ namespace DeltaStock.DAO
                 throw;
             }
         }
-=======
->>>>>>> 64499522d940a9044f610225e541b4f451401584
+
     }
 }
