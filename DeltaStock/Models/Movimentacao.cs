@@ -2,17 +2,15 @@
 {
     public class Movimentacao
     {
-        public int id_mov { get; set; }
-        public DateTime data_mov { get; set; }
-        public string tipo_mov { get; set; } = string.Empty;
-        public int quantidade_mov { get; set; }
-        public int saldo_anterior_mov { get; set; }
-        public int saldo_final_mov { get; set; }
-        public string origem_mov { get; set; } = string.Empty;
-        public string? id_documento_mov { get; set; }
-        public string? motivo_mov { get; set; }
-        public int id_prod_fk { get; set; }
-        public int id_usu_fk { get; set; }
+        public int Id { get; set; }
+        public DateTime Data { get; set; }
+        public string Tipo { get; set; } = string.Empty;
+        public int Quantidade { get; set; }
+        public int SaldoAnterior { get; set; }
+        public int SaldoFinal { get; set; }
+        public string Origem { get; set; } = string.Empty;
+        public string? Id_documento { get; set; }
+        public string? Motivo { get; set; }
 
         //id_mov int primary key auto_increment,
         //data_mov datetime,
