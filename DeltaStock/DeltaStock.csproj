@@ -14,4 +14,8 @@
     <None Include="wwwroot\bootstrap\logo deltaestoque.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="26.7.0" />
+  </ItemGroup>
+
 </Project>
