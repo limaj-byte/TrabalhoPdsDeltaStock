@@ -1,6 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 
-namespace teste_PDS.Configs
+namespace DeltaStock.Configs
 {
     public class Conexao
     {
