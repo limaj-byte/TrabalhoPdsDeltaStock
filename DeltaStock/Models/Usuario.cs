@@ -2,14 +2,14 @@
 {
     public class Usuario
     {
-        public string Nome { get; internal set; }
         public int Id { get; internal set; }
+        public string Nome { get; internal set; }
         public string Email { get; internal set; }
         public string Senha { get; internal set; }
         public string Telefone { get; internal set; }
-        public DateTime Endereco { get; internal set; }
-        public DateTime Tipo { get; internal set; }
-        public DateTime Status { get; internal set; }
+        public string Endereco { get; internal set; }
+        public string Tipo { get; internal set; }
+        public string Status { get; internal set; }
 
         //id_usu int primary key auto_increment,
         // nome_usu varchar(300),
