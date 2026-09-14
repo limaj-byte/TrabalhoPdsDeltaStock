@@ -22,7 +22,7 @@ namespace DeltaStock.DAO
 
                 using var con = _conexao.GetConnection();
 
-                string sql = "SELECT * FROM categoria";
+                string sql = "SELECT * FROM usuario";
                 using var comando = con.CreateCommand();
                 comando.CommandText = sql;
 
