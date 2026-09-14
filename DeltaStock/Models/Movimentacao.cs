@@ -1,4 +1,4 @@
-﻿namespace DeltaStock.DAO
+﻿namespace DeltaStock.Models
 {
     public class Movimentacao
     {
