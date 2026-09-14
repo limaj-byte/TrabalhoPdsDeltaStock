@@ -12,5 +12,6 @@
         // endereco_usu varchar(300),
         //tipo_usu varchar(100),
         //status_usu varchar(100)
+        public string Nome { get; internal set; }
     }
 }
