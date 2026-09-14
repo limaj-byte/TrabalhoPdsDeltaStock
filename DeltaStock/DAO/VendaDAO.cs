@@ -12,18 +12,7 @@
         //id_ven int primary key auto_increment,
         //data_ven date,
         //valor_total_ven float,
-        //
+        //status_ven varchar(100),
+        //id_usu_fk int
     }
 }
-
-
-
-
-
-
-//id_cat int primary key auto_increment,
-//nome_cat varchar(300),
-//descricao_cat varchar(500),
-//codigo_cat varchar(100),
-//status_cat varchar(100),
-//data_cadastro_cat date
