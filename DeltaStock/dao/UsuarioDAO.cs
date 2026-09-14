@@ -1,4 +1,4 @@
-﻿namespace DeltaStock.DAO
+namespace DeltaStock.DAO
 {
     public class Usuario
     {
