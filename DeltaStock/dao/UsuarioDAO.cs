@@ -1,4 +1,7 @@
 using DeltaStock.Configs;
+using DeltaStock.Models;
+using System.Data;
+using System.Diagnostics;
 using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace DeltaStock.DAO
@@ -11,11 +14,11 @@ namespace DeltaStock.DAO
         {
             _conexao = conexao;
         }
-        public List<UsuarioDAO> Listar()
+        public List<Usuario> Listar()
         {
             try
             {
-                var lista = new List<UsuarioDAO>();
+                var lista = new List<Usuario>();
 
                 using var con = _conexao.GetConnection();
 
@@ -26,14 +29,16 @@ namespace DeltaStock.DAO
                 using var leitor = comando.ExecuteReader();
                 while (leitor.Read())
                 {
-                    var categoria = new UsuarioDAO();
+                    var usuario = new Usuario();
 
-                    categoria.Id = leitor.GetInt32("id_cat");
-                    categoria.Nome = leitor.GetString("id_cat");
-                    categoria.Descricao = leitor.GetString("descricao_cat");
-                    categoria.Codigo = leitor.GetString("codigo_cat");
-                    categoria.Status = leitor.GetString("status_cat");
-                    categoria.DataCadastroCategoria = leitor.GetDateTime("data_cadastro_cat");
+                    usuario.Id = leitor.GetInt32("id_usu");
+                    usuario.Nome = leitor.GetString("nome_usu");
+                    usuario.Email = leitor.GetString("email_usu");
+                    usuario.Senha = leitor.GetString("senha_usu");
+                    usuario.Telefone = leitor.GetString("telefone_usu");
+                    usuario.Endereco = leitor.GetDateTime("endereco_usu");
+                    usuario.Tipo = leitor.GetDateTime("tipo_usu");
+                    usuario.Status = leitor.GetDateTime("data_cadastro_cat");
 
                     //id_usu int primary key auto_increment,
                     // nome_usu varchar(300),
@@ -44,7 +49,7 @@ namespace DeltaStock.DAO
                     //tipo_usu varchar(100),
                     //status_usu varchar(100)
 
-                    lista.Add(categoria);
+                    lista.Add(usuario);
                 }
                 return lista;
 
