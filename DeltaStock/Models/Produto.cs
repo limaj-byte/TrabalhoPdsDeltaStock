@@ -7,15 +7,15 @@ namespace DeltaStock.Models;
 
 public class Produto
 {
-    public int id_prod { get; set; }
-    public string codigo_prod { get; set; } = string.Empty;
-    public string nome_prod { get; set; } = string.Empty;
-    public string descricao_prod { get; set; } = string.Empty;
-    public string quantidade_prod { get; set; } = string.Empty;
-    public string custo_prod { get; set; } = string.Empty;
-    public string valor_venda_prod { get; set; } = string.Empty;
-    public string status_prod { get; set; } = string.Empty;
-    public DateOnly data_cadastro_prod { get; set; }
+    public int Id { get; set; }
+    public string Codigo { get; set; } = string.Empty;
+    public string Nome { get; set; } = string.Empty;
+    public string Descricao { get; set; } = string.Empty;
+    public string Quantidade { get; set; } = string.Empty;
+    public string Custo { get; set; } = string.Empty;
+    public string Valor_venda { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
+    public DateOnly Data_cadastro { get; set; }
 
 
 
