@@ -1,6 +1,6 @@
 ﻿namespace DeltaStock.Models
 {
-    public class UsuarioDAO
+    public class Usuario
     {
 
         //    CREATE TABLE Produto(
