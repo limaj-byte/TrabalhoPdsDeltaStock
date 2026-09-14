@@ -3,10 +3,10 @@
     public class VendaDAO
     {
         public int id { get; set; }
-        public DateOnly data_ven { get; set; }
-        public float valor_total_ven { get; set; } 
-        public string status_ven { get; set; } = string.Empty;
-        public int id_usu_fk { get; set; }
+        public DateOnly dataven { get; set; }
+        public float valortotalven { get; set; } 
+        public string statusven { get; set; } = string.Empty;
+        public int ideusufk { get; set; }
 
 
         //id_ven int primary key auto_increment,
