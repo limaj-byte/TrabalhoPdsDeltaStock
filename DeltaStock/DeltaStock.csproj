@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Components\Layout\" />
-    <Folder Include="DAO\" />
   </ItemGroup>
 
   <ItemGroup>
