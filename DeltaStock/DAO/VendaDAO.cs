@@ -5,6 +5,7 @@ namespace DeltaStock.DAO
 {
     public class VendaDAO
     {
+<<<<<<< HEAD
         private readonly Conexao _conexao;
 
         public VendaDAO(Conexao conexao)
@@ -52,5 +53,7 @@ namespace DeltaStock.DAO
                 throw;
             }
         }
+=======
+>>>>>>> 64499522d940a9044f610225e541b4f451401584
     }
 }
