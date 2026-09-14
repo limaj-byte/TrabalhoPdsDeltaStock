@@ -6,33 +6,6 @@
 <h1>Adicionar Produto</h1>
 
 <EditForm Model="ProdutoForm" OnValidSubmit="SalvarProduto" FormName="produto-local-form" class="produto-form">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <label>Nome do Produto</label>
-    <input @bind="ProdutoForm.Nome" @bind:event="oninput" />
-
-    <label>Codigo</label>
-    <input @bind="ProdutoForm.Codigo" @bind:event="oninput" />
-
-    <label>Fornecedor</label>
-    <input @bind="ProdutoForm.Fornecedor" @bind:event="oninput" />
-
-    <label>Categoria</label>
-    <input @bind="ProdutoForm.Categoria" @bind:event="oninput" />
-
-    <label>Preco de Compra</label>
-    <input type="number" min="0.01" step="0.01" @bind="ProdutoForm.PrecoCompra" @bind:event="oninput" />
-
-    <label>Preco de Venda</label>
-    <input type="number" min="0.01" step="0.01" @bind="ProdutoForm.PrecoVenda" @bind:event="oninput" />
-
-    <label>Quantidade</label>
-    <input type="number" min="0" @bind="ProdutoForm.Quantidade" @bind:event="oninput" />
-
-    <button type="submit">
-        Salvar Produto
-    </button>
 </EditForm>
 
 @code {
