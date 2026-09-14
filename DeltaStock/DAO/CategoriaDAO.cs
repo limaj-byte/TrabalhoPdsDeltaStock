@@ -1,8 +1,5 @@
 ﻿using DeltaStock.Configs;
 using DeltaStock.Models;
-using System.Data;
-using System.Diagnostics;
-using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace DeltaStock.DAO
 {
@@ -22,7 +19,7 @@ namespace DeltaStock.DAO
 
                 using var con = _conexao.GetConnection();
 
-                string sql = "SELECT * FROM categoria";
+                const string sql = "SELECT id_cat, nome_cat, descricao_cat, codigo_cat, status_cat, data_cadastro_cat FROM categoria ORDER BY nome_cat";
                 using var comando = con.CreateCommand();
                 comando.CommandText = sql;
 
@@ -32,7 +29,7 @@ namespace DeltaStock.DAO
                     var categoria = new Categoria();
 
                     categoria.Id = leitor.GetInt32("id_cat");
-                    categoria.Nome = leitor.GetString("id_cat");
+                    categoria.Nome = leitor.GetString("nome_cat");
                     categoria.Descricao = leitor.GetString("descricao_cat");
                     categoria.Codigo = leitor.GetString("codigo_cat");
                     categoria.Status = leitor.GetString("status_cat");
