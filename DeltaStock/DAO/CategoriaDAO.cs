@@ -1,6 +1,30 @@
-﻿namespace DeltaStock.DAO
+﻿using static Mysqlx.Expect.Open.Types.Condition.Types;
+
+namespace DeltaStock.DAO
 {
     public class CategoriaDAO
     {
+        public int id { get; set; }
+        public string nome_cat { get; set; } = string.Empty;
+        public string descricao_cat { get; set; } =string.Empty;
+        public string codigo_cat {  get; set; } = string.Empty;
+        public string status_cat {  get; set; } = string.Empty;
+        public DateOnly data_cadastro_categoria { get; set; }
+             
+        //id_cat int primary key auto_increment,
+        //nome_cat varchar(300),
+        //descricao_cat varchar(500),
+        //codigo_cat varchar(100),
+        //status_cat varchar(100),
+        //data_cadastro_cat date
+
+        //public int Id { get; set; }
+        //public string Numero { get; set; } = string.Empty;
+        //public DateOnly Data { get; set; }
+        //public string Interessado { get; set; } = string.Empty;
+        //public string Assunto { get; set; } = string.Empty;
+        //public string Descricao { get; set; } = string.Empty;
+        //public string Situacao { get; set; } = string.Empty;
+
     }
 }
