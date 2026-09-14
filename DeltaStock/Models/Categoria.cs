@@ -2,12 +2,12 @@
 {
     public class Categoria
     {
-        public int id { get; set; }
-        public string nome_cat { get; set; } = string.Empty;
-        public string descricao_cat { get; set; } = string.Empty;
-        public string codigo_cat { get; set; } = string.Empty;
-        public string status_cat { get; set; } = string.Empty;
-        public DateOnly data_cadastro_categoria { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; } = string.Empty;
+        public string Descricao { get; set; } = string.Empty;
+        public string Codigo{ get; set; } = string.Empty;
+        public string Status{ get; set; } = string.Empty;
+        public DateTime DataCadastroCategoria { get; set; }
 
         //id_cat int primary key auto_increment,
         //nome_cat varchar(300),
