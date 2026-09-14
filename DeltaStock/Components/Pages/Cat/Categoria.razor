@@ -1,7 +1,83 @@
-﻿@page "/Categoria"
+@page "/Categoria"
+@rendermode InteractiveServer
+@inject CategoriaDAO CategoriaDao
 
-<PageTitle>Categoria</PageTitle>
+<PageTitle>Categorias</PageTitle>
 
-<div class="cat">
-    <h1>Categoria</h1>
+<div class="categoria-page">
+    <div class="categoria-header">
+        <div>
+            <h1>Categorias</h1>
+            <p>Organize os produtos do estoque por tipo.</p>
+        </div>
+        <span class="categoria-total">@Categorias.Count categoria@(Categorias.Count == 1 ? "" : "s")</span>
+    </div>
+
+    @if (Carregando)
+    {
+        <div class="categoria-feedback">Carregando categorias...</div>
+    }
+    else if (MensagemErro is not null)
+    {
+        <div class="categoria-feedback categoria-error">
+            <strong>Não foi possível carregar as categorias.</strong>
+            <span>@MensagemErro</span>
+        </div>
+    }
+    else if (Categorias.Count == 0)
+    {
+        <div class="categoria-feedback">Nenhuma categoria cadastrada ainda.</div>
+    }
+    else
+    {
+        <div class="categoria-table-wrapper">
+            <table class="categoria-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Status</th>
+                        <th>Cadastro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var categoria in Categorias)
+                    {
+                        <tr>
+                            <td>@categoria.Codigo</td>
+                            <td><strong>@categoria.Nome</strong></td>
+                            <td>@categoria.Descricao</td>
+                            <td><span class="categoria-status">@categoria.Status</span></td>
+                            <td>@categoria.DataCadastroCategoria.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 </div>
+
+@code {
+    private List<DeltaStock.Models.Categoria> Categorias { get; set; } = [];
+    private bool Carregando { get; set; } = true;
+    private string? MensagemErro { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        try
+        {
+            Categorias = CategoriaDao.Listar();
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Confira se o MySQL está em execução e se os dados de conexão em appsettings.json estão corretos. ({ex.Message})";
+        }
+        finally
+        {
+            Carregando = false;
+        }
+
+        return Task.CompletedTask;
+    }
+}

@@ -1,4 +1,6 @@
 using DeltaStock.Components;
+using DeltaStock.Configs;
+using DeltaStock.DAO;
 using DeltaStock.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSingleton<ProdutoLocalStore>();
+builder.Services.AddScoped<Conexao>();
+builder.Services.AddScoped<CategoriaDAO>();
 
 var app = builder.Build();
 
