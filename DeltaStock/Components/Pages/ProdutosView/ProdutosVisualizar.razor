@@ -1,30 +1,79 @@
 @page "/ProdutosVisualizar"
 @rendermode InteractiveServer
-@inject ProdutoLocalStore ProdutoStore
+@inject ProdutoDAO ProdutoDao
 
-<h1>Produtos</h1>
+<PageTitle>Produtos</PageTitle>
 
-<div class="cards-container">
-    @foreach (Produto produto in ProdutoStore.ObterTodos())
+<div class="produto-lista-page">
+    <div class="produto-cadastro-header">
+        <div>
+            <h1>Produtos</h1>
+            <p>Itens cadastrados no banco de dados.</p>
+        </div>
+        <a class="categoria-link" href="/ProdutosAdicionar">Adicionar produto</a>
+    </div>
+
+    @if (MensagemErro is not null)
     {
-        <div class="produto-card">
-            <h3>@produto.Nome</h3>
-            <p>Codigo: @produto.Codigo</p>
-            <p>Fornecedor: @produto.Fornecedor</p>
-            <p>Categoria: @produto.Categoria</p>
-            <p>Estoque atual: @produto.Quantidade unidades</p>
-            <p>Preco de compra: @produto.PrecoCompra.ToString("C")</p>
-            <p>Preco sugerido: @produto.PrecoVenda.ToString("C")</p>
-
-            <button type="button">Editar</button>
-            <button type="button" @onclick="() => RemoverProduto(produto.Id)">Excluir</button>
+        <div class="produto-feedback produto-error">@MensagemErro</div>
+    }
+    else if (Produtos.Count == 0)
+    {
+        <div class="produto-feedback">Ainda não há produtos cadastrados.</div>
+    }
+    else
+    {
+        <div class="cards-container">
+            @foreach (var produto in Produtos)
+            {
+                <div class="produto-card">
+                    <h3>@produto.Nome</h3>
+                    <p>Código: @produto.Codigo</p>
+                    <p><a class="produto-categoria" href="/Categoria">Categoria: @produto.Categoria</a></p>
+                    <p>Estoque atual: @produto.Quantidade unidades</p>
+                    <p>Preço de compra: @produto.PrecoCompra.ToString("C")</p>
+                    <p>Preço de venda: @produto.PrecoVenda.ToString("C")</p>
+                    <p>Status: @produto.Status</p>
+                    <a class="produto-editar" href="/Categoria">Editar categoria</a>
+                    <button type="button" @onclick="() => RemoverProduto(produto.Id)">Excluir</button>
+                </div>
+            }
         </div>
     }
 </div>
 
 @code {
+    private List<Produto> Produtos { get; set; } = [];
+    private string? MensagemErro { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CarregarProdutos();
+    }
+
     private void RemoverProduto(int id)
     {
-        ProdutoStore.Remover(id);
+        try
+        {
+            ProdutoDao.Remover(id);
+            CarregarProdutos();
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Não foi possível excluir o produto. ({ex.Message})";
+        }
+    }
+
+    private void CarregarProdutos()
+    {
+        try
+        {
+            Produtos = ProdutoDao.Listar();
+            MensagemErro = null;
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Não foi possível carregar os produtos. Confira a conexão com o banco. ({ex.Message})";
+        }
     }
 }

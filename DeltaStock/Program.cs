@@ -11,6 +11,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddSingleton<ProdutoLocalStore>();
 builder.Services.AddScoped<Conexao>();
 builder.Services.AddScoped<CategoriaDAO>();
+builder.Services.AddScoped<ProdutoDAO>();
 
 var app = builder.Build();
 
