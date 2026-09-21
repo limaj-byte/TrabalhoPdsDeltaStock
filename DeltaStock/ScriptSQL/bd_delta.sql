@@ -159,3 +159,21 @@ SET
     status_cat = 'novo',
     data_cadastro_cat = '2026-01-01'
 WHERE id_cat = 1;
+
+ALTER TABLE ItemVenda
+    DROP FOREIGN KEY itemvenda_ibfk_2;
+
+ALTER TABLE ItemVenda
+    ADD CONSTRAINT itemvenda_ibfk_2
+    FOREIGN KEY (id_prod_fk)
+    REFERENCES Produto(id_prod)
+    ON DELETE CASCADE;
+
+ALTER TABLE Movimentacao
+    DROP FOREIGN KEY movimentacao_ibfk_1;
+
+ALTER TABLE Movimentacao
+    ADD CONSTRAINT movimentacao_ibfk_1
+    FOREIGN KEY (id_prod_fk)
+    REFERENCES Produto(id_prod)
+    ON DELETE CASCADE;
