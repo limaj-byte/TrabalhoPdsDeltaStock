@@ -14,7 +14,7 @@
     </div>
 
     @if (Carregando)
-    {
+    {   
         <div class="categoria-feedback">Carregando categorias...</div>
     }
     else if (MensagemErro is not null)
@@ -49,7 +49,7 @@
                             <td><strong>@categoria.Nome</strong></td>
                             <td>@categoria.Descricao</td>
                             <td><span class="categoria-status">@categoria.Status</span></td>
-                            <td>@categoria.DataCadastroCategoria.ToString("dd/MM/yyyy")</td>
+                            <td><strong>@categoria.DataCadastroCategoria</strong></td>
                         </tr>
                     }
                 </tbody>

@@ -30,18 +30,22 @@ namespace DeltaStock.DAO
 
                     categoria.Id = leitor.GetInt32("id_cat");
                     categoria.Nome = leitor.GetString("nome_cat");
-                    categoria.Descricao = leitor.GetString("descricao_cat");
-                    categoria.Codigo = leitor.GetString("codigo_cat");
-                    categoria.Status = leitor.GetString("status_cat");
-                    categoria.DataCadastroCategoria = leitor.GetDateTime("data_cadastro_cat");
 
-                    //Aqui estao os de categoria, no seu use o seu                                                                                                                                  
-                    //id_cat int primary key auto_increment,
-                    //nome_cat varchar(300),
-                    //descricao_cat varchar(500),
-                    //codigo_cat varchar(100),
-                    //status_cat varchar(100),
-                    //data_cadastro_cat date
+                    categoria.Descricao = leitor.IsDBNull(leitor.GetOrdinal("descricao_cat"))
+                        ? ""
+                        : leitor.GetString("descricao_cat");
+
+                    categoria.Codigo = leitor.IsDBNull(leitor.GetOrdinal("codigo_cat"))
+                        ? ""
+                        : leitor.GetString("codigo_cat");
+
+                    categoria.Status = leitor.IsDBNull(leitor.GetOrdinal("status_cat"))
+                        ? ""
+                        : leitor.GetString("status_cat");
+
+                    categoria.DataCadastroCategoria = leitor.IsDBNull(leitor.GetOrdinal("data_cadastro_cat"))
+                        ? DateTime.MinValue
+                        : leitor.GetDateTime("data_cadastro_cat");
 
                     lista.Add(categoria);
                 }

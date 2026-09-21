@@ -9,10 +9,5 @@
         public int Idusufk { get; set; }
 
 
-        //id_ven int primary key auto_increment,
-        //data_ven date,
-        //valor_total_ven float,
-        //status_ven varchar(100),
-        //id_usu_fk int
     }
 }
