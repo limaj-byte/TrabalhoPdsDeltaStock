@@ -1,87 +1,126 @@
 ﻿@page "/Usuario"
+@rendermode InteractiveServer
+@inject UsuarioDAO UsuarioDao
+
+<PageTitle>Usuários</PageTitle>
 
 <div class="usuario-page">
 
+    ```
     <div class="usuario-header">
-        <h1>Gerenciamento de Usuários</h1>
-
-        <button class="btn-novo">
-            + Novo Usuário
-        </button>
-    </div>
-
-
-    <div class="usuarios-container">
-
-
-        <div class="usuario-card">
-
-            <div class="usuario-avatar">
-                👤
-            </div>
-
-            <div class="usuario-info">
-
-                <h2>João Da Silva</h2>
-
-                <p>Email: joaodasilva@gmail.com</p>
-
-                <p>Cargo: Administrador</p>
-
-            </div>
-
-
-            <div class="acoes">
-
-                <button class="editar">
-                    Editar
-                </button>
-
-                <button class="excluir">
-                    Excluir
-                </button>
-
-            </div>
-
-
+        <div>
+            <h1>Usuários</h1>
+            <p>Gerencie os usuários cadastrados no sistema.</p>
         </div>
 
-
-
-        <div class="usuario-card">
-
-            <div class="usuario-avatar">
-                👤
-            </div>
-
-            <div class="usuario-info">
-
-                <h2>Rivelino Bahia</h2>
-
-                <p>Email: seurivas@gmail.com</p>
-
-                <p>Cargo: Funcionário</p>
-
-            </div>
-
-
-            <div class="acoes">
-
-                <button class="editar">
-                    Editar
-                </button>
-
-                <button class="excluir">
-                    Excluir
-                </button>
-
-            </div>
-
-
-        </div>
-
-
+        <span class="usuario-total">
+            @Usuarios.Count usuário@(Usuarios.Count == 1 ? "" : "s")
+        </span>
     </div>
 
+    @if (Carregando)
+    {
+        <div class="usuario-feedback">
+            Carregando usuários...
+        </div>
+    }
+    else if (MensagemErro is not null)
+    {
+        <div class="usuario-feedback usuario-error">
+            <strong>Não foi possível carregar os usuários.</strong>
+            <span>@MensagemErro</span>
+        </div>
+    }
+    else if (Usuarios.Count == 0)
+    {
+        <div class="usuario-feedback">
+            Nenhum usuário cadastrado ainda.
+        </div>
+    }
+    else
+    {
+        <div class="usuario-table-wrapper">
+
+            <table class="usuario-table">
+
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Tipo</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var usuario in Usuarios)
+                    {
+                        <tr>
+
+                            <td>@usuario.Id</td>
+
+                            <td>
+                                <strong>@usuario.Nome</strong>
+                            </td>
+
+                            <td>@usuario.Email</td>
+
+                            <td>@usuario.Telefone</td>
+
+                            <td>
+                                <span class="usuario-tipo">
+                                    @usuario.Tipo
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="usuario-status @(usuario.Status == "Ativo" ? "ativo" : "desativado")">
+                                    @usuario.Status
+                                </span>
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+    ```
 
 </div>
+
+@code {
+
+private List<DeltaStock.Models.Usuario> Usuarios { get; set; } = [];
+
+    private bool Carregando { get; set; } = true;
+
+    private string? MensagemErro { get; set; }
+
+
+    protected override Task OnInitializedAsync()
+    {
+        try
+        {
+            Usuarios = UsuarioDao.Listar();
+        }
+        catch (Exception ex)
+        {
+            MensagemErro =
+                $"Confira se o MySQL está em execução e se os dados de conexão em appsettings.json estão corretos. ({ex.Message})";
+        }
+        finally
+        {
+            Carregando = false;
+        }
+
+        return Task.CompletedTask;
+    }
+
+}
