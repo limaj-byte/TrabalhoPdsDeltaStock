@@ -12,6 +12,7 @@ builder.Services.AddSingleton<ProdutoLocalStore>();
 builder.Services.AddScoped<Conexao>();
 builder.Services.AddScoped<CategoriaDAO>();
 builder.Services.AddScoped<ProdutoDAO>();
+builder.Services.AddScoped<MovimentacaoDAO>();
 
 var app = builder.Build();
 

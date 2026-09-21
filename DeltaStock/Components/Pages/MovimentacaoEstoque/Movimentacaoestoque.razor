@@ -1,27 +1,24 @@
 ﻿@page "/MovimentacaoEstoque"
+@page "/Movimentacao"
 @rendermode InteractiveServer
+@using DeltaStock.DAO
+@using DeltaStock.Models
 @inject MovimentacaoDAO MovimentacaoDao
 
-<PageTitle>Movimentação de Estoque</PageTitle>
+<PageTitle>Movimentações</PageTitle>
 
 <div class="movimentacao-page">
-
     <div class="movimentacao-header">
         <div>
-            <h1>Movimentação de Estoque</h1>
-            <p>Consulte as entradas e saídas realizadas no estoque.</p>
+            <h1>Movimentações de Estoque</h1>
+            <p>Histórico de entradas e saídas do estoque.</p>
         </div>
-
-        <span class="movimentacao-total">
-            @Movimentacoes.Count movimentação@(Movimentacoes.Count == 1 ? "" : "ões")
-        </span>
+        <span class="movimentacao-total">@Movimentacoes.Count movimentaç@(Movimentacoes.Count == 1 ? "ão" : "ões")</span>
     </div>
 
     @if (Carregando)
     {
-        <div class="movimentacao-feedback">
-            Carregando movimentações...
-        </div>
+        <div class="movimentacao-feedback">Carregando movimentações...</div>
     }
     else if (MensagemErro is not null)
     {
@@ -32,92 +29,49 @@
     }
     else if (Movimentacoes.Count == 0)
     {
-        <div class="movimentacao-feedback">
-            Nenhuma movimentação registrada ainda.
-        </div>
+        <div class="movimentacao-feedback">Nenhuma movimentação registrada ainda.</div>
     }
     else
     {
         <div class="movimentacao-table-wrapper">
-
             <table class="movimentacao-table">
-
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Data</th>
+                        <th>#ID</th>
+                        <th>Data/Hora</th>
                         <th>Tipo</th>
-                        <th>Quantidade</th>
-                        <th>Saldo Anterior</th>
-                        <th>Saldo Final</th>
+                        <th>Qtd.</th>
+                        <th>Saldo Ant.</th>
+                        <th>Saldo Fin.</th>
                         <th>Origem</th>
-                        <th>ID Documento</th>
+                        <th>Documento</th>
                         <th>Motivo</th>
                     </tr>
                 </thead>
-
                 <tbody>
-
-                    @foreach (var movimentacao in Movimentacoes)
+                    @foreach (var mov in Movimentacoes)
                     {
                         <tr>
-
-                            <td>
-                                @movimentacao.Id
-                            </td>
-
-                            <td>
-                                @movimentacao.Data.ToString("dd/MM/yyyy HH:mm")
-                            </td>
-
-                            <td>
-                                <span class="movimentacao-tipo">
-                                    @movimentacao.Tipo
-                                </span>
-                            </td>
-
-                            <td>
-                                @movimentacao.Quantidade
-                            </td>
-
-                            <td>
-                                @movimentacao.SaldoAnterior
-                            </td>
-
-                            <td>
-                                <strong>@movimentacao.SaldoFinal</strong>
-                            </td>
-
-                            <td>
-                                @movimentacao.Origem
-                            </td>
-
-                            <td>
-                                @(movimentacao.Id_documento ?? "-")
-                            </td>
-
-                            <td>
-                                @(movimentacao.Motivo ?? "-")
-                            </td>
-
+                            <td>@mov.Id</td>
+                            <td>@mov.Data.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td><span class="movimentacao-tipo">@mov.Tipo</span></td>
+                            <td><strong>@mov.Quantidade</strong></td>
+                            <td>@mov.SaldoAnterior</td>
+                            <td><strong>@mov.SaldoFinal</strong></td>
+                            <td>@mov.Origem</td>
+                            <td>@(string.IsNullOrWhiteSpace(mov.Id_documento) ? "-" : mov.Id_documento)</td>
+                            <td>@(string.IsNullOrWhiteSpace(mov.Motivo) ? "-" : mov.Motivo)</td>
                         </tr>
                     }
-
                 </tbody>
-
             </table>
-
         </div>
     }
-
 </div>
 
 @code {
-
-    private List<DeltaStock.Models.Movimentacao> Movimentacoes { get; set; } = [];
-
+    private List<Movimentacao> Movimentacoes { get; set; } = [];
     private bool Carregando { get; set; } = true;
-
     private string? MensagemErro { get; set; }
 
     protected override Task OnInitializedAsync()
