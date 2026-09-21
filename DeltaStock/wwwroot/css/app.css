@@ -1777,3 +1777,105 @@ tbody tr {
         width: 100%;
     }
 }
+/* Movimentacao Estoque*/
+.movimentacao-page {
+    padding: 1rem 0;
+}
+
+.movimentacao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+    .movimentacao-header h1 {
+        margin: 0;
+        color: #1e3a8a;
+        font-weight: 700;
+    }
+
+    .movimentacao-header p {
+        margin: 0.25rem 0 0 0;
+        color: #6b7280;
+    }
+
+.movimentacao-total {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+}
+
+.movimentacao-table-wrapper {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.movimentacao-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+    .movimentacao-table th {
+        background-color: #2563eb;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.75rem 1rem;
+    }
+
+    .movimentacao-table td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid #f3f4f6;
+        color: #374151;
+    }
+
+    .movimentacao-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+/* Badges/Pills Coloridas */
+.badge-tipo {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge-entrada {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.badge-saida {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.badge-ajuste-pos {
+    background-color: #e0e7ff;
+    color: #4338ca;
+}
+
+.badge-ajuste-neg {
+    background-color: #ffedd5;
+    color: #c2410c;
+}
+
+.badge-perda {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.badge-default {
+    background-color: #f3f4f6;
+    color: #374151;
+}
