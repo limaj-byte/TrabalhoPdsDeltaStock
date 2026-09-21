@@ -1,4 +1,9 @@
-﻿namespace DeltaStock.DAO
+﻿using DeltaStock.Configs;
+using DeltaStock.Models;
+using System.Security.Cryptography.Xml;
+using static Mysqlx.Expect.Open.Types.Condition.Types;
+
+namespace DeltaStock.DAO
 {
     public class VendaDAO
     {
@@ -24,21 +29,21 @@
                 using var leitor = comando.ExecuteReader();
                 while (leitor.Read())
                 {
-                    var venda = new Venda();
+                    var venda = new Venda
+                    {
+                        Id = leitor.GetInt32("id_ven"),
+                        Dataven = leitor.GetDateTime("data_ven"),
+                        Valortotalven = leitor.GetFloat("valor_total_ven"),
+                        Statusven = leitor.GetString("status_ven"),
+                        Idusufk = leitor.GetInt16("id_usu_fk")
+                    };
 
-                    venda.Id = leitor.GetInt32("id_ven");
-                    venda.Dataven = leitor.GetDateTime("data_ven");
-                    venda.Valortotalven = leitor.GetFloat("valor_total_ven");
-                    venda.Statusven = leitor.GetString("status_ven");
-                    venda.Idusufk = leitor.GetInt16("id_usu_fk");
-
-                    //Aqui estao os de categoria, no seu use o seu                                                                                                                                  
-                    //id_cat int primary key auto_increment,
-                    //nome_cat varchar(300),
-                    //descricao_cat varchar(500),
-                    //codigo_cat varchar(100),
-                    //status_cat varchar(100),
-                    //data_cadastro_cat date
+                       //id_ven int primary key auto_increment,
+                      //data_ven datetime,
+                     //valor_total_ven float,
+                     //status_ven varchar(100),
+                    //id_usu_fk int,
+                    //foreign key(id_usu_fk) references Usuario(id_usu)
 
                     lista.Add(venda);
                 }
