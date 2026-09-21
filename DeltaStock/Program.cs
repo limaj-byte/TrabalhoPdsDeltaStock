@@ -13,6 +13,7 @@ builder.Services.AddScoped<Conexao>();
 builder.Services.AddScoped<CategoriaDAO>();
 builder.Services.AddScoped<ProdutoDAO>();
 builder.Services.AddScoped<MovimentacaoDAO>();
+builder.Services.AddScoped<UsuarioDAO>();
 
 var app = builder.Build();
 

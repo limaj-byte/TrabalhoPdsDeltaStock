@@ -6,11 +6,10 @@
 
 <div class="usuario-page">
 
-    ```
     <div class="usuario-header">
         <div>
             <h1>Usuários</h1>
-            <p>Gerencie os usuários cadastrados no sistema.</p>
+            <p>Usuários cadastrados no sistema.</p>
         </div>
 
         <span class="usuario-total">
@@ -40,7 +39,6 @@
     else
     {
         <div class="usuario-table-wrapper">
-
             <table class="usuario-table">
 
                 <thead>
@@ -55,11 +53,9 @@
                 </thead>
 
                 <tbody>
-
                     @foreach (var usuario in Usuarios)
                     {
                         <tr>
-
                             <td>@usuario.Id</td>
 
                             <td>
@@ -77,32 +73,27 @@
                             </td>
 
                             <td>
-                                <span class="usuario-status @(usuario.Status == "Ativo" ? "ativo" : "desativado")">
+                                <span class="usuario-status">
                                     @usuario.Status
                                 </span>
                             </td>
-
                         </tr>
                     }
-
                 </tbody>
 
             </table>
-
         </div>
     }
-    ```
 
 </div>
 
 @code {
 
-private List<DeltaStock.Models.Usuario> Usuarios { get; set; } = [];
+    private List<DeltaStock.Models.Usuario> Usuarios { get; set; } = [];
 
     private bool Carregando { get; set; } = true;
 
     private string? MensagemErro { get; set; }
-
 
     protected override Task OnInitializedAsync()
     {
@@ -112,8 +103,7 @@ private List<DeltaStock.Models.Usuario> Usuarios { get; set; } = [];
         }
         catch (Exception ex)
         {
-            MensagemErro =
-                $"Confira se o MySQL está em execução e se os dados de conexão em appsettings.json estão corretos. ({ex.Message})";
+            MensagemErro = $"Confira se o MySQL está em execução e se os dados de conexão em appsettings.json estão corretos. ({ex.Message})";
         }
         finally
         {
@@ -122,5 +112,4 @@ private List<DeltaStock.Models.Usuario> Usuarios { get; set; } = [];
 
         return Task.CompletedTask;
     }
-
 }
