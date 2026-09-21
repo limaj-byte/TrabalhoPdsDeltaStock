@@ -150,3 +150,12 @@ insert into ItemVenda values(null, 2, 129.90, 259.80, 2, 4);
 insert into ItemVenda values(null, 1, 299.90, 299.90, 3, 5);
 insert into ItemVenda values(null, 4, 39.90, 159.60, 3, 6);
 insert into ItemVenda values(null, 2, 79.90, 159.80, 4, 7);
+
+UPDATE categoria
+SET
+    nome_cat = 'Sem categoria',
+    descricao_cat = 'Categoria padrão',
+    codigo_cat = '0',
+    status_cat = 'novo',
+    data_cadastro_cat = '2026-01-01'
+WHERE id_cat = 1;
