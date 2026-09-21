@@ -1,147 +1,140 @@
 ﻿@page "/MovimentacaoEstoque"
+@rendermode InteractiveServer
+@inject MovimentacaoDAO MovimentacaoDao
 
 <PageTitle>Movimentação de Estoque</PageTitle>
 
 <div class="movimentacao-page">
 
-    <h1>📊 Movimentação de Estoque</h1>
-
-    <div class="painel-container">
-
-        
-        <div class="mov-card entrada">
-
-            <div class="mov-icon">
-                📥
-            </div>
-
-            <div class="mov-info">
-
-                <h2>Entradas</h2>
-
-                <p>
-                    Produtos adicionados ao estoque
-                </p>
-
-                <span>
-                    +120 produtos
-                </span>
-
-            </div>
-
+    <div class="movimentacao-header">
+        <div>
+            <h1>Movimentação de Estoque</h1>
+            <p>Consulte as entradas e saídas realizadas no estoque.</p>
         </div>
 
-       
-        <div class="mov-card saida">
-
-            <div class="mov-icon">
-                📤
-            </div>
-
-            <div class="mov-info">
-
-                <h2>Saídas</h2>
-
-                <p>
-                    Produtos retirados do estoque
-                </p>
-
-                <span>
-                    -45 produtos
-                </span>
-
-            </div>
-
-        </div>
-
-        
-        <div class="mov-card total">
-
-            <div class="mov-icon">
-                📦
-            </div>
-
-            <div class="mov-info">
-
-                <h2>Total Movimentado</h2>
-
-                <p>
-                    Movimentações realizadas
-                </p>
-
-                <span>
-                    165 registros
-                </span>
-
-            </div>
-
-        </div>
-
+        <span class="movimentacao-total">
+            @Movimentacoes.Count movimentação@(Movimentacoes.Count == 1 ? "" : "ões")
+        </span>
     </div>
 
-    <h2 class="titulo-historico">
-        Histórico de Movimentações
-    </h2>
+    @if (Carregando)
+    {
+        <div class="movimentacao-feedback">
+            Carregando movimentações...
+        </div>
+    }
+    else if (MensagemErro is not null)
+    {
+        <div class="movimentacao-feedback movimentacao-error">
+            <strong>Não foi possível carregar as movimentações.</strong>
+            <span>@MensagemErro</span>
+        </div>
+    }
+    else if (Movimentacoes.Count == 0)
+    {
+        <div class="movimentacao-feedback">
+            Nenhuma movimentação registrada ainda.
+        </div>
+    }
+    else
+    {
+        <div class="movimentacao-table-wrapper">
 
-    <div class="tabela-container">
+            <table class="movimentacao-table">
 
-        <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Quantidade</th>
+                        <th>Saldo Anterior</th>
+                        <th>Saldo Final</th>
+                        <th>Origem</th>
+                        <th>ID Documento</th>
+                        <th>Motivo</th>
+                    </tr>
+                </thead>
 
-            <thead>
+                <tbody>
 
-                <tr>
+                    @foreach (var movimentacao in Movimentacoes)
+                    {
+                        <tr>
 
-                    <th>Produto</th>
-                    <th>Tipo</th>
-                    <th>Quantidade</th>
-                    <th>Data</th>
+                            <td>
+                                @movimentacao.Id
+                            </td>
 
-                </tr>
+                            <td>
+                                @movimentacao.Data.ToString("dd/MM/yyyy HH:mm")
+                            </td>
 
-            </thead>
+                            <td>
+                                <span class="movimentacao-tipo">
+                                    @movimentacao.Tipo
+                                </span>
+                            </td>
 
-            <tbody>
+                            <td>
+                                @movimentacao.Quantidade
+                            </td>
 
-                <tr>
+                            <td>
+                                @movimentacao.SaldoAnterior
+                            </td>
 
-                    <td>Mouse Gamer</td>
+                            <td>
+                                <strong>@movimentacao.SaldoFinal</strong>
+                            </td>
 
-                    <td class="entrada-texto">
-                        Entrada
-                    </td>
+                            <td>
+                                @movimentacao.Origem
+                            </td>
 
-                    <td>
-                        +50
-                    </td>
+                            <td>
+                                @(movimentacao.Id_documento ?? "-")
+                            </td>
 
-                    <td>
-                        22/06/2026
-                    </td>
+                            <td>
+                                @(movimentacao.Motivo ?? "-")
+                            </td>
 
-                </tr>
+                        </tr>
+                    }
 
-                <tr>
+                </tbody>
 
-                    <td>Teclado Mecânico</td>
+            </table>
 
-                    <td class="saida-texto">
-                        Saída
-                    </td>
-
-                    <td>
-                        -10
-                    </td>
-
-                    <td>
-                        21/06/2026
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
+        </div>
+    }
 
 </div>
+
+@code {
+
+    private List<DeltaStock.Models.Movimentacao> Movimentacoes { get; set; } = [];
+
+    private bool Carregando { get; set; } = true;
+
+    private string? MensagemErro { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        try
+        {
+            Movimentacoes = MovimentacaoDao.Listar();
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Confira se o MySQL está em execução e se os dados de conexão em appsettings.json estão corretos. ({ex.Message})";
+        }
+        finally
+        {
+            Carregando = false;
+        }
+
+        return Task.CompletedTask;
+    }
+}
