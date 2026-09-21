@@ -1,21 +1,19 @@
 ﻿@page "/Usuario"
-@rendermode InteractiveServer
-@inject UsuarioDAO UsuarioDao
-
-<PageTitle>Usuários</PageTitle>
 
 <div class="usuario-page">
 
     <div class="usuario-header">
-        <div>
-            <h1>Usuários</h1>
-            <p>Usuários cadastrados no sistema.</p>
-        </div>
+<div>
+    <h1>Gerenciamento de Usuários</h1>
+    <p>Usuários cadastrados no sistema.</p>
+</div>
 
-        <span class="usuario-total">
-            @Usuarios.Count usuário@(Usuarios.Count == 1 ? "" : "s")
-        </span>
+        <button class="btn-novo">
+            + Novo Usuário
+        </button>
     </div>
+
+<div class="usuarios-container">
 
     @if (Carregando)
     {
@@ -38,78 +36,36 @@
     }
     else
     {
-        <div class="usuario-table-wrapper">
-            <table class="usuario-table">
 
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Telefone</th>
-                        <th>Tipo</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
 
-                <tbody>
-                    @foreach (var usuario in Usuarios)
-                    {
-                        <tr>
-                            <td>@usuario.Id</td>
+@foreach (var usuario in Usuarios)
+{
+    <div class="usuario-card">
 
-                            <td>
-                                <strong>@usuario.Nome</strong>
-                            </td>
+        <div class="usuario-avatar">👤</div>
 
-                            <td>@usuario.Email</td>
-
-                            <td>@usuario.Telefone</td>
-
-                            <td>
-                                <span class="usuario-tipo">
-                                    @usuario.Tipo
-                                </span>
-                            </td>
-
-                            <td>
-                                <span class="usuario-status">
-                                    @usuario.Status
-                                </span>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-
-            </table>
+        <div class="usuario-info">
+            <h2>@usuario.Nome</h2>
+            <p>Email: @usuario.Email</p>
+            <p>Cargo: @usuario.Cargo</p>
         </div>
+
+        <div class="acoes">
+            <button class="editar">Editar</button>
+            <button class="excluir">Excluir</button>
+        </div>
+
+    </div>
+}
+
+                <h2>João Da Silva</h2>
+
+                <p>Email: joaodasilva@gmail.com</p>
+
+                <p>Cargo: Administrador</p>
+
+            </div>
+
     }
 
 </div>
-
-@code {
-
-    private List<DeltaStock.Models.Usuario> Usuarios { get; set; } = [];
-
-    private bool Carregando { get; set; } = true;
-
-    private string? MensagemErro { get; set; }
-
-    protected override Task OnInitializedAsync()
-    {
-        try
-        {
-            Usuarios = UsuarioDao.Listar();
-        }
-        catch (Exception ex)
-        {
-            MensagemErro = $"Confira se o MySQL está em execução e se os dados de conexão em appsettings.json estão corretos. ({ex.Message})";
-        }
-        finally
-        {
-            Carregando = false;
-        }
-
-        return Task.CompletedTask;
-    }
-}

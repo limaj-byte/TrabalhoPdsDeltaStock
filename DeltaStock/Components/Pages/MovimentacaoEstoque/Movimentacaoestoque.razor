@@ -54,7 +54,11 @@
                         <tr>
                             <td>@mov.Id</td>
                             <td>@mov.Data.ToString("dd/MM/yyyy HH:mm")</td>
-                            <td><span class="movimentacao-tipo">@mov.Tipo</span></td>
+                            <td>
+                                <span class="badge-tipo @ObterClasseBadge(mov.Tipo)">
+                                    @mov.Tipo
+                                </span>
+                            </td>
                             <td><strong>@mov.Quantidade</strong></td>
                             <td>@mov.SaldoAnterior</td>
                             <td><strong>@mov.SaldoFinal</strong></td>
@@ -90,5 +94,18 @@
         }
 
         return Task.CompletedTask;
+    }
+
+    private string ObterClasseBadge(string tipo)
+    {
+        return tipo?.ToUpper() switch
+        {
+            "ENTRADA" => "badge-entrada",
+            "SAIDA" => "badge-saida",
+            "AJUSTE+" => "badge-ajuste-pos",
+            "AJUSTE-" => "badge-ajuste-neg",
+            "PERDA" => "badge-perda",
+            _ => "badge-default"
+        };
     }
 }

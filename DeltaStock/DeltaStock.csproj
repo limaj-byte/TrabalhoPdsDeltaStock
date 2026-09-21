@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Pages\MovimentacaoEstoque\movimentacaoestoque.razor.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Components\Layout\" />
     <Folder Include="ScriptSQL\" />
   </ItemGroup>

@@ -14,7 +14,7 @@ namespace DeltaStock.DAO
         {
             _conexao = conexao;
         }
-        public List<Venda> Listar()     
+        public List<Venda> Listar()
         {
             try
             {
@@ -38,10 +38,10 @@ namespace DeltaStock.DAO
                         Idusufk = leitor.GetInt16("id_usu_fk")
                     };
 
-                       //id_ven int primary key auto_increment,
-                      //data_ven datetime,
-                     //valor_total_ven float,
-                     //status_ven varchar(100),
+                    //id_ven int primary key auto_increment,
+                    //data_ven datetime,
+                    //valor_total_ven float,
+                    //status_ven varchar(100),
                     //id_usu_fk int,
                     //foreign key(id_usu_fk) references Usuario(id_usu)
 
