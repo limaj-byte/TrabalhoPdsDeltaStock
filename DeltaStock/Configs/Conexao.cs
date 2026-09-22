@@ -14,6 +14,7 @@ namespace DeltaStock.Configs
         public MySqlConnection GetConnection()
         {
             var conn = new MySqlConnection(_connectionString);
+            // Cada operação do DAO recebe uma conexão já aberta.
             conn.Open();
             return conn;
         }
