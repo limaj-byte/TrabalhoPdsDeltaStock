@@ -18,6 +18,7 @@ public class ProdutoDAO
 
         using var conexao = _conexao.GetConnection();
         using var comando = conexao.CreateCommand();
+        // O JOIN traz o nome da categoria junto com cada produto.
         comando.CommandText = """
             SELECT p.id_prod, p.codigo_prod, p.nome_prod, p.descricao_prod,
                    p.quantidade_prod, p.custo_prod, p.valor_venda_prod,
@@ -62,6 +63,7 @@ public class ProdutoDAO
                 (@codigo, @nome, @descricao, @quantidade, @custo,
                  @valorVenda, @status, @dataCadastro, @idCategoria);
             """;
+        // Parâmetros separam os dados do SQL e evitam injeção de comandos.
         comando.Parameters.AddWithValue("@codigo", produto.Codigo.Trim());
         comando.Parameters.AddWithValue("@nome", produto.Nome.Trim());
         comando.Parameters.AddWithValue("@descricao", produto.Descricao.Trim());
@@ -79,6 +81,7 @@ public class ProdutoDAO
     {
         using var conexao = _conexao.GetConnection();
         using var comando = conexao.CreateCommand();
+        // A chave primária identifica exatamente o registro que será excluído.
         comando.CommandText = "DELETE FROM Produto WHERE id_prod = @id";
         comando.Parameters.AddWithValue("@id", id);
         comando.ExecuteNonQuery();
