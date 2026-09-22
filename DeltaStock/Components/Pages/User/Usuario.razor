@@ -42,7 +42,6 @@
     {
         <div class="usuario-table-wrapper">
             <table class="usuario-table">
-
                 <thead>
                     <tr>
                         <th>Código</th>
@@ -53,36 +52,25 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @foreach (var usuario in Usuarios)
                     {
                         <tr>
                             <td>@usuario.Id</td>
-
-                            <td>
-                                <strong>@usuario.Nome</strong>
-                            </td>
-
+                            <td><strong>@usuario.Nome</strong></td>
                             <td>@usuario.Email</td>
-
                             <td>@usuario.Telefone</td>
-
                             <td>
-                                <span class="usuario-tipo">
-                                    @usuario.Tipo
-                                </span>
+                                <span class="usuario-tipo">@usuario.Tipo</span>
                             </td>
-
                             <td>
-                                <span class="usuario-status">
+                                <span class="usuario-status status-@(usuario.Status?.ToLower())">
                                     @usuario.Status
                                 </span>
                             </td>
                         </tr>
                     }
                 </tbody>
-
             </table>
         </div>
     }

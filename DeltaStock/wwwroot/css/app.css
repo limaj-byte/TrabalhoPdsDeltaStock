@@ -828,27 +828,29 @@ body {
 }
 
 
-/* -------- USUARIOS -------- */
+/* -------- USUÁRIOS -------- */
 
 .usuario-page {
-    padding: 40px;
+    padding: 10px;
     font-family: 'Inter', sans-serif;
 }
-
 
 .usuario-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
 }
-
 
     .usuario-header h1 {
         color: #1E3A8A;
+        margin: 0 0 6px;
     }
 
-
+    .usuario-header p {
+        color: #4b5563;
+        margin: 0;
+    }
 
 .btn-novo {
     background: #3B82F6;
@@ -858,105 +860,84 @@ body {
     border-radius: 10px;
     cursor: pointer;
     font-size: 15px;
+    font-weight: 600;
 }
-
 
     .btn-novo:hover {
         background: #2563eb;
     }
 
-
-
-.usuarios-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.usuario-table-wrapper {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+    overflow: hidden;
+    margin-top: 10px;
 }
 
-
-
-.usuario-card {
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+.usuario-table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: left;
+    background-color: #ffffff;
 }
 
-
-
-.usuario-avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: #d9d9d9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 35px;
-}
-
-
-
-.usuario-info {
-    flex: 1;
-}
-
-
-    .usuario-info h2 {
-        color: #1E3A8A;
-        margin-bottom: 8px;
+    .usuario-table th {
+        background-color: #254796;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 16px 18px;
     }
 
-
-
-    .usuario-info p {
-        color: #555;
-        margin: 4px 0;
+    .usuario-table td {
+        padding: 16px 18px;
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+        font-size: 14px;
+        vertical-align: middle;
     }
 
-
-
-
-.acoes {
-    display: flex;
-    gap: 10px;
-}
-
-
-
-    .acoes button {
-        border: none;
-        padding: 10px 15px;
-        border-radius: 8px;
-        cursor: pointer;
-        color: white;
+    .usuario-table tbody tr:last-child td {
+        border-bottom: none;
     }
 
+    .usuario-table tbody tr:hover {
+        background-color: #f8fafc;
+    }
 
-
-.editar {
-    background: #3B82F6;
+.usuario-tipo {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: #f1f5f9;
+    color: #475569;
+    text-transform: uppercase;
 }
 
-
-
-.excluir {
-    background: #dc2626;
+.usuario-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
 }
 
+   
+    .usuario-status.status-ativo {
+        background-color: #dcfce7;
+        color: #166534;
+    }
 
-.editar:hover {
-    background: #2563eb;
-}
-
-
-.excluir:hover {
-    background: #b91c1c;
-}
-
+    .usuario-status.status-desativado,
+    .usuario-status.status-inativo {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
 /* -------- CONFIGURACOES DA CONTA -------- */
 
 .account-settings-page {
