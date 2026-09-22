@@ -88,25 +88,6 @@
     }
 </div>
 
-@foreach (var usuario in Usuarios)
-{
-    <div class="usuario-card">
-
-        <div class="usuario-avatar">👤</div>
-
-        <div class="usuario-info">
-            <h2>@usuario.Nome</h2>
-            <p>Email: @usuario.Email</p>
-        </div>
-
-        <div class="acoes">
-            <button class="editar">Editar</button>
-            <button class="excluir">Excluir</button>
-        </div>
-
-    </div>
-}
-
 @code {
     private List<DeltaStock.Models.Usuario> Usuarios { get; set; } = [];
     private bool Carregando { get; set; } = true;
