@@ -50,7 +50,7 @@ public class ProdutoDAO
         return produtos;
     }
 
-    public void Adicionar(Produto produto)
+    public void Adicionar(Produto produto) 
     {
         using var conexao = _conexao.GetConnection();
         using var comando = conexao.CreateCommand();
