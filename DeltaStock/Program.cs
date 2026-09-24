@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+// Disponibiliza os DAOs por requisição para que as páginas acessem o banco.
 builder.Services.AddSingleton<ProdutoLocalStore>();
 builder.Services.AddScoped<Conexao>();
 builder.Services.AddScoped<CategoriaDAO>();

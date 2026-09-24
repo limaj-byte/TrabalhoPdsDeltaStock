@@ -1,111 +1,88 @@
 ﻿@page "/Usuario"
 @rendermode InteractiveServer
 @inject UsuarioDAO UsuarioDAO
-<div class="usuario-page">
 
-    <div class="usuario-header">
-    <div>
-        <h1>Gerenciamento de Usuários</h1>
-        <p>Usuários cadastrados no sistema.</p>
-    </div>
+<div class="container-fluid p-4">
+
+    <!-- Cabeçalho -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <button class="btn-novo">
-                + Novo Usuário
+            <h1 class="h3 text-primary fw-bold mb-1">Gerenciamento de Usuários</h1>
+            <p class="text-muted mb-0">Usuários cadastrados no sistema.</p>
+        </div>
+        <div>
+            <button class="btn btn-primary d-inline-flex align-items-center gap-2 shadow-sm fw-semibold px-3 py-2">
+                <i class="bi bi-plus-lg"></i> + Novo Usuário
             </button>
         </div>
     </div>
-</div>
 
+    <!-- Conteúdo -->
+    <div class="w-100">
+        @if (Carregando)
+        {
+            <div class="alert alert-info d-flex align-items-center gap-2 shadow-sm rounded-3" role="alert">
+                <div class="spinner-border spinner-border-sm" role="status"></div>
+                <span>Carregando usuários...</span>
+            </div>
+        }
+        else if (MensagemErro is not null)
+        {
+            <div class="alert alert-danger shadow-sm rounded-3" role="alert">
+                <h6 class="alert-heading fw-bold mb-1">Não foi possível carregar os usuários.</h6>
+                <p class="mb-0 small">@MensagemErro</p>
+            </div>
+        }
+        else if (Usuarios.Count == 0)
+        {
+            <div class="alert alert-secondary text-center py-4 shadow-sm rounded-3">
+                <p class="mb-0 text-muted">Nenhum usuário cadastrado ainda.</p>
+            </div>
+        }
+        else
+        {
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-primary text-uppercase small fw-bold">
+                            <tr>
+                                <th scope="col" class="py-3 px-4">Código</th>
+                                <th scope="col" class="py-3 px-4">Nome</th>
+                                <th scope="col" class="py-3 px-4">Email</th>
+                                <th scope="col" class="py-3 px-4">Telefone</th>
+                                <th scope="col" class="py-3 px-4">Tipo</th>
+                                <th scope="col" class="py-3 px-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var usuario in Usuarios)
+                            {
+                                <tr>
 
-<div class="usuarios-container">
-
-    @if (Carregando)
-    {
-        <div class="usuario-feedback">
-            Carregando usuários...
-        </div>
-    }
-    else if (MensagemErro is not null)
-    {
-        <div class="usuario-feedback usuario-error">
-            <strong>Não foi possível carregar os usuários.</strong>
-            <span>@MensagemErro</span>
-        </div>
-    }
-    else if (Usuarios.Count == 0)
-    {
-        <div class="usuario-feedback">
-            Nenhum usuário cadastrado ainda.
-        </div>
-    }
-    else
-    {
-        <div class="usuario-table-wrapper">
-            <table class="usuario-table">
-
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Telefone</th>
-                        <th>Tipo</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var usuario in Usuarios)
-                    {
-                        <tr>
-                            <td>@usuario.Id</td>
-
-                            <td>
-                                <strong>@usuario.Nome</strong>
-                            </td>
-
-                            <td>@usuario.Email</td>
-
-                            <td>@usuario.Telefone</td>
-
-                            <td>
-                                <span class="usuario-tipo">
-                                    @usuario.Tipo
-                                </span>
-                            </td>
-
-                            <td>
-                                <span class="usuario-status">
-                                    @usuario.Status
-                                </span>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-
-            </table>
-        </div>
-    }
-</div>
-
-@foreach (var usuario in Usuarios)
-{
-    <div class="usuario-card">
-
-        <div class="usuario-avatar">👤</div>
-
-        <div class="usuario-info">
-            <h2>@usuario.Nome</h2>
-            <p>Email: @usuario.Email</p>
-        </div>
-
-        <div class="acoes">
-            <button class="editar">Editar</button>
-            <button class="excluir">Excluir</button>
-        </div>
-
+                                    <td class="py-3 px-4 text-muted fw-medium">#@usuario.Id</td>
+                                    <td class="py-3 px-4 fw-bold text-dark">@usuario.Nome</td>
+                                    <td class="py-3 px-4 text-secondary">@usuario.Email</td>
+                                    <td class="py-3 px-4 text-secondary">@usuario.Telefone</td>
+                                    <td class="py-3 px-4">
+                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill fw-semibold">
+                                            @usuario.Tipo
+                                        </span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill fw-semibold">
+                                            @usuario.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
     </div>
-}
+
+</div>
 
 @code {
     private List<DeltaStock.Models.Usuario> Usuarios { get; set; } = [];

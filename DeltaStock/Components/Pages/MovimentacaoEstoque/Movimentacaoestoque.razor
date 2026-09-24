@@ -1,21 +1,31 @@
-﻿@page "/MovimentacaoEstoque"
+﻿@* Mapeamento de rotas de navegação aceitas pela página *@
+@page "/MovimentacaoEstoque"
 @page "/Movimentacao"
+
+@* Define o modo de renderização interativo no lado do servidor *@
 @rendermode InteractiveServer
+
+@* Importação dos namespaces das Models e do DAO *@
 @using DeltaStock.DAO
 @using DeltaStock.Models
+
+@* Injeção do DAO responsável pela busca dos dados *@
 @inject MovimentacaoDAO MovimentacaoDao
 
 <PageTitle>Movimentações</PageTitle>
 
 <div class="movimentacao-page">
+    @* Cabeçalho da página com título, descrição e totalizador dinâmico *@
     <div class="movimentacao-header">
         <div>
             <h1>Movimentações de Estoque</h1>
             <p>Histórico de entradas e saídas do estoque.</p>
         </div>
+        @* Formatação no plural/singular com base no total de registros *@
         <span class="movimentacao-total">@Movimentacoes.Count movimentaç@(Movimentacoes.Count == 1 ? "ão" : "ões")</span>
     </div>
 
+    @* Tratamento dos estados da tela (Carregando, Erro, Lista Vazia, Tabela de Dados) *@
     @if (Carregando)
     {
         <div class="movimentacao-feedback">Carregando movimentações...</div>
@@ -33,6 +43,7 @@
     }
     else
     {
+        @* Exibição dos dados organizados em tabela *@
         <div class="movimentacao-table-wrapper">
             <table class="movimentacao-table">
                 <thead>
@@ -49,12 +60,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @* Loop para renderizar cada registro retornado do banco *@
                     @foreach (var mov in Movimentacoes)
                     {
                         <tr>
                             <td>@mov.Id</td>
                             <td>@mov.Data.ToString("dd/MM/yyyy HH:mm")</td>
                             <td>
+                                @* Aplica classe CSS dinâmica na badge com base no tipo da movimentação *@
                                 <span class="badge-tipo @ObterClasseBadge(mov.Tipo)">
                                     @mov.Tipo
                                 </span>
@@ -63,6 +76,7 @@
                             <td>@mov.SaldoAnterior</td>
                             <td><strong>@mov.SaldoFinal</strong></td>
                             <td>@mov.Origem</td>
+                            @* Trata campos nulos/vazios para exibir o caractere '-' caso não haja dado *@
                             <td>@(string.IsNullOrWhiteSpace(mov.Id_documento) ? "-" : mov.Id_documento)</td>
                             <td>@(string.IsNullOrWhiteSpace(mov.Motivo) ? "-" : mov.Motivo)</td>
                         </tr>
@@ -74,28 +88,38 @@
 </div>
 
 @code {
+    // Propriedades do estado interno do componente
     private List<Movimentacao> Movimentacoes { get; set; } = [];
     private bool Carregando { get; set; } = true;
     private string? MensagemErro { get; set; }
 
+    /// <summary>
+    /// Método executado automaticamente na inicialização do componente Blazor.
+    /// </summary>
     protected override Task OnInitializedAsync()
     {
         try
         {
+            // Busca as movimentações através da camada DAO
             Movimentacoes = MovimentacaoDao.Listar();
         }
         catch (Exception ex)
         {
+            // Captura falhas de conexão ou banco de dados
             MensagemErro = $"Confira se o MySQL está em execução e se os dados de conexão em appsettings.json estão corretos. ({ex.Message})";
         }
         finally
         {
+            // Finaliza o estado de carregamento independente do resultado
             Carregando = false;
         }
 
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Retorna o nome da classe CSS correspondente ao tipo de movimentação para estilização das badges coloridas.
+    /// </summary>
     private string ObterClasseBadge(string tipo)
     {
         return tipo?.ToUpper() switch

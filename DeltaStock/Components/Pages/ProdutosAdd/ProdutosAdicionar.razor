@@ -100,6 +100,7 @@
     {
         try
         {
+            // Este método só é chamado depois que o EditForm valida o modelo.
             ProdutoDao.Adicionar(ProdutoForm);
             NavigationManager.NavigateTo("/ProdutosVisualizar");
         }
