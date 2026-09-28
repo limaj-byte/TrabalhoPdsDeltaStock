@@ -1,4 +1,4 @@
-@page "/Categoria"
+@page "/categoria"
 @rendermode InteractiveServer
 @inject CategoriaDAO CategoriaDao
 
@@ -10,6 +10,13 @@
             <h1>Categorias</h1>
             <p>Organize os produtos do estoque por tipo.</p>
         </div>
+        <div>
+            <a href="/categoria/cadastro" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Nova Categoria
+            </a>
+            Passo a passo — Tela de Cadastro de Processo 3
+        </div>
+    </div>
         <span class="categoria-total">@Categorias.Count categoria@(Categorias.Count == 1 ? "" : "s")</span>
     </div>
 
@@ -56,7 +63,7 @@
             </table>
         </div>
     }
-</div>
+
 
 @code {
     private List<DeltaStock.Models.Categoria> Categorias { get; set; } = [];

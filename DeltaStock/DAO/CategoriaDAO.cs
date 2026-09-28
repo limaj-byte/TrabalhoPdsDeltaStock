@@ -57,5 +57,30 @@ namespace DeltaStock.DAO
                 throw;
             }
         }
+
+            public void Inserir (Categoria categoria)
+            {
+                try
+                {
+                    using var con = _conexao.GetConnection();
+                    string sql = @"Insert into categoria (nome_cat, descricao_cat, codigo_cat, status_cat, data_cadastro_cat)
+                    VALUES ( @Nome,@Descricao,@Codigo,@Status,@DataCadastroCategoria)";
+                    using var comando = con.CreateCommand();
+                    comando.CommandText = sql;
+                    comando.Parameters.AddWithValue("@Nome", categoria.Nome);
+                    comando.Parameters.AddWithValue("@Descricao", categoria.Descricao);
+                    comando.Parameters.AddWithValue("@Codigo", categoria.Codigo);
+                    comando.Parameters.AddWithValue("@Status", categoria.Status);
+                    comando.Parameters.AddWithValue("@DataCadastroCategoria", categoria.DataCadastroCategoria);
+                comando.ExecuteNonQuery();
+            }
+                catch
+                {
+                    throw;
+                }
+            }
+
+
     }
 }
+
