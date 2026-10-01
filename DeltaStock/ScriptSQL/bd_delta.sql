@@ -38,14 +38,14 @@ CREATE TABLE Categoria(
     data_cadastro_cat date
 );
 
-insert into Categoria values (id_cat, nome_cat, descricao_cat, codigo_cat, status_cat, data_cadastro_cat),
-(null,"Eletrônicos", "Produtos de informática",1, "novo", '2026-01-01'),
-(null,"Decoração","Produtos de decoração",2, "novo", '2026-01-01'),
-(null,"Cozinha","Para cozinha",3, "novo", '2026-01-01'),
-(null,"Casa e banho","Casa e banho",4, "novo", '2026-01-01'),
-(null,"Alimentos","Produtos comestiveis",5, "novo", '2026-01-01'),
-(null,"Ferramentas","Ferramentas gerais",6, "novo", '2026-01-01'),
-(null,"Automotiva","Peças para carro",7, "novo", '2026-01-01');
+INSERT INTO Categoria (nome_cat, descricao_cat, codigo_cat, status_cat, data_cadastro_cat) VALUES
+('Eletrônicos', 'Produtos de informática', '1', 'Ativo', '2026-01-01'),
+('Decoração', 'Produtos de decoração', '2', 'Ativo', '2026-01-01'),
+('Cozinha', 'Para cozinha', '3', 'Ativo', '2026-01-01'),
+('Casa e banho', 'Casa e banho', '4', 'Ativo', '2026-01-01'),
+('Alimentos', 'Produtos comestíveis', '5', 'Ativo', '2026-01-01'),
+('Ferramentas', 'Ferramentas gerais', '6', 'Ativo', '2026-01-01'),
+('Automotiva', 'Peças para carro', '7', 'Ativo', '2026-01-01');
 
 CREATE TABLE Fornecedor(
     id_forn int primary key auto_increment,

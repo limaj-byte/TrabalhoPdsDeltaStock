@@ -53,6 +53,8 @@ public class ProdutoDAO
 
     public void Adicionar(Produto produto) 
     {
+        ArgumentNullException.ThrowIfNull(produto);
+
         using var conexao = _conexao.GetConnection();
         using var comando = conexao.CreateCommand();
         comando.CommandText = """
@@ -70,7 +72,7 @@ public class ProdutoDAO
         comando.Parameters.AddWithValue("@quantidade", produto.Quantidade);
         comando.Parameters.AddWithValue("@custo", produto.Custo);
         comando.Parameters.AddWithValue("@valorVenda", produto.ValorVenda);
-        comando.Parameters.AddWithValue("@status", produto.Status);
+        comando.Parameters.AddWithValue("@status", produto.Status.Trim());
         comando.Parameters.AddWithValue("@dataCadastro", produto.DataCadastro.Date);
         comando.Parameters.AddWithValue("@idCategoria", produto.IdCategoria);
         comando.ExecuteNonQuery();

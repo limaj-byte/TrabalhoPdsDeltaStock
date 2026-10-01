@@ -13,6 +13,7 @@ builder.Services.AddSingleton<ProdutoLocalStore>();
 builder.Services.AddScoped<Conexao>();
 builder.Services.AddScoped<CategoriaDAO>();
 builder.Services.AddScoped<ProdutoDAO>();
+builder.Services.AddScoped<DashboardDAO>();
 builder.Services.AddScoped<MovimentacaoDAO>();
 builder.Services.AddScoped<UsuarioDAO>();
 

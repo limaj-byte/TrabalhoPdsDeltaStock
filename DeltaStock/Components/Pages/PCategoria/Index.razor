@@ -15,7 +15,6 @@
                 <i class="bi bi-plus-lg"></i> Nova Categoria
             </a>
         </div>
-    </div>
         <span class="categoria-total">@Categorias.Count categoria@(Categorias.Count == 1 ? "" : "s")</span>
     </div>
 
@@ -55,13 +54,14 @@
                             <td><strong>@categoria.Nome</strong></td>
                             <td>@categoria.Descricao</td>
                             <td><span class="categoria-status">@categoria.Status</span></td>
-                            <td><strong>@categoria.DataCadastroCategoria</strong></td>
+                            <td><strong>@categoria.DataCadastroCategoria?.ToString("dd/MM/yyyy")</strong></td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
     }
+</div>
 
 
 @code {
