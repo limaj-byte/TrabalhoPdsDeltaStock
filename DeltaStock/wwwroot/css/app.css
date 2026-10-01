@@ -1556,6 +1556,156 @@ tbody tr {
     }
 }
 
+/* ===================================================
+   AÇÕES DO CABEÇALHO E BOTÃO NOVA MOVIMENTAÇÃO
+   =================================================== */
+.movimentacao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+    .movimentacao-header p {
+        margin: 5px 0 0;
+        color: #666;
+        font-size: 16px;
+    }
+
+.movimentacao-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Botão no padrão do seu azul (#254796) */
+.btn-novo-mov {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #254796;
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(37, 71, 150, 0.2);
+}
+
+    .btn-novo-mov:hover {
+        background-color: #1e3a8a;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(30, 58, 138, 0.3);
+    }
+
+/* Badge do total de movimentações */
+.movimentacao-total {
+    background-color: #eff6ff;
+    color: #1e3a8a;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid #bfdbfe;
+}
+
+/* ===================================================
+   FORMULÁRIO DE CADASTRO (IGUAL AOS CARDS DA APLICAÇÃO)
+   =================================================== */
+.form-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.10);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+    .form-control:focus {
+        border-color: #254796;
+        box-shadow: 0 0 0 3px rgba(37, 71, 150, 0.15);
+    }
+
+.text-danger {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.btn-salvar {
+    background-color: #254796;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s;
+}
+
+    .btn-salvar:hover {
+        background-color: #1e3a8a;
+    }
+
+.btn-voltar, .btn-cancelar {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none !important;
+    border: none;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+}
+
+    .btn-voltar:hover, .btn-cancelar:hover {
+        background-color: #e5e7eb;
+        color: #111827;
+    }
+
 /* HOME PAGE */
 .dashboard {
     display: grid;
