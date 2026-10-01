@@ -1,5 +1,8 @@
 ﻿@page "/homepage"
 
+@rendermode InteractiveServer
+@inject DashboardDAO DashboardDao
+
 <PageTitle>Home - DeltaStock</PageTitle>
 
 <section class="dashboard">
@@ -16,55 +19,77 @@
     <section class="summary-grid" aria-label="Resumo do estoque">
         <article class="summary-card summary-blue">
             <span class="summary-label">Produtos</span>
-            <strong>1.248</strong>
-            <small>itens cadastrados</small>
+            <strong>@Resumo.TotalProdutos</strong>
+            <small>produtos cadastrados</small>
         </article>
 
         <article class="summary-card summary-green">
             <span class="summary-label">Entradas</span>
-            <strong>342</strong>
-            <small>movimentacoes no mes</small>
+            <strong>@Resumo.EntradasMes</strong>
+            <small>movimentações no mês</small>
         </article>
 
         <article class="summary-card summary-orange">
             <span class="summary-label">Saidas</span>
-            <strong>198</strong>
-            <small>vendas registradas</small>
+            <strong>@Resumo.SaidasMes</strong>
+            <small>movimentações no mês</small>
         </article>
 
         <article class="summary-card summary-profit">
             <span class="summary-label">Lucro</span>
-            <strong>R$ 45.780</strong>
-            <small>resultado estimado</small>
+            <strong>@Resumo.LucroBruto.ToString("C")</strong>
+            <small>lucro bruto acumulado</small>
         </article>
     </section>
+
+    @if (MensagemErro is not null)
+    {
+        <div class="produto-feedback produto-error">@MensagemErro</div>
+    }
 
     <section class="dashboard-columns">
         <article class="dashboard-panel">
             <div class="panel-title-row">
                 <h2>Estoque baixo</h2>
-                <span>4 alertas</span>
+                <span>@EstoqueBaixo.Count alerta@(EstoqueBaixo.Count == 1 ? "" : "s")</span>
             </div>
 
             <ul class="status-list">
-                <li><strong>Mouse Gamer RGB</strong><span>3 unidades</span></li>
-                <li><strong>Teclado Mecanico</strong><span>2 unidades</span></li>
-                <li><strong>Headset HyperX</strong><span>1 unidade</span></li>
-                <li><strong>Monitor LG 24&quot;</strong><span>4 unidades</span></li>
+                @if (EstoqueBaixo.Count == 0)
+                {
+                    <li><span>Nenhum produto com estoque baixo.</span></li>
+                }
+                else
+                {
+                    @foreach (var produto in EstoqueBaixo)
+                    {
+                        <li><strong>@produto.Nome</strong><span>@produto.Quantidade unidade@(produto.Quantidade == 1 ? "" : "s")</span></li>
+                    }
+                }
             </ul>
         </article>
 
         <article class="dashboard-panel">
             <div class="panel-title-row">
-                <h2>Ultimas movimentacoes</h2>
-                <span>Hoje</span>
+                <h2>Últimas movimentações</h2>
+                <span>Registros recentes</span>
             </div>
 
             <ul class="movement-list">
-                <li><span class="movement-in">+50</span><strong>Camisetas Dry-Fit</strong></li>
-                <li><span class="movement-out">-12</span><strong>Fones Sony</strong></li>
-                <li><span class="movement-in">+15</span><strong>Teclados Mecanicos</strong></li>
-                <li><span class="movement-out">-5</span><strong>Monitores LG</strong></li>
+                @if (Movimentacoes.Count == 0)
+                {
+                    <li><span>Nenhuma movimentação registrada.</span></li>
+                }
+                else
+                {
+                    @foreach (var movimentacao in Movimentacoes)
+                    {
+                        <li>
+                            <span class="@(movimentacao.Tipo == "ENTRADA" || movimentacao.Tipo == "AJUSTE+" ? "movement-in" : "movement-out")">@Sinal(movimentacao.Tipo)@movimentacao.Quantidade</span>
+                            <strong>@movimentacao.Produto</strong>
+                        </li>
+                    }
+                }
             </ul>
         </article>
     </section>
@@ -83,3 +108,26 @@
         </div>
     </section>
 </section>
+
+@code {
+    private DashboardResumo Resumo { get; set; } = new(0, 0, 0, 0);
+    private List<ProdutoEstoqueBaixo> EstoqueBaixo { get; set; } = [];
+    private List<MovimentacaoRecente> Movimentacoes { get; set; } = [];
+    private string? MensagemErro { get; set; }
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            Resumo = DashboardDao.ObterResumo(DateTime.Today);
+            EstoqueBaixo = DashboardDao.ListarEstoqueBaixo();
+            Movimentacoes = DashboardDao.ListarUltimasMovimentacoes();
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Não foi possível carregar os indicadores do painel. ({ex.Message})";
+        }
+    }
+
+    private static string Sinal(string tipo) => tipo is "ENTRADA" or "AJUSTE+" ? "+" : "-";
+}
