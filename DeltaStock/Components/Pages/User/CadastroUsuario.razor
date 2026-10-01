@@ -1,0 +1,98 @@
+﻿@page "/Usuario/Cadastro"
+@using DeltaStock.Models
+@using DeltaStock.DAO
+@rendermode InteractiveServer
+@inject UsuarioDAO UsuarioDao
+@inject NavigationManager NavigationManager
+
+<PageTitle>Cadastro de Usuário</PageTitle>
+
+<div class="usuario-page">
+    <div class="usuario-header mb-4">
+        <div>
+            <h1>Cadastro de Usuário</h1>
+            <p class="text-muted">Preencha os dados para cadastrar um novo usuário.</p>
+        </div>
+    </div>
+
+    <div class="usuario-table-wrapper p-4">
+        <EditForm Model="usuario" OnValidSubmit="Salvar">
+            <DataAnnotationsValidator />
+            <ValidationSummary class="alert alert-danger" />
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="nome" class="form-label">Nome</label>
+                    <InputText id="nome" class="form-control" @bind-Value="usuario.Nome" />
+                    <ValidationMessage For="() => usuario.Nome" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="email" class="form-label">E-mail</label>
+                    <InputText id="email" class="form-control" @bind-Value="usuario.Email" />
+                    <ValidationMessage For="() => usuario.Email" />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="senha" class="form-label">Senha</label>
+                    <InputText id="senha" type="password" class="form-control" @bind-Value="usuario.Senha" />
+                    <ValidationMessage For="() => usuario.Senha" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <InputText id="telefone" class="form-control" @bind-Value="usuario.Telefone" />
+                    <ValidationMessage For="() => usuario.Telefone" />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label for="endereco" class="form-label">Endereço</label>
+                    <InputText id="endereco" class="form-control" @bind-Value="usuario.Endereco" />
+                    <ValidationMessage For="() => usuario.Endereco" />
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label for="tipo" class="form-label">Tipo</label>
+                    <InputSelect id="tipo" class="form-select" @bind-Value="usuario.Tipo">
+                        <option value="Vendedor">Vendedor</option>
+                        <option value="Admin">Admin</option>
+                    </InputSelect>
+                    <ValidationMessage For="() => usuario.Tipo" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="status" class="form-label">Status</label>
+                    <InputSelect id="status" class="form-select" @bind-Value="usuario.Status">
+                        <option value="Ativo">Ativo</option>
+                        <option value="Desativado">Desativado</option>
+                    </InputSelect>
+                    <ValidationMessage For="() => usuario.Status" />
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> Salvar
+                </button>
+
+                <a href="/Usuario" class="btn btn-light border">Cancelar</a>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private Usuario usuario = new();
+
+    private void Salvar()
+    {
+        UsuarioDao.Inserir(usuario);
+        NavigationManager.NavigateTo("/Usuario");
+    }
+}
