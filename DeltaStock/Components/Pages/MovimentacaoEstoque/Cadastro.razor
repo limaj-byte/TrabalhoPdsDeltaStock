@@ -1,0 +1,118 @@
+﻿@page "/Movimentacao/Cadastro"
+@rendermode InteractiveServer
+@using DeltaStock.DAO
+@using DeltaStock.Models
+@inject MovimentacaoDAO dao
+@inject NavigationManager nav
+
+<PageTitle>Nova Movimentação</PageTitle>
+
+<div class="movimentacao-page">
+    <div class="movimentacao-header">
+        <div>
+            <h1>Cadastrar Movimentação</h1>
+            <p>Registre uma nova entrada, saída ou ajuste de estoque.</p>
+        </div>
+        <a href="/Movimentacao" class="btn-voltar">← Voltar para Listagem</a>
+    </div>
+
+    @if (mensagemErro is not null)
+    {
+        <div class="movimentacao-feedback movimentacao-error">
+            <strong>Erro ao salvar:</strong>
+            <span>@mensagemErro</span>
+        </div>
+    }
+
+    <div class="form-card">
+        <EditForm Model="movimentacao" OnValidSubmit="Salvar" FormName="FormCadastroMovimentacao">
+            <DataAnnotationsValidator />
+
+            <div class="form-grid">
+                <!-- Tipo de Movimentação -->
+                <div class="form-group">
+                    <label>Tipo de Movimentação *</label>
+                    <InputSelect @bind-Value="movimentacao.Tipo" class="form-control">
+                        <option value="">Selecione...</option>
+                        <option value="ENTRADA">ENTRADA</option>
+                        <option value="SAIDA">SAIDA</option>
+                        <option value="AJUSTE+">AJUSTE+</option>
+                        <option value="AJUSTE-">AJUSTE-</option>
+                        <option value="PERDA">PERDA</option>
+                    </InputSelect>
+                    <ValidationMessage For="() => movimentacao.Tipo" class="text-danger" />
+                </div>
+
+                <!-- Origem -->
+                <div class="form-group">
+                    <label>Origem *</label>
+                    <InputText @bind-Value="movimentacao.Origem" class="form-control" placeholder="Ex: Compra, Venda, Reposição" />
+                    <ValidationMessage For="() => movimentacao.Origem" class="text-danger" />
+                </div>
+
+                <!-- Quantidade -->
+                <div class="form-group">
+                    <label>Quantidade *</label>
+                    <InputNumber @bind-Value="movimentacao.Quantidade" class="form-control" />
+                    <ValidationMessage For="() => movimentacao.Quantidade" class="text-danger" />
+                </div>
+
+                <!-- Saldo Anterior -->
+                <div class="form-group">
+                    <label>Saldo Anterior *</label>
+                    <InputNumber @bind-Value="movimentacao.SaldoAnterior" class="form-control" />
+                    <ValidationMessage For="() => movimentacao.SaldoAnterior" class="text-danger" />
+                </div>
+
+                <!-- Saldo Final -->
+                <div class="form-group">
+                    <label>Saldo Final *</label>
+                    <InputNumber @bind-Value="movimentacao.SaldoFinal" class="form-control" />
+                    <ValidationMessage For="() => movimentacao.SaldoFinal" class="text-danger" />
+                </div>
+
+                <!-- Documento -->
+                <div class="form-group">
+                    <label>Documento (Opcional)</label>
+                    <InputText @bind-Value="movimentacao.Id_documento" class="form-control" placeholder="Ex: NF001, VENDA002" />
+                </div>
+
+                <!-- Motivo -->
+                <div class="form-group full-width">
+                    <label>Motivo / Observação (Opcional)</label>
+                    <InputTextArea @bind-Value="movimentacao.Motivo" class="form-control" rows="3" placeholder="Observações sobre perdas ou ajustes..." />
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="/Movimentacao" class="btn-cancelar">Cancelar</a>
+                <button type="submit" class="btn-salvar">Salvar Registro</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    // Instância do objeto vinculado ao formulário
+    private Movimentacao movimentacao = new();
+    private string? mensagemErro;
+
+    /// <summary>
+    /// Método chamado quando o formulário é submetido e passa em todas as validações.
+    /// </summary>
+    private void Salvar()
+    {
+        try
+        {
+            // Salva no MySQL via DAO
+            dao.Inserir(movimentacao);
+            
+            // Redireciona o usuário de volta para a tabela de listagem
+            nav.NavigateTo("/Movimentacao");
+        }
+        catch (Exception ex)
+        {
+            mensagemErro = ex.Message;
+        }
+    }
+}
