@@ -34,7 +34,7 @@
                     <p>Preço de compra: @produto.PrecoCompra.ToString("C")</p>
                     <p>Preço de venda: @produto.PrecoVenda.ToString("C")</p>
                     <p>Status: @produto.Status</p>
-                    <a class="produto-editar" href="/Categoria">Editar categoria</a>
+                    <a class="produto-editar" href="/ProdutoEditar">Editar Produto</a>
                     <button type="button" @onclick="() => RemoverProduto(produto.Id)">Excluir</button>
                 </div>
             }
