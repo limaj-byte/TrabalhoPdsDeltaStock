@@ -69,9 +69,48 @@ namespace DeltaStock.DAO
 
                 return lista;
             }
+
             catch
             {
                 // Repassa a exceção capturada para tratar na camada de apresentação (View/Componente)
+                throw;
+            }
+        }
+        /// <summary>
+        /// Insere um novo registro de movimentação de estoque no banco de dados MySQL.
+        /// </summary>
+        /// <param name="m">Objeto contendo os dados da movimentação a ser persistida.</param>
+        public void Inserir(Movimentacao m)
+        {
+            try
+            {
+                using var con = _conexao.GetConnection();
+
+                // Instrução SQL com parâmetros para prevenir SQL Injection
+                string sql = @"INSERT INTO Movimentacao 
+                      (data_mov, tipo_mov, quantidade_mov, saldo_anterior_mov, saldo_final_mov, origem_mov, id_documento_mov, motivo_mov) 
+                      VALUES (@data, @tipo, @qtd, @saldoAnt, @saldoFin, @origem, @doc, @motivo);";
+
+                using var comando = con.CreateCommand();
+                comando.CommandText = sql;
+
+                // Atribuição dos valores aos parâmetros SQL
+                comando.Parameters.AddWithValue("@data", m.Data);
+                comando.Parameters.AddWithValue("@tipo", m.Tipo);
+                comando.Parameters.AddWithValue("@qtd", m.Quantidade);
+                comando.Parameters.AddWithValue("@saldoAnt", m.SaldoAnterior);
+                comando.Parameters.AddWithValue("@saldoFin", m.SaldoFinal);
+                comando.Parameters.AddWithValue("@origem", m.Origem);
+
+                // Tratamento para campos opcionais (envia DBNull.Value se estiver nulo)
+                comando.Parameters.AddWithValue("@doc", (object?)m.Id_documento ?? DBNull.Value);
+                comando.Parameters.AddWithValue("@motivo", (object?)m.Motivo ?? DBNull.Value);
+
+                // Executa a inserção no banco
+                comando.ExecuteNonQuery();
+            }
+            catch
+            {
                 throw;
             }
         }

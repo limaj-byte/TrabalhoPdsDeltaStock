@@ -14,16 +14,16 @@
 
 <PageTitle>Movimentações</PageTitle>
 
-<div class="movimentacao-page">
-    @* Cabeçalho da página com título, descrição e totalizador dinâmico *@
-    <div class="movimentacao-header">
-        <div>
-            <h1>Movimentações de Estoque</h1>
-            <p>Histórico de entradas e saídas do estoque.</p>
-        </div>
-        @* Formatação no plural/singular com base no total de registros *@
+<div class="movimentacao-header">
+    <div>
+        <h1>Movimentações de Estoque</h1>
+        <p>Histórico de entradas e saídas do estoque.</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="/Movimentacao/Cadastro" class="btn-novo">+ Nova Movimentação</a>
         <span class="movimentacao-total">@Movimentacoes.Count movimentaç@(Movimentacoes.Count == 1 ? "ão" : "ões")</span>
     </div>
+
 
     @* Tratamento dos estados da tela (Carregando, Erro, Lista Vazia, Tabela de Dados) *@
     @if (Carregando)

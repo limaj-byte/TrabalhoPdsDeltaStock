@@ -11,6 +11,5 @@
         public string Tipo { get; internal set; }
         public string Status { get; internal set; }
 
-
     }
 }
