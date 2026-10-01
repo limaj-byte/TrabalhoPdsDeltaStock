@@ -1,4 +1,5 @@
-﻿using DeltaStock.Configs;
+﻿using AppWeb.Configs;
+using DeltaStock.Configs;
 using DeltaStock.Models;
 
 namespace DeltaStock.DAO
@@ -76,6 +77,71 @@ namespace DeltaStock.DAO
             comando.Parameters.AddWithValue("@dataCadastro", categoria.DataCadastroCategoria!.Value.Date);
             comando.ExecuteNonQuery();
             categoria.Id = (int)comando.LastInsertedId;
+        }
+
+        public Categoria? BuscarPorId(int id)
+        {
+            var comando = _conexao.CreateCommand(
+                "SELECT * FROM categoria WHERE id_cat = @id;");
+            comando.Parameters.AddWithValue("@id", id);
+
+            var leitor = comando.ExecuteReader();
+
+            if (leitor.Read())
+            {
+                var categoria = new Categoria();
+                categoria.Id = leitor.GetInt32("id_cat");
+                categoria.Nome = DAOHelper.GetString(leitor, "nome_cat");
+                categoria.Descricao = DAOHelper.GetString(leitor, "descricao_cat");
+                categoria.Codigo = leitor.GetString("codigo_cat");
+                categoria.Status = leitor.GetString("Status_cat");
+                categoria.DataCadastroCategoria = leitor.GetDateTime("data_Cadastro_cat");
+                return categoria;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void Atualizar(Categoria categoria)
+        {
+            try
+            {
+                var comando = _conexao.CreateCommand(
+                "UPDATE categoria SET nome_cat = @_nome, descricao_cat = @_descricao, " +
+                "codigoc_cat = @_codigo, status_cat = @_status, data_cadastro_categoria = @_dataCad WHERE id_pro = @_id;");
+
+                comando.Parameters.AddWithValue("@_nome", categoria.Nome);
+                comando.Parameters.AddWithValue("@_descricao", categoria.Descricao);
+                comando.Parameters.AddWithValue("@_codigo", categoria.Codigo);
+                comando.Parameters.AddWithValue("@_status", categoria.Status);
+                comando.Parameters.AddWithValue("@_dataCad", categoria.DataCadastroCategoria);
+                comando.Parameters.AddWithValue("@_id", categoria.Id);
+
+                comando.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void Excluir(int id)
+        {
+            try
+            {
+                var comando = _conexao.CreateCommand(
+                "DELETE FROM categoria WHERE id_cat = @id;");
+
+                comando.Parameters.AddWithValue("@id", id);
+
+                comando.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
