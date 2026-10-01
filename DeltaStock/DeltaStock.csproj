@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Components\Pages\MovimentacaoEstoque\movimentacaoestoque.razor.razor" />
+    <Content Remove="Components\Pages\Venda\cadastroVenda.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Components\Pages\Venda\cadastroVenda.razor" />
     <None Include="wwwroot\bootstrap\logo deltaestoque.png" />
   </ItemGroup>
 

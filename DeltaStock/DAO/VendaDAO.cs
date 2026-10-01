@@ -1,19 +1,17 @@
 ﻿using DeltaStock.Configs;
 using DeltaStock.Models;
-using System.Security.Cryptography.Xml;
-using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace DeltaStock.DAO
 {
     public class VendaDAO
     {
-
         private readonly Conexao _conexao;
 
         public VendaDAO(Conexao conexao)
         {
             _conexao = conexao;
         }
+
         public List<Venda> Listar()
         {
             try
@@ -27,6 +25,7 @@ namespace DeltaStock.DAO
                 comando.CommandText = sql;
 
                 using var leitor = comando.ExecuteReader();
+
                 while (leitor.Read())
                 {
                     var venda = new Venda
@@ -47,8 +46,8 @@ namespace DeltaStock.DAO
 
                     lista.Add(venda);
                 }
-                return lista;
 
+                return lista;
             }
             catch
             {
@@ -56,5 +55,31 @@ namespace DeltaStock.DAO
             }
         }
 
+        public void Inserir(Venda venda)
+        {
+            try
+            {
+                using var con = _conexao.GetConnection();
+
+                string sql = @"INSERT INTO venda
+                (data_ven, valor_total_ven, status_ven, id_usu_fk)
+                VALUES
+                (@data, @valor, @status, @usuario)";
+
+                using var comando = con.CreateCommand();
+                comando.CommandText = sql;
+
+                comando.Parameters.AddWithValue("@data", venda.Dataven);
+                comando.Parameters.AddWithValue("@valor", venda.Valortotalven);
+                comando.Parameters.AddWithValue("@status", venda.Statusven);
+                comando.Parameters.AddWithValue("@usuario", venda.Idusufk);
+
+                comando.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
