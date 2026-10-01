@@ -20,7 +20,8 @@ namespace DeltaStock.DAO
 
                 using var con = _conexao.GetConnection();
 
-                string sql = "SELECT * FROM categoria";
+                const string sql = "SELECT id_ven, data_ven, valor_total_ven, status_ven, id_usu_fk FROM venda ORDER BY data_ven";
+
                 using var comando = con.CreateCommand();
                 comando.CommandText = sql;
 
@@ -28,21 +29,21 @@ namespace DeltaStock.DAO
 
                 while (leitor.Read())
                 {
-                    var venda = new Venda
-                    {
-                        Id = leitor.GetInt32("id_ven"),
-                        Dataven = leitor.GetDateTime("data_ven"),
-                        Valortotalven = leitor.GetFloat("valor_total_ven"),
-                        Statusven = leitor.GetString("status_ven"),
-                        Idusufk = leitor.GetInt16("id_usu_fk")
-                    };
+                    var venda = new Venda();
 
-                    //id_ven int primary key auto_increment,
-                    //data_ven datetime,
-                    //valor_total_ven float,
-                    //status_ven varchar(100),
-                    //id_usu_fk int,
-                    //foreign key(id_usu_fk) references Usuario(id_usu)
+                    venda.Id = leitor.GetInt32("id_ven");
+
+                    venda.Dataven = leitor.IsDBNull(leitor.GetOrdinal("data_ven"))
+                        ? null
+                        : leitor.GetDateTime("data_ven");
+
+                    venda.Valortotalven = leitor.GetFloat("valor_total_ven");
+
+                    venda.Statusven = leitor.IsDBNull(leitor.GetOrdinal("status_ven"))
+                        ? ""
+                        : leitor.GetString("status_ven");
+
+                    venda.Idusufk = leitor.GetInt32("id_usu_fk");
 
                     lista.Add(venda);
                 }
@@ -57,29 +58,26 @@ namespace DeltaStock.DAO
 
         public void Inserir(Venda venda)
         {
-            try
-            {
-                using var con = _conexao.GetConnection();
+            ArgumentNullException.ThrowIfNull(venda);
 
-                string sql = @"INSERT INTO venda
-                (data_ven, valor_total_ven, status_ven, id_usu_fk)
-                VALUES
-                (@data, @valor, @status, @usuario)";
+            using var con = _conexao.GetConnection();
 
-                using var comando = con.CreateCommand();
-                comando.CommandText = sql;
+            const string sql = """
+                INSERT INTO venda (data_ven, valor_total_ven, status_ven, id_usu_fk)
+                VALUES (@data, @valorTotal, @status, @idUsuario);
+                """;
 
-                comando.Parameters.AddWithValue("@data", venda.Dataven);
-                comando.Parameters.AddWithValue("@valor", venda.Valortotalven);
-                comando.Parameters.AddWithValue("@status", venda.Statusven);
-                comando.Parameters.AddWithValue("@usuario", venda.Idusufk);
+            using var comando = con.CreateCommand();
+            comando.CommandText = sql;
 
-                comando.ExecuteNonQuery();
-            }
-            catch
-            {
-                throw;
-            }
+            comando.Parameters.AddWithValue("@data", venda.Dataven!.Value);
+            comando.Parameters.AddWithValue("@valorTotal", venda.Valortotalven);
+            comando.Parameters.AddWithValue("@status", venda.Statusven.Trim());
+            comando.Parameters.AddWithValue("@idUsuario", venda.Idusufk);
+
+            comando.ExecuteNonQuery();
+
+            venda.Id = (int)comando.LastInsertedId;
         }
     }
 }

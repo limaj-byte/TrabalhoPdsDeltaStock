@@ -1,9 +1,11 @@
 @page "/venda/cadastro"
 @rendermode InteractiveServer
-@inject VendaDAO dao
 @inject NavigationManager NavigationManager
+@inject VendaDAO dao
 
-<PageTitle>Cadastro de Venda</PageTitle>
+<PageTitle>
+    Nova Venda - Delta Stock
+</PageTitle>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
@@ -13,16 +15,22 @@
 
 <div class="custom-table-card p-4">
 
-    <EditForm Model="venda" OnValidSubmit="Salvar">
+    @if (MensagemErro is not null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @MensagemErro
+        </div>
+    }
+
+    <EditForm Model="venda" OnValidSubmit="Salvar" FormName="venda-form">
 
         <DataAnnotationsValidator />
-
         <ValidationSummary class="alert alert-danger" />
 
         <div class="row mb-3">
 
             <div class="col-md-6">
-                <label for="data" class="form-label">Data</label>
+                <label for="data" class="form-label">Data da Venda</label>
 
                 <InputDate id="data"
                            class="form-control"
@@ -85,11 +93,18 @@
 
 @code {
     private DeltaStock.Models.Venda venda = new();
+    private string? MensagemErro;
 
     private void Salvar()
     {
-        dao.Inserir(venda);
-
-        NavigationManager.NavigateTo("/Venda");
+        try
+        {
+            dao.Inserir(venda);
+            NavigationManager.NavigateTo("/Venda");
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Não foi possível salvar a venda. ({ex.Message})";
+        }
     }
 }

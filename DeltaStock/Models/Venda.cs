@@ -7,7 +7,7 @@ namespace DeltaStock.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "A data é obrigatória.")]
-        public DateTime? Dataven { get; set; }
+        public DateTime? Dataven { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "O valor total é obrigatório.")]
         public float Valortotalven { get; set; }
