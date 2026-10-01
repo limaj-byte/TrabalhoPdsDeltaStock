@@ -14,7 +14,12 @@
 </div>
 
 <div class="custom-table-card p-4">
-    <EditForm Model="categoria" OnValidSubmit="Salvar">
+    @if (MensagemErro is not null)
+    {
+        <div class="alert alert-danger" role="alert">@MensagemErro</div>
+    }
+
+    <EditForm Model="categoria" OnValidSubmit="Salvar" FormName="categoria-form">
         <DataAnnotationsValidator />
         <ValidationSummary class="alert alert-danger" />
 
@@ -29,7 +34,7 @@
 
             <div class="col-md-4">
                 <label for="descricao" class="form-label">Descrição</label>
-                <InputText id="descricao" class="form-control" @bind-Value="categoria.Descricao" />
+                <InputText id="descricao" class="form-control" @bind-Value="categoria.Descricao" maxlength="500" />
                 <ValidationMessage For="() => categoria.Descricao" />
             </div>
 
@@ -71,10 +76,18 @@
 
 @code {
     private Categoria categoria = new();
+    private string? MensagemErro;
 
     private void Salvar()
     {
-        dao.Inserir(categoria);
-        NavigationManager.NavigateTo("/categoria");
+        try
+        {
+            dao.Inserir(categoria);
+            NavigationManager.NavigateTo("/categoria");
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Não foi possível salvar a categoria. ({ex.Message})";
+        }
     }
 }

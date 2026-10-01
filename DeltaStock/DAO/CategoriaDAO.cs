@@ -44,7 +44,7 @@ namespace DeltaStock.DAO
                         : leitor.GetString("status_cat");
 
                     categoria.DataCadastroCategoria = leitor.IsDBNull(leitor.GetOrdinal("data_cadastro_cat"))
-                        ? DateTime.MinValue
+                        ? null
                         : leitor.GetDateTime("data_cadastro_cat");
 
                     lista.Add(categoria);
@@ -58,29 +58,25 @@ namespace DeltaStock.DAO
             }
         }
 
-            public void Inserir (Categoria categoria)
-            {
-                try
-                {
-                    using var con = _conexao.GetConnection();
-                    string sql = @"Insert into categoria (nome_cat, descricao_cat, codigo_cat, status_cat, data_cadastro_cat)
-                    VALUES ( @Nome,@Descricao,@Codigo,@Status,@DataCadastroCategoria)";
-                    using var comando = con.CreateCommand();
-                    comando.CommandText = sql;
-                    comando.Parameters.AddWithValue("@Nome", categoria.Nome);
-                    comando.Parameters.AddWithValue("@Descricao", categoria.Descricao);
-                    comando.Parameters.AddWithValue("@Codigo", categoria.Codigo);
-                    comando.Parameters.AddWithValue("@Status", categoria.Status);
-                    comando.Parameters.AddWithValue("@DataCadastroCategoria", categoria.DataCadastroCategoria);
-                comando.ExecuteNonQuery();
-            }
-                catch
-                {
-                    throw;
-                }
-            }
+        public void Inserir(Categoria categoria)
+        {
+            ArgumentNullException.ThrowIfNull(categoria);
 
-
+            using var con = _conexao.GetConnection();
+            const string sql = """
+                INSERT INTO categoria (nome_cat, descricao_cat, codigo_cat, status_cat, data_cadastro_cat)
+                VALUES (@nome, @descricao, @codigo, @status, @dataCadastro);
+                """;
+            using var comando = con.CreateCommand();
+            comando.CommandText = sql;
+            comando.Parameters.AddWithValue("@nome", categoria.Nome.Trim());
+            comando.Parameters.AddWithValue("@descricao", categoria.Descricao.Trim());
+            comando.Parameters.AddWithValue("@codigo", categoria.Codigo.Trim());
+            comando.Parameters.AddWithValue("@status", categoria.Status.Trim());
+            comando.Parameters.AddWithValue("@dataCadastro", categoria.DataCadastroCategoria!.Value.Date);
+            comando.ExecuteNonQuery();
+            categoria.Id = (int)comando.LastInsertedId;
+        }
     }
 }
 
