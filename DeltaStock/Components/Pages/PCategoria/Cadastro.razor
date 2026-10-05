@@ -1,10 +1,12 @@
 ﻿@page "/categoria/cadastro"
+@page "/categoria/{Id:int?}/atualizacao"
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 @inject CategoriaDAO dao
 
+
 <PageTitle>
-    Nova Categoria - Delta Stock
+    @(Id.HasValue ? "Editar Categoria - Delta Stock" : "Nova Categoria - Delta Stock")
 </PageTitle>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -75,6 +77,26 @@
 </div>
 
 @code {
+    [Parameter]
+    public int? Id { get; set; }
+    protected override void OnInitialized()
+    {
+        if (Id.HasValue)
+        {
+            categoria = dao.BuscarPorId(Id.Value);
+
+            if (categoria is null)
+            {
+                MensagemErro = "Categoria não encontrada.";
+                categoria = new();
+            }
+        }
+
+
+    }
+
+
+
     private Categoria categoria = new();
     private string? MensagemErro;
 
@@ -82,8 +104,17 @@
     {
         try
         {
-            dao.Inserir(categoria);
-            NavigationManager.NavigateTo("/categoria");
+            if(Id.HasValue){
+                dao.Atualizar(categoria);
+                NavigationManager.NavigateTo("/categoria");
+            }
+            else
+            {
+                dao.Inserir(categoria);
+                NavigationManager.NavigateTo("/categoria");
+            }
+
+
         }
         catch (Exception ex)
         {

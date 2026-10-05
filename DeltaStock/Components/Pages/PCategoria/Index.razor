@@ -44,6 +44,8 @@
                         <th>Descrição</th>
                         <th>Status</th>
                         <th>Cadastro</th>
+                        <th>Editar</th>
+                        <th>Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,7 +57,22 @@
                             <td>@categoria.Descricao</td>
                             <td><span class="categoria-status">@categoria.Status</span></td>
                             <td><strong>@categoria.DataCadastroCategoria?.ToString("dd/MM/yyyy")</strong></td>
+                            <td>
+                                <div>
+                                    <a href="/categoria/@categoria.Id/atualizacao" class="btn btn-primary">
+                                        <i class="bi bi-plus-lg"></i> Editar 
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <a href="/categoria/@categoria.Id/excluir" class="btn btn-danger">
+                                        <i class="bi bi-trash"></i>Excluir
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
+                        
                     }
                 </tbody>
             </table>
@@ -68,6 +85,7 @@
     private List<DeltaStock.Models.Categoria> Categorias { get; set; } = [];
     private bool Carregando { get; set; } = true;
     private string? MensagemErro { get; set; }
+
 
     protected override Task OnInitializedAsync()
     {

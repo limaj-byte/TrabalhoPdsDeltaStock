@@ -110,7 +110,7 @@ namespace DeltaStock.DAO
             {
                 var comando = _conexao.CreateCommand(
                 "UPDATE categoria SET nome_cat = @_nome, descricao_cat = @_descricao, " +
-                "codigoc_cat = @_codigo, status_cat = @_status, data_cadastro_categoria = @_dataCad WHERE id_pro = @_id;");
+                "codigo_cat = @_codigo, status_cat = @_status, data_cadastro_cat = @_dataCad WHERE id_cat = @_id;");
 
                 comando.Parameters.AddWithValue("@_nome", categoria.Nome);
                 comando.Parameters.AddWithValue("@_descricao", categoria.Descricao);
