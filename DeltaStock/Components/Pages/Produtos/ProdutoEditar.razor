@@ -1,13 +1,175 @@
-﻿@page "/ProdutoEditar"
-
+@page "/ProdutoEditar"
+@rendermode InteractiveServer
+@inject ProdutoDAO ProdutoDao
+@inject CategoriaDAO CategoriaDao
+@inject DeltaStock.Configs.Conexao Conexao
+@inject NavigationManager NavigationManager
 
 <PageTitle>Editar produto</PageTitle>
 
-<div class="produto-editar-page">
-    <div class="produto-editar-header">
+<div class="produto-cadastro-page" style="margin: 0 auto; max-width: 760px; width: 100%;">
+    <div class="produto-cadastro-header">
         <div>
             <h1>Editar produto</h1>
-            <p>Os dados serão salvos diretamente no banco local.</p>
+            <p>Atualize as informações do produto selecionado.</p>
         </div>
+        <a class="categoria-link" href="/Categoria">Gerenciar categorias</a>
     </div>
+
+    @if (MensagemErro is not null)
+    {
+        <div class="produto-feedback produto-error">@MensagemErro</div>
+    }
+    else if (Produtos.Count == 0)
+    {
+        <div class="produto-feedback">Ainda não há produtos cadastrados para editar.</div>
+    }
+    else
+    {
+        <EditForm Model="ProdutoForm" OnValidSubmit="SalvarProduto" FormName="produto-editar-form" class="produto-form produto-cadastro-form" style="margin: 0 auto; width: 100%;">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <label class="produto-form-full">
+                Produto a editar
+                <select @bind="ProdutoSelecionadoId" @bind:after="SelecionarProduto">
+                    @foreach (var produto in Produtos)
+                    {
+                        <option value="@produto.Id">@produto.Nome (@produto.Codigo)</option>
+                    }
+                </select>
+            </label>
+            <label>
+                Código
+                <input @bind="ProdutoForm.Codigo" placeholder="Ex.: TEC-001" />
+                <ValidationMessage For="@(() => ProdutoForm.Codigo)" />
+            </label>
+            <label>
+                Nome
+                <input @bind="ProdutoForm.Nome" placeholder="Nome do produto" />
+                <ValidationMessage For="@(() => ProdutoForm.Nome)" />
+            </label>
+            <label class="produto-form-full">
+                Descrição
+                <textarea @bind="ProdutoForm.Descricao" placeholder="Descreva o produto"></textarea>
+            </label>
+            <label>
+                Categoria
+                <select @bind="ProdutoForm.IdCategoria">
+                    <option value="0">Selecione uma categoria</option>
+                    @foreach (var categoria in Categorias)
+                    {
+                        <option value="@categoria.Id">@categoria.Nome</option>
+                    }
+                </select>
+                <ValidationMessage For="@(() => ProdutoForm.IdCategoria)" />
+            </label>
+            <label>
+                Status
+                <select @bind="ProdutoForm.Status">
+                    <option value="Ativo">Ativo</option>
+                    <option value="Inativo">Inativo</option>
+                </select>
+            </label>
+            <label>
+                Quantidade
+                <input type="number" min="0" @bind="ProdutoForm.Quantidade" />
+                <ValidationMessage For="@(() => ProdutoForm.Quantidade)" />
+            </label>
+            <label>
+                Custo (R$)
+                <input type="number" min="0" step="0.01" @bind="ProdutoForm.Custo" />
+                <ValidationMessage For="@(() => ProdutoForm.Custo)" />
+            </label>
+            <label class="produto-form-full">
+                Preço de venda (R$)
+                <input type="number" min="0" step="0.01" @bind="ProdutoForm.ValorVenda" />
+                <ValidationMessage For="@(() => ProdutoForm.ValorVenda)" />
+            </label>
+
+            <div class="produto-form-actions produto-form-full">
+                <a href="/ProdutosVisualizar" class="produto-cancelar">Cancelar</a>
+                <button type="submit">Salvar alterações</button>
+            </div>
+        </EditForm>
+    }
 </div>
+
+@code {
+    private Produto ProdutoForm { get; set; } = new();
+    private List<Produto> Produtos { get; set; } = [];
+    private List<DeltaStock.Models.Categoria> Categorias { get; set; } = [];
+    private int ProdutoSelecionadoId { get; set; }
+    private string? MensagemErro { get; set; }
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            Produtos = ProdutoDao.Listar();
+            Categorias = CategoriaDao.Listar();
+
+            if (Produtos.Count > 0)
+            {
+                ProdutoSelecionadoId = Produtos[0].Id;
+                SelecionarProduto();
+            }
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Não foi possível carregar os dados. Confira a conexão com o banco. ({ex.Message})";
+        }
+    }
+
+    private void SelecionarProduto()
+    {
+        var produto = Produtos.FirstOrDefault(p => p.Id == ProdutoSelecionadoId);
+        if (produto is null)
+        {
+            return;
+        }
+
+        ProdutoForm = new Produto
+        {
+            Id = produto.Id,
+            Codigo = produto.Codigo,
+            Nome = produto.Nome,
+            Descricao = produto.Descricao,
+            Quantidade = produto.Quantidade,
+            Custo = produto.Custo,
+            ValorVenda = produto.ValorVenda,
+            Status = produto.Status,
+            DataCadastro = produto.DataCadastro,
+            IdCategoria = produto.IdCategoria
+        };
+    }
+
+    private void SalvarProduto()
+    {
+        try
+        {
+            using var conexao = Conexao.GetConnection();
+            using var comando = conexao.CreateCommand();
+            comando.CommandText = "UPDATE Produto SET codigo_prod = @codigo, nome_prod = @nome, " +
+                "descricao_prod = @descricao, quantidade_prod = @quantidade, custo_prod = @custo, " +
+                "valor_venda_prod = @valorVenda, status_prod = @status, id_cat_fk = @idCategoria " +
+                "WHERE id_prod = @id;";
+            comando.Parameters.AddWithValue("@codigo", ProdutoForm.Codigo.Trim());
+            comando.Parameters.AddWithValue("@nome", ProdutoForm.Nome.Trim());
+            comando.Parameters.AddWithValue("@descricao", ProdutoForm.Descricao.Trim());
+            comando.Parameters.AddWithValue("@quantidade", ProdutoForm.Quantidade);
+            comando.Parameters.AddWithValue("@custo", ProdutoForm.Custo);
+            comando.Parameters.AddWithValue("@valorVenda", ProdutoForm.ValorVenda);
+            comando.Parameters.AddWithValue("@status", ProdutoForm.Status.Trim());
+            comando.Parameters.AddWithValue("@idCategoria", ProdutoForm.IdCategoria);
+            comando.Parameters.AddWithValue("@id", ProdutoForm.Id);
+            comando.ExecuteNonQuery();
+
+            NavigationManager.NavigateTo("/ProdutosVisualizar");
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Não foi possível salvar as alterações. ({ex.Message})";
+        }
+    }
+}
