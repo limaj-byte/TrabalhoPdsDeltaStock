@@ -1,0 +1,58 @@
+﻿@page "/categoria/{id:int?}/excluir"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject CategoriaDAO dao
+
+<div class="d-flex justify-content-between align-items-center mb-4"> <div> <h2 class="fw-bold mb-1">Excluir Categoria</h2> <p class="text-muted mb-0"> Confirme a exclusão da categoria abaixo. </p> </div> </div>
+<div class="custom-table-card p-4">
+    @if (MensagemErro is not null)
+    {
+        <div class="alert alert-danger" role="alert"> @MensagemErro </div>
+    }
+    <div class="mb-4">
+        <h5 class="fw-bold">Tem certeza que deseja excluir esta categoria?</h5>
+        <p class="mb-1"> <strong>Nome:</strong> @categoria.Nome </p>
+        <p class="mb-1"><strong>Código:</strong> @categoria.Codigo</p>
+        <p class="mb-0"><strong>Descrição:</strong>@categoria.Descricao</p>
+    </div> <div class="d-flex gap-2">
+    <button type="button" class="btn btn-danger" @onclick="Excluir">
+        <i class="bi bi-trash"></i> Confirmar exclusão
+    </button>
+    <a href="/categoria" class="btn btn-light border"> Cancelar </a>
+</div>
+</div>
+@code{
+    private Categoria categoria = new();
+    private string? MensagemErro;
+    [Parameter]
+    public int? Id { get; set; }
+    protected override void OnInitialized()
+    {
+        if (Id.HasValue)
+        {
+            categoria = dao.BuscarPorId(Id.Value);
+
+            if (categoria is null)
+            {
+                MensagemErro = "Categoria não encontrada.";
+                categoria = new();
+            }
+        }
+    }
+
+    private void Excluir()
+    {
+        try
+        {
+            if (Id.HasValue)
+            {
+                dao.Excluir(Id.Value);
+                NavigationManager.NavigateTo("/categoria");
+            }
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = $"Não foi possível excluir a categoria. ({ex.Message})";
+        }
+    }
+}
